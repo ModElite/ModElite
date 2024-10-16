@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { headers } from 'next/headers'
+import axios from 'axios';
+import { headers } from 'next/headers';
 
 export const axiosInstance = axios.create({
   baseURL: 'http://localhost:8080',
@@ -8,9 +8,9 @@ export const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-})
+});
 
 axiosInstance.interceptors.request.use((config) => {
-  config.headers['Cookies'] = headers().get('cookie')
-  return config
-})
+  config.headers['Cookies'] = headers().get('cookie');
+  return config;
+});
