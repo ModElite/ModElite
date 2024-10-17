@@ -8,6 +8,10 @@ const config: Config = {
       colors: {
         background: 'F5F6FB',
         foreground: 'var(--foreground)',
+        blue1: '#46A8E1',
+        blue2: '#6FBBE8',
+        blue3: '#C1E2F5',
+        blue4: '#D6ECF8',
       },
       size: size,
       spacing: size,
