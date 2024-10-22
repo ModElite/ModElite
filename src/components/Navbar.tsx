@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
         <Link href='/' className='pl-4 text-2xl font-bold'>
           <div className='flex flex-row items-center'>
             <div className='relative h-12 w-12 lg:h-12 lg:w-12 xl:mx-2 xl:h-16 xl:w-16'>
-              <Image src='/logo.png' fill alt='logo' className='inline h-4 object-cover' />
+              <Image src='/logo.png' fill sizes='(max-width: 1000px) 100vw, 1000px' alt='logo' className='inline h-4 object-cover' />
             </div>
           </div>
         </Link>

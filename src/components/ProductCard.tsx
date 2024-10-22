@@ -10,15 +10,15 @@ export const ProductCard: React.FC<IProductCard> = ({ id, name, price, image, ta
       href={`/product/${id}`}
     >
       <div className='relative h-32 w-full lg:h-60'>
-        <Image src={image} alt={name} className='rounded-3xl' layout='fill' objectFit='cover' />
+        <Image src={image} alt={name} className='rounded-3xl' fill sizes='(max-width: 1000px) 100vw, 1000px' style={{ objectFit: 'cover' }} />
       </div>
       <div className='flex flex-col gap-3'>
         <div className='flex flex-wrap space-x-2'>
-          <h3 className='flew text-xl font-semibold'>{name}</h3>
-          <p className='flew flex-wrap content-center space-x-2'>
+          <h3 className='flex text-xl font-semibold'>{name}</h3>
+          <p className='flex flex-wrap content-center space-x-2'>
             {tags &&
               tags.map((tag) => (
-                <span key={tag} className='text-blue1 bg-blue3 rounded-2xl px-2 py-1 text-sm'>
+                <span key={tag} className='rounded-2xl bg-blue3 px-2 py-1 text-sm text-blue1'>
                   {tag}
                 </span>
               ))}
