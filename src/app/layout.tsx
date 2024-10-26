@@ -26,12 +26,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='th' className={`${poppins.variable}`}>
+    <html lang='th' className={`${poppins.variable} bg-white`}>
       <ConfigProvider theme={theme}>
         <AntdRegistry>
-          <body className={`bg-foreground text-black antialiased`}>
+          <body className={`min-h-screen text-black antialiased`}>
             <Navbar />
-            <div className='p-8 lg:p-16'>{children}</div>
+            <main>{children}</main>
           </body>
         </AntdRegistry>
       </ConfigProvider>

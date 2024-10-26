@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Button } from 'antd';
+import Image from 'next/image';
 
 const HeartBtn: React.FC = () => {
   const [clicked, setClick] = useState(false);
@@ -19,7 +20,9 @@ const HeartBtn: React.FC = () => {
       }}
       onClick={handleClick}
     >
-      <div className='aspect-square'>{clicked ? <img src='/WhiteHeart.svg' alt='favorite' /> : <img src='/BlackHeart.svg' alt='favorite' />}</div>
+      <div className='aspect-square'>
+        {clicked ? <Image src='/WhiteHeart.svg' alt='favorite' className='p-3' fill /> : <Image src='/BlackHeart.svg' alt='favorite' className='p-3' fill />}
+      </div>
     </Button>
   );
 };

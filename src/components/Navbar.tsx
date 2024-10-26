@@ -1,10 +1,10 @@
 'use client';
-import { SearchOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { IoBagOutline, IoClose, IoHeartOutline, IoPersonOutline, IoReorderThreeOutline } from 'react-icons/io5';
+import { Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 
 const Navbar: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -13,12 +13,12 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className='sticky top-0 z-50 border-gray-200 bg-white shadow-md'>
+    <nav aria-label='Main Navigation' className='sticky top-0 z-50 border-gray-200 bg-white shadow-md'>
       <div className='min-w-screen-xl mx-auto flex flex-wrap items-center justify-between px-6 py-2 sm:px-12'>
         <Link href='/' className='pl-4 text-2xl font-bold'>
           <div className='flex flex-row items-center'>
             <div className='relative h-12 w-12 lg:h-12 lg:w-12 xl:mx-2 xl:h-16 xl:w-16'>
-              <Image src='/logo.png' fill sizes='(max-width: 1000px) 100vw, 1000px' alt='logo' className='inline h-4 object-cover' />
+              <Image src='/logo.png' fill alt='logo' className='inline h-4 object-cover' />
             </div>
           </div>
         </Link>
@@ -35,6 +35,7 @@ const Navbar: React.FC = () => {
 
         {/* Navbar Buttons */}
         <button
+          aria-label='toggle navbar'
           type='button'
           onClick={toggleNavbar}
           className='focus:ring-lightblue inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 p-2 text-sm focus:outline-none focus:ring-2 lg:hidden'
@@ -57,7 +58,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

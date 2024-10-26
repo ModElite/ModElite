@@ -42,7 +42,13 @@ const ProductPicSlideShow: React.FC<ProductPicSlideShowProps> = (props) => {
             <div className='flex transition-transform duration-500' style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
               {props.pic[colorIndex].images.map((pic: string, index: number) => (
                 <div key={index} className='w-full flex-shrink-0'>
-                  <Image src={pic} alt={`Slide ${index + 1}`} width={1000} height={1000} className='aspect-square h-full w-full snap-center object-cover' />
+                  <Image
+                    src={pic}
+                    alt={`Slide ${index + 1}`}
+                    width={1000}
+                    height={1000}
+                    className='aspect-square h-full w-full snap-center rounded-xl object-cover'
+                  />
                 </div>
               ))}
             </div>
