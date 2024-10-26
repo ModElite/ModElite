@@ -1,4 +1,5 @@
 import { LandingCarousel } from '@/components/landing/LandingCarousel';
+import React from 'react';
 import { ProductCard } from '@/components/ProductCard';
 import { Button } from 'antd';
 import Image from 'next/image';
@@ -23,7 +24,7 @@ export default async function Landing() {
   ];
 
   return (
-    <>
+    <HomeLayout>
       <LandingCarousel />
       <div className='py-6'>
         <div className='flex w-full snap-x gap-6 overflow-x-auto'>
@@ -97,6 +98,10 @@ export default async function Landing() {
           </div>
         </div>
       </div>
-    </>
+    </HomeLayout>
   );
 }
+
+const HomeLayout = (props: { children: React.ReactNode }) => {
+  return <div className='p-8 lg:p-16'>{props.children}</div>;
+};

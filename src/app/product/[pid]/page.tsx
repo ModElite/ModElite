@@ -26,8 +26,8 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
   const { data: product } = await FetchProduct(pid);
 
   return (
-    <div className='flex w-full flex-col content-center items-center justify-center gap-4 bg-white'>
-      <div className='w-9/12 pt-3'>
+    <div className='flex w-full flex-col content-center items-center justify-center gap-y-8 bg-white py-12'>
+      <div className='w-9/12'>
         <div className='text-3xl'>
           <Breadcrumb
             separator='>'
@@ -51,6 +51,7 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
           />
         </div>
 
+        {/* Product Section */}
         <div className='my-5 grid justify-between gap-12 lg:grid-cols-2'>
           <div className='eounded-xl w-full'>
             <ProductPicSlideShow pic={product.PRODUCT_PIC} />
@@ -85,13 +86,18 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
             </div>
           </div>
         </div>
-      </div>
-      <div className='flex w-11/12 snap-x gap-6 overflow-x-auto'>
-        {Array(10)
-          .fill(1)
-          .map((id) => (
-            <ProductCard key={id} id={id} name='Shoe' price={100} image='/shoe1.jpg' />
-          ))}
+
+        {/* Other Section */}
+        <div className='mt-12 space-y-8'>
+          <h1 className='text-xl font-bold'>You may also like</h1>
+          <div className='flex snap-x gap-6 overflow-x-auto'>
+            {Array(10)
+              .fill(1)
+              .map((id) => (
+                <ProductCard key={id} id={id} name='Shoe' price={100} image='/shoe1.jpg' />
+              ))}
+          </div>
+        </div>
       </div>
     </div>
   );

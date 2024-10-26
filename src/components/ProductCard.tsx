@@ -14,8 +14,8 @@ export const ProductCard: React.FC<IProductCard> = ({ id, name, price, image, ta
       </div>
       <div className='flex flex-col gap-3'>
         <div className='flex flex-wrap space-x-2'>
-          <h3 className='flex text-xl font-semibold'>{name}</h3>
-          <p className='flex flex-wrap content-center space-x-2'>
+          <h1 className='flew text-xl font-semibold'>{name}</h1>
+          <p className='flew flex-wrap content-center space-x-2'>
             {tags &&
               tags.map((tag) => (
                 <span key={tag} className='rounded-2xl bg-blue3 px-2 py-1 text-sm text-blue1'>
@@ -24,11 +24,11 @@ export const ProductCard: React.FC<IProductCard> = ({ id, name, price, image, ta
               ))}
           </p>
         </div>
-        <h5 className='text-md text-gray-500'>
+        <h1 className='text-md text-gray-500'>
           Price:
           <br />
           <span className='text-lg text-black'>{price.toFixed(0)} THB</span>
-        </h5>
+        </h1>
       </div>
     </Link>
   );
