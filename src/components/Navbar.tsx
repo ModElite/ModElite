@@ -1,10 +1,10 @@
 'use client';
+import { SearchOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { IoBagOutline, IoClose, IoHeartOutline, IoPersonOutline, IoReorderThreeOutline } from 'react-icons/io5';
-import { Input } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
 
 const Navbar: React.FC = () => {
   const [showMenu, setShowMenu] = useState(false);

@@ -28,7 +28,6 @@ const ImageSlider = (props: Props) => {
   };
 
   useEffect(() => {
-    console.log('props.disabledAutoSlide', props.disabledAutoSlide);
     if (!props.disabledAutoSlide && !stopAutoSlide) {
       const interval = setInterval(() => {
         nextImage();
