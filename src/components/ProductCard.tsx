@@ -1,6 +1,6 @@
 'use server';
-import Image from 'next/image';
 import type { IProductCard } from '@/interfaces/product';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export const ProductCard: React.FC<IProductCard> = ({ id, name, price, image, tags }) => {

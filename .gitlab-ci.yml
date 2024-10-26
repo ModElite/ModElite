@@ -1,31 +1,28 @@
 stages:
-    - eslint
-    - build
+  - eslint
+  - build
 
 image: node:latest
 
 cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-        - node_modules/
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
 
 eslint:
-    stage: eslint
-    script:
-        - yarn
-        - yarn lint
+  stage: eslint
+  script:
+    - yarn
+    - yarn lint
 
 build:
-    stage: build
-    dependencies:
-        - eslint
-    needs:
-        - eslint
-    rules:
-        - if: $CI_MERGE_REQUEST_ID
-          when: always
-    cache:
-        policy: pull
-    script:
-        - if [ ! -d "node_modules" ]; then yarn install; fi
-        - yarn build
+  stage: build
+  dependencies:
+    - eslint
+  needs:
+    - eslint
+  cache:
+    policy: pull
+  script:
+    - if [ ! -d "node_modules" ]; then yarn install; fi
+    - yarn build
