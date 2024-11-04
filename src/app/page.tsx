@@ -46,7 +46,7 @@ export default async function Landing() {
           {Array(10)
             .fill(1)
             .map((id) => (
-              <ProductCard key={id} id={id} name='Shoe' price={100} image='/shoe1.jpg' />
+              <ProductCard key={`1${id}`} id={id} name='Shoe' price={100} image='/shoe1.jpg' />
             ))}
         </div>
       </div>
@@ -60,7 +60,7 @@ export default async function Landing() {
           {Array(10)
             .fill(1)
             .map((id) => (
-              <ProductCard key={id} id={id} name='Shoe' price={100} image='/shoe1.jpg' />
+              <ProductCard key={`2${id}`} id={id} name='Shoe' price={100} image='/shoe1.jpg' />
             ))}
         </div>
       </div>
