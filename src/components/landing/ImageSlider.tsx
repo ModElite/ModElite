@@ -46,7 +46,7 @@ const ImageSlider = (props: Props) => {
         {props.images.map((image, index) => (
           <div key={index} className={'relative h-full w-full flex-shrink-0 flex-grow-0'}>
             <Image
-              priority={index === 0 ? true : false}
+              priority={index === 0}
               loading={index === 0 ? 'eager' : 'lazy'}
               fill
               sizes='(max-width: 2000px) 100vw, 2000px'
@@ -81,9 +81,7 @@ const ImageSlider = (props: Props) => {
               {Array.from({ length: totalImages }, (_, i) => (
                 <button
                   key={i}
-                  className={`mx-2 h-3 rounded-full duration-300 ease-in-out ${
-                    currentIndex === i ? `bg-primary-blue w-6 text-white` : `bg-light-gray w-3 text-gray-700`
-                  }`}
+                  className={`mx-2 h-3 rounded-full duration-300 ease-in-out ${currentIndex === i ? `bg-primary-blue w-6 text-white` : `bg-light-gray w-3 text-gray-700`}`}
                   aria-label={`image-slider-${i + 1}`}
                   onClick={() => goToImage(i)}
                 ></button>
