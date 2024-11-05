@@ -2,8 +2,9 @@
 import type { IProductCard } from '@/interfaces/product';
 import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
 
-export const ProductCard: React.FC<IProductCard> = ({ id, name, price, image, tags }) => {
+export const ProductCard: React.FC<IProductCard> = async ({ id, name, price, image, tags }) => {
   return (
     <Link
       className='flex w-full min-w-64 snap-center flex-col justify-center gap-y-4 rounded-3xl border border-gray-200 bg-white p-4 lg:min-w-110'

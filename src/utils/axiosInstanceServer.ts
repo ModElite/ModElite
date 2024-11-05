@@ -1,8 +1,9 @@
+'use server';
 import axios from 'axios';
 import { headers } from 'next/headers';
 
-export const axiosInstanceServer = axios.create({
-  baseURL: 'http://localhost:8080',
+export const axiosInstance = axios.create({
+  baseURL: 'https://se-api.sssboom.xyz/api',
   withCredentials: true,
   timeout: 1000,
   headers: {
@@ -10,7 +11,7 @@ export const axiosInstanceServer = axios.create({
   },
 });
 
-axiosInstanceServer.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
   const cookieHeader = headers().get('cookie');
   if (cookieHeader) {
     config.headers['cookie'] = cookieHeader;
