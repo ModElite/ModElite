@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { headers } from 'next/headers';
 
-export const axiosInstance = axios.create({
+export const axiosInstanceServer = axios.create({
   baseURL: 'http://localhost:8080',
   withCredentials: true,
   timeout: 1000,
@@ -10,7 +10,10 @@ export const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use((config) => {
-  config.headers['Cookies'] = headers().get('cookie');
+axiosInstanceServer.interceptors.request.use((config) => {
+  const cookieHeader = headers().get('cookie');
+  if (cookieHeader) {
+    config.headers['cookie'] = cookieHeader;
+  }
   return config;
 });
