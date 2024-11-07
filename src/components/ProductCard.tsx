@@ -1,17 +1,16 @@
-'use server';
+'use client';
 import type { IProductCard } from '@/interfaces/product';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-export const ProductCard: React.FC<IProductCard> = async ({ id, name, price, image, tags }) => {
+export const ProductCard: React.FC<IProductCard> = ({ id, name, price, image, tags }) => {
   return (
-    <Link
-      className='flex w-full min-w-64 snap-center flex-col justify-center gap-y-4 rounded-3xl border border-gray-200 bg-white p-4 lg:min-w-110'
-      href={`/product/${id}`}
-    >
+    <Link className='lg: flex w-full snap-center flex-col justify-center gap-y-4 rounded-3xl border border-gray-200 bg-white p-4' href={`/product/${id}`}>
       <div className='relative h-32 w-full lg:h-60'>
-        <Image src={image} alt={name} className='rounded-3xl' fill sizes='(max-width: 1000px) 100vw, 1000px' style={{ objectFit: 'cover' }} />
+        {image && (
+          <Image src={image ?? 'shoe1.jpg'} alt={name} className='rounded-3xl' fill sizes='(max-width: 1000px) 100vw, 1000px' style={{ objectFit: 'cover' }} />
+        )}
       </div>
       <div className='flex flex-col gap-3'>
         <div className='flex flex-wrap space-x-2'>

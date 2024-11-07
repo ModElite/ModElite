@@ -23,8 +23,9 @@ async function FetchProduct(pid: string) {
 }
 
 export default async function ViewProduct({ params: { pid = '' } }: { params: { pid: string } }) {
-  const { data: product } = await FetchProduct(pid);
-
+  const { data } = await FetchProduct(pid);
+  if (data === null) return <div>Product not found</div>;
+  const product = data;
   return (
     <div className='flex w-full flex-col content-center items-center justify-center gap-y-8 bg-white py-12'>
       <div className='w-9/12'>

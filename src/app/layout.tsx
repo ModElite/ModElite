@@ -31,7 +31,7 @@ export default function RootLayout({
         <AntdRegistry>
           <body className={`min-h-screen text-black antialiased`}>
             <Navbar />
-            <main>{children}</main>
+            <main className=''>{children}</main>
           </body>
         </AntdRegistry>
       </ConfigProvider>

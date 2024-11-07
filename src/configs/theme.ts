@@ -25,5 +25,10 @@ export const theme: ThemeConfig = {
       controlPaddingHorizontal: 4,
       paddingContentHorizontal: 8,
     },
+    Collapse: {
+      /* here is your component tokens */
+      contentPadding: '0px 0px',
+      headerPadding: '12px 0px',
+    },
   },
 };
