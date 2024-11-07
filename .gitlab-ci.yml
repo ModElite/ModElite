@@ -15,14 +15,17 @@ format:
   script:
     - yarn
     - yarn format
-    - git config user.name "CI Pipeline"
-    - git config user.email "cipipeline@example.com"
-    # stage some changes
-    - git add .
-    # We can use `-o ci.skip`, but AFAIK it doesn't work for Merge Request pipelines, while having it inside the commit message works there as well
-    - git commit -m "A commit message [skip ci]"
-    # we're on a detached head but we can push the commits we made to the remote branch like so:
-    - git push origin HEAD:$CI_COMMIT_REF_NAME
+    - git checkout -B $CI_COMMIT_REF_NAME  # Checkout the branch explicitly
+    - |
+      if ! git diff --exit-code; then
+        git config --global user.email "ci@git.cpe.kmutt.ac.th"
+        git config --global user.name "CI Bot - [Zuck-my-clothe]"
+        git add .
+        git commit -m "Update Swagger documentation"
+        git push https://gitlab-ci-token:$CI_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git $CI_COMMIT_REF_NAME
+      else
+        echo "No changes For Prettier Format"
+      fi
 
 eslint:
   stage: eslint
