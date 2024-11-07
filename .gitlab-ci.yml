@@ -15,7 +15,7 @@ format:
   script:
     - yarn
     - yarn format
-    - git checkout -B $CI_COMMIT_REF_NAME  # Checkout the branch explicitly
+    - git checkout -B $CI_COMMIT_REF_NAME # Checkout the branch explicitly
     - |
       if ! git diff --exit-code; then
         git config --global user.email "ci@git.cpe.kmutt.ac.th"
