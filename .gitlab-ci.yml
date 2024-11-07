@@ -22,7 +22,7 @@ format:
     # We can use `-o ci.skip`, but AFAIK it doesn't work for Merge Request pipelines, while having it inside the commit message works there as well
     - git commit -m "A commit message [skip ci]"
     # we're on a detached head but we can push the commits we made to the remote branch like so:
-    - git push HEAD:$CI_COMMIT_REF_NAME
+    - git push origin HEAD:$CI_COMMIT_REF_NAME
 
 eslint:
   stage: eslint
