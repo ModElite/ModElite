@@ -1,17 +1,5 @@
 import { axiosInstance } from '@/utils/axiosInstanceServer';
-
-interface IProfileData {
-  id: string;
-  email: string;
-  google_id: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  profileUrl: string;
-  role: string;
-  updateAt: string;
-  createdAt: string;
-}
+import { IProfileData } from '@/interfaces/profile';
 
 export const getProfile = async () => {
   try {

@@ -26,7 +26,7 @@ export default async function Landing() {
   return (
     <HomeLayout>
       <LandingCarousel />
-      <div className='py-6'>
+      <div className='mx-auto w-fit max-w-full py-6'>
         <div className='flex w-full snap-x gap-6 overflow-x-auto'>
           {listItem.map((brand) => (
             <div key={brand.id} className='flex h-full w-32 min-w-32 flex-col items-center gap-y-4'>
@@ -42,11 +42,16 @@ export default async function Landing() {
           <span>View All</span>
         </div>
         <div className='flex w-full snap-x gap-6 overflow-x-auto'>
-          <ProductCard id={1} name='Nike Air Jordan' price={500} image='/shoe1.jpg' tags={['Best Seller', 'Summer sale']} />
+          <div className='min-w-64 lg:min-w-110'>
+            <ProductCard id={'1'} name='Nike Air Jordan' price={500} image='/shoe1.jpg' tags={['Best Seller', 'Summer sale']} />
+          </div>
+
           {Array(10)
             .fill(1)
             .map((id) => (
-              <ProductCard key={`1${id}`} id={id} name='Shoe' price={100} image='/shoe1.jpg' />
+              <div className='min-w-64 lg:min-w-110' key={`1${id}`}>
+                <ProductCard id={id} name='Shoe' price={100} image='/shoe1.jpg' />
+              </div>
             ))}
         </div>
       </div>
@@ -56,11 +61,16 @@ export default async function Landing() {
           <span>View All</span>
         </div>
         <div className='flex w-full snap-x gap-6 overflow-x-auto'>
-          <ProductCard id={1} name='Nike Air Jordan' price={500} image='/shoe1.jpg' tags={['Best Seller', 'Summer sale']} />
+          <div className='min-w-64 lg:min-w-110'>
+            <ProductCard id={'1'} name='Nike Air Jordan' price={500} image='/shoe1.jpg' tags={['Best Seller', 'Summer sale']} />
+          </div>
+
           {Array(10)
             .fill(1)
             .map((id) => (
-              <ProductCard key={`2${id}`} id={id} name='Shoe' price={100} image='/shoe1.jpg' />
+              <div className='min-w-64 lg:min-w-110' key={`2${id}`}>
+                <ProductCard id={id} name='Shoe' price={100} image='/shoe1.jpg' />
+              </div>
             ))}
         </div>
       </div>
