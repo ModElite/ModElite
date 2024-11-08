@@ -21,3 +21,29 @@ export const getGoogleAuth = async () => {
     return null;
   }
 };
+
+export const isAuth = async () => {
+  try {
+    const response = await axiosInstance.get('/auth/me');
+    if (response.status !== 200) {
+      return false;
+    }
+    console.log(response.data);
+    return response.data.success as boolean;
+  } catch (error) {
+    console.log('ERROR', error);
+    return false;
+  }
+};
+
+export const Logout = async () => {
+  try {
+    const response = await axiosInstance.get('/auth/logout');
+    if (response.status !== 200) {
+      return false;
+    }
+    return response.data.success as boolean;
+  } catch {
+    return false;
+  }
+};
