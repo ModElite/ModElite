@@ -4,7 +4,7 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export const axiosInstance = axios.create({
-  baseURL: 'https://se-api.sssboom.xyz/api',
+  baseURL: process.env.BACKEND_API || 'https://se-api.sssboom.xyz/api',
   withCredentials: true,
   timeout: 1000,
   headers: {
