@@ -7,7 +7,7 @@ export const getProfile = async () => {
     if (response.status !== 200) {
       return null;
     }
-    return response.data as IProfileData;
+    return response.data.data as IProfileData;
   } catch {
     return null;
   }

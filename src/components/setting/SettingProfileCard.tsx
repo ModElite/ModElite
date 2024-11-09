@@ -66,7 +66,7 @@ const SettingProfileCard: FC<IProfile> = (props) => {
                 <Input disabled={!editable} size='large' />
               </Form.Item>
               <Form.Item label='Email' name='email'>
-                <Input disabled={true} type='email' />
+                <Input disabled={true} type='email' size='large' />
               </Form.Item>
               <Form.Item label='Phone' name='phone_num'>
                 <Input disabled={!editable} size='large' />
