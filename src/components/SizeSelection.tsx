@@ -6,14 +6,14 @@ import { Button, InputNumber } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-interface size{
+interface size {
   id: string;
   size: string;
   createdAt: string;
   updatedAt: string;
 }
 
-interface productSize{
+interface productSize {
   id: string;
   size: size;
   quantity: number;
@@ -60,11 +60,11 @@ const SizeSelection: React.FC<Product> = (props) => {
 
   useEffect(() => {
     setQty(1);
-  }, [colorlabel,selectSize]);
+  }, [colorlabel, selectSize]);
 
   return (
     <div>
-      <ColorPicker option={props.option} selectedColor={colorlabel}/>
+      <ColorPicker option={props.option} selectedColor={colorlabel} />
       <hr className='mb-4 mt-5' />
       <div className='mb-2 text-base'>Size (US)</div>
       <div className='mb-5 flex flex-wrap gap-3'>
@@ -73,8 +73,8 @@ const SizeSelection: React.FC<Product> = (props) => {
             key={index}
             className='w-fit rounded-xl border px-4 py-2'
             style={{
-              background: selectSize === index ? '#6E62E5' : (!item.quantity ? '#f5f5f5' : 'white'),
-              color: selectSize === index ? 'white' : (!item.quantity ? '#c8c8c8' : 'black'),
+              background: selectSize === index ? '#6E62E5' : !item.quantity ? '#f5f5f5' : 'white',
+              color: selectSize === index ? 'white' : !item.quantity ? '#c8c8c8' : 'black',
               fontSize: '16px',
             }}
             disabled={!item.quantity}

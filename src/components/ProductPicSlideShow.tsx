@@ -6,14 +6,14 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-interface size{
+interface size {
   id: string;
   size: string;
   createdAt: string;
   updatedAt: string;
 }
 
-interface productSize{
+interface productSize {
   id: string;
   size: size;
   quantity: number;
@@ -40,7 +40,7 @@ const ProductPicSlideShow: React.FC<Product> = (props) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const selectColor = props.option.find((item) => item.label === color) || props.option[0];
-  const images = JSON.parse(selectColor.imageUrl)
+  const images = JSON.parse(selectColor.imageUrl);
 
   useEffect(() => {
     setCurrentSlide(0);
