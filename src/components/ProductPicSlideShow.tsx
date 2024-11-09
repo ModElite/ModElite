@@ -1,33 +1,57 @@
+// chage from index encoded to color name
+
 'use client';
 import { Button } from 'antd';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-interface products {
+interface size{
+  id: string;
+  size: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface productSize{
+  id: string;
+  size: size;
+  quantity: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface productOption {
+  id: string;
+  productSize: productSize[];
   label: string;
-  images: Array<string>;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-interface ProductPicSlideShowProps {
-  pic: products[];
+interface Product {
+  option: productOption[];
 }
 
-const ProductPicSlideShow: React.FC<ProductPicSlideShowProps> = (props) => {
+const ProductPicSlideShow: React.FC<Product> = (props) => {
   const searchParams = useSearchParams();
-  const colorIndex = parseInt(searchParams.get('color') || '0');
+  const color = searchParams.get('color') || props.option[0].label;
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  const selectColor = props.option.find((item) => item.label === color) || props.option[0];
+  const images = JSON.parse(selectColor.imageUrl)
 
   useEffect(() => {
     setCurrentSlide(0);
-  }, [colorIndex]);
+  }, [color]);
 
   const nextImage = () => {
-    setCurrentSlide(Math.abs(currentSlide + 1) % props.pic[colorIndex].images.length);
+    setCurrentSlide(Math.abs(currentSlide + 1) % images.length);
   };
 
   const prevImage = () => {
-    setCurrentSlide(currentSlide <= 0 ? props.pic[colorIndex].images.length - 1 : currentSlide - 1);
+    setCurrentSlide(currentSlide <= 0 ? images.length - 1 : currentSlide - 1);
   };
 
   const handleMiniPicClick = (index: number) => {
@@ -40,7 +64,7 @@ const ProductPicSlideShow: React.FC<ProductPicSlideShowProps> = (props) => {
         <div className='mb-2 w-full snap-x snap-mandatory overflow-x-scroll'>
           <div className='flex'>
             <div className='flex transition-transform duration-500' style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-              {props.pic[colorIndex].images.map((pic: string, index: number) => (
+              {images.map((pic: string, index: number) => (
                 <div key={index} className='w-full flex-shrink-0'>
                   <Image
                     src={pic}
@@ -54,7 +78,7 @@ const ProductPicSlideShow: React.FC<ProductPicSlideShowProps> = (props) => {
             </div>
           </div>
         </div>
-        {props.pic[colorIndex].images.length > 0 && (
+        {images.length > 0 && (
           <>
             <button
               key={'next-button'}
@@ -76,7 +100,7 @@ const ProductPicSlideShow: React.FC<ProductPicSlideShowProps> = (props) => {
         )}
       </div>
       <div className='flex w-full gap-5 overflow-x-scroll'>
-        {props.pic[colorIndex].images.map((pic: string, index: number) => (
+        {images.map((pic: string, index: number) => (
           <Button
             size='large'
             style={{

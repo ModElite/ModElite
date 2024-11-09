@@ -9,8 +9,8 @@ import axios from 'axios';
 
 async function FetchProduct(pid: string) {
   try {
-    const res = await axios.get(`https://671136fc4eca2acdb5f41fa5.mockapi.io/api/productInfo/product/${pid}`);
-    const data = res.data;
+    const res = await axios.get(`https://se-api.sssboom.xyz/api/product/${pid}`);
+    const data = res.data.data;
     return {
       data,
     };
@@ -46,7 +46,7 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
                 ),
               },
               {
-                title: <div className='text-blue-500'>{product.NAME}</div>,
+                title: <div className='text-blue-500'>{product.name}</div>,
               },
             ]}
           />
@@ -55,13 +55,13 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
         {/* Product Section */}
         <div className='my-5 grid justify-between gap-12 lg:grid-cols-2'>
           <div className='eounded-xl w-full'>
-            <ProductPicSlideShow pic={product.PRODUCT_PIC} />
+            <ProductPicSlideShow option={product.productOption} />
           </div>
           <div className='flex w-full flex-col gap-2 rounded-xl bg-white'>
             <div className='flex items-start justify-between'>
               <div className='flex flex-col gap-2'>
-                <div className='text-xl font-extrabold'>{product.NAME}</div>
-                <div className='text-xl'>{product.PRICE} THB</div>
+                <div className='text-xl font-extrabold'>{product.name}</div>
+                <div className='text-xl'>{product.price} THB</div>
               </div>
               <div className=''>
                 <HeartBtn />
@@ -69,21 +69,22 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
             </div>
 
             <div className='mb-1'>
-              <SizeSelection pid={product.ID} sizes={product.SIZE} maxqty={product.QUANTITY} products={product.PRODUCT_PIC} />
+              <SizeSelection option={product.productOption} />
             </div>
             <hr className='my-3' />
             <div className=''>
               <div className='text-base font-bold'>Feature</div>
-              {product.FEATURE.map((items: string, index: number) => (
+              {/* this is feature but we don't have it yet */}
+              {/* {product.FEATURE.map((items: string, index: number) => (
                 <div key={index} className='mt-2'>
                   &nbsp; - {items}
                 </div>
-              ))}
+              ))} */}
             </div>
             <hr className='my-3' />
             <div>
               <div className='font-bold'>Description</div>
-              <div className='mt-2'>{product.DESCRIPTION}</div>
+              <div className='mt-2'>{product.description}</div>
             </div>
           </div>
         </div>

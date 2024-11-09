@@ -3,25 +3,48 @@ import { Button } from 'antd';
 import Image from 'next/image';
 import { useState } from 'react';
 
-interface product {
-  images: Array<string>;
+interface size{
+  id: string;
+  size: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-interface ColorPickerProps {
-  products: product[];
+interface productSize{
+  id: string;
+  size: size;
+  quantity: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
-const ColorPicker: React.FC<ColorPickerProps> = (props) => {
-  const [currentColor, setCurrentColor] = useState(0);
-  const handleClick = (index: number) => {
-    setCurrentColor(index);
-    const newUrl = `${window.location.pathname}?color=${index}`;
+interface productOption {
+  id: string;
+  productSize: productSize[];
+  label: string;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Product {
+  option: productOption[];
+  selectedColor: string;
+}
+
+const ColorPicker: React.FC<Product> = (props) => {
+  const [currentColor, setCurrentColor] = useState(props.option[0].label);
+  const handleClick = (label: string) => {
+    setCurrentColor(label);
+    const newUrl = `${window.location.pathname}?color=${label}`;
     window.history.pushState(null, '', newUrl);
   };
 
   return (
     <div className='flex gap-4'>
-      {props.products.map((color: product, index: number) => (
+      {props.option.map((color: productOption, index: number) => {
+      const firstIndex = JSON.parse(color.imageUrl)[0]
+      return (
         <Button
           size='large'
           style={{
@@ -33,13 +56,13 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
             overflow: 'hidden',
           }}
           variant='outlined'
-          color={currentColor === index ? 'primary' : 'default'}
+          color={props.selectedColor === color.label ? 'primary' : 'default'}
           key={index}
-          onClick={() => handleClick(index)}
+          onClick={() => handleClick(color.label)}
         >
-          <Image src={color.images[0]} alt='color' width={1000} height={1000} className='aspect-square object-cover' />
+          <Image src={firstIndex} alt='color' width={1000} height={1000} className='aspect-square object-cover' />
         </Button>
-      ))}
+      )})}
     </div>
   );
 };

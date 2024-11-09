@@ -1,32 +1,54 @@
+// use searchparam instead of child component useState passing method for easier maintaining.
+
 'use client';
 import ColorPicker from '@/components/ColorPicker';
 import { Button, InputNumber } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-interface product {
+interface size{
+  id: string;
+  size: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface productSize{
+  id: string;
+  size: size;
+  quantity: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface productOption {
+  id: string;
+  productSize: productSize[];
   label: string;
-  images: Array<string>;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-interface SizeSelectionProps {
-  pid: string;
-  sizes: number[];
-  maxqty: number;
-  products: product[];
+interface Product {
+  option: productOption[];
 }
 
-const SizeSelection: React.FC<SizeSelectionProps> = (props) => {
+const SizeSelection: React.FC<Product> = (props) => {
   const searchParams = useSearchParams();
-  const colorlabel = parseInt(searchParams.get('color') ?? '') ?? 0;
+  const colorlabel = searchParams.get('color') || props.option[0].label;
+  const selectedColor = props.option.find((item) => item.label === colorlabel) || props.option[0];
+
   const [selectSize, setSelectSize] = useState<number>();
-  const [setSize, setSetSize] = useState<number>();
+  const [size, setSize] = useState<string>();
+  const [maxQty, setMaxQty] = useState<number>(1);
 
   const router = useRouter();
 
-  const handleSendSize = (index: number, items: number) => {
+  const handleSendSize = (index: number, item: string, qty: number) => {
     setSelectSize(index);
-    setSetSize(items);
+    setSize(item);
+    setMaxQty(qty);
   };
 
   const [hover, setHover] = useState(false);
@@ -36,25 +58,30 @@ const SizeSelection: React.FC<SizeSelectionProps> = (props) => {
     setQty(newQty ?? qty);
   };
 
+  useEffect(() => {
+    setQty(1);
+  }, [colorlabel,selectSize]);
+
   return (
     <div>
-      <ColorPicker products={props.products} />
+      <ColorPicker option={props.option} selectedColor={colorlabel}/>
       <hr className='mb-4 mt-5' />
       <div className='mb-2 text-base'>Size (US)</div>
       <div className='mb-5 flex flex-wrap gap-3'>
-        {props.sizes.map((items: number, index: number) => (
+        {selectedColor.productSize.map((item: productSize, index: number) => (
           <Button
             key={index}
             className='w-fit rounded-xl border px-4 py-2'
             style={{
-              background: selectSize === index ? '#6E62E5' : 'white',
-              color: selectSize === index ? 'white' : 'black',
+              background: selectSize === index ? '#6E62E5' : (!item.quantity ? '#f5f5f5' : 'white'),
+              color: selectSize === index ? 'white' : (!item.quantity ? '#c8c8c8' : 'black'),
               fontSize: '16px',
             }}
+            disabled={!item.quantity}
             size='large'
-            onClick={() => handleSendSize(index, items)}
+            onClick={() => handleSendSize(index, item.size.id, item.quantity)}
           >
-            {items}
+            {item.size.size}
           </Button>
         ))}
       </div>
@@ -67,7 +94,7 @@ const SizeSelection: React.FC<SizeSelectionProps> = (props) => {
               <InputNumber
                 size='large'
                 min={1}
-                max={props.maxqty}
+                max={maxQty}
                 defaultValue={qty}
                 onChange={onChange}
                 changeOnWheel
@@ -88,7 +115,8 @@ const SizeSelection: React.FC<SizeSelectionProps> = (props) => {
                   borderRadius: '10px',
                   fontSize: '16px',
                 }}
-                onClick={() => router.push(`/cart/${props.pid}/${props.products[colorlabel].label}/${setSize}/${qty}`)}
+                // sending product size id + quantity
+                onClick={() => router.push(`/cart/${size}/${qty}`)}
               >
                 Buy
               </Button>
