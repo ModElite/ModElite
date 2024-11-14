@@ -1,29 +1,14 @@
-//test URL /product/2?color=0&label=red
+//test URL /product/0c73fd04-d88c-49eb-b7d6-a48267805a19?color=Black
 import HeartBtn from '@/components/HeartBtn';
 import { ProductCard } from '@/components/ProductCard';
 import ProductPicSlideShow from '@/components/ProductPicSlideShow';
 import SizeSelection from '@/components/SizeSelection';
 import { HomeOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'antd';
-import axios from 'axios';
-
-async function FetchProduct(pid: string) {
-  try {
-    const res = await axios.get(`https://se-api.sssboom.xyz/api/product/${pid}`);
-    const data = res.data.data;
-    return {
-      data,
-    };
-  } catch (error) {
-    console.error('Error fetching product data:', error);
-    return {
-      data: null,
-    };
-  }
-}
+import { GetProductById } from '@/routes/product'
 
 export default async function ViewProduct({ params: { pid = '' } }: { params: { pid: string } }) {
-  const { data } = await FetchProduct(pid);
+  const { data } = await GetProductById(pid);
   if (data === null) return <div>Product not found</div>;
   const product = data;
   return (
@@ -55,7 +40,7 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
         {/* Product Section */}
         <div className='my-5 grid justify-between gap-12 lg:grid-cols-2'>
           <div className='eounded-xl w-full'>
-            <ProductPicSlideShow option={product.productOption} />
+            <ProductPicSlideShow productOption={product.productOption} />
           </div>
           <div className='flex w-full flex-col gap-2 rounded-xl bg-white'>
             <div className='flex items-start justify-between'>
@@ -69,7 +54,7 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
             </div>
 
             <div className='mb-1'>
-              <SizeSelection option={product.productOption} />
+              <SizeSelection productOption={product.productOption} />
             </div>
             <hr className='my-3' />
             <div className=''>
