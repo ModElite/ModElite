@@ -2,42 +2,15 @@
 
 'use client';
 import ColorPicker from '@/components/ColorPicker';
+import { IProduct, IProductSize } from '@/interfaces/product';
 import { Button, InputNumber } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-interface size{
-  id: string;
-  size: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface productSize{
-  id: string;
-  size: size;
-  quantity: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface productOption {
-  id: string;
-  productSize: productSize[];
-  label: string;
-  imageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Product {
-  option: productOption[];
-}
-
-const SizeSelection: React.FC<Product> = (props) => {
+const SizeSelection = (props : IProduct) => {
   const searchParams = useSearchParams();
-  const colorlabel = searchParams.get('color') || props.option[0].label;
-  const selectedColor = props.option.find((item) => item.label === colorlabel) || props.option[0];
+  const colorlabel = searchParams.get('color') || props.productOption[0].label;
+  const selectedColor = props.productOption.find((item) => item.label === colorlabel) || props.productOption[0];
 
   const [selectSize, setSelectSize] = useState<number>();
   const [size, setSize] = useState<string>();
@@ -64,11 +37,11 @@ const SizeSelection: React.FC<Product> = (props) => {
 
   return (
     <div>
-      <ColorPicker option={props.option} selectedColor={colorlabel}/>
+      <ColorPicker productOption={props.productOption} selectedColor={colorlabel}/>
       <hr className='mb-4 mt-5' />
       <div className='mb-2 text-base'>Size (US)</div>
       <div className='mb-5 flex flex-wrap gap-3'>
-        {selectedColor.productSize.map((item: productSize, index: number) => (
+        {selectedColor.productSize.map((item: IProductSize, index: number) => (
           <Button
             key={index}
             className='w-fit rounded-xl border px-4 py-2'

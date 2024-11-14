@@ -1,45 +1,18 @@
 // chage from index encoded to color name
 
 'use client';
+import { IProduct } from '@/interfaces/product';
 import { Button } from 'antd';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-interface size{
-  id: string;
-  size: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface productSize{
-  id: string;
-  size: size;
-  quantity: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface productOption {
-  id: string;
-  productSize: productSize[];
-  label: string;
-  imageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Product {
-  option: productOption[];
-}
-
-const ProductPicSlideShow: React.FC<Product> = (props) => {
+const ProductPicSlideShow = (props : IProduct) => {
   const searchParams = useSearchParams();
-  const color = searchParams.get('color') || props.option[0].label;
+  const color = searchParams.get('color') || props.productOption[0].label;
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const selectColor = props.option.find((item) => item.label === color) || props.option[0];
+  const selectColor = props.productOption.find((item) => item.label === color) || props.productOption[0];
   const images = JSON.parse(selectColor.imageUrl)
 
   useEffect(() => {
