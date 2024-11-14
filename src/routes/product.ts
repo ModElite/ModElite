@@ -33,4 +33,4 @@ export async function GetProductById(pid: string) {
       data: null,
     };
   }
-};
+}

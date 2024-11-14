@@ -5,7 +5,7 @@ import ProductPicSlideShow from '@/components/ProductPicSlideShow';
 import SizeSelection from '@/components/SizeSelection';
 import { HomeOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'antd';
-import { GetProductById } from '@/routes/product'
+import { GetProductById } from '@/routes/product';
 
 export default async function ViewProduct({ params: { pid = '' } }: { params: { pid: string } }) {
   const { data } = await GetProductById(pid);

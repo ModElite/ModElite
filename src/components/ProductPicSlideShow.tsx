@@ -7,13 +7,13 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const ProductPicSlideShow = (props : IProduct) => {
+const ProductPicSlideShow = (props: IProduct) => {
   const searchParams = useSearchParams();
   const color = searchParams.get('color') || props.productOption[0].label;
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const selectColor = props.productOption.find((item) => item.label === color) || props.productOption[0];
-  const images = JSON.parse(selectColor.imageUrl)
+  const images = JSON.parse(selectColor.imageUrl);
 
   useEffect(() => {
     setCurrentSlide(0);

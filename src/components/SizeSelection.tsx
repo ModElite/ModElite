@@ -7,7 +7,7 @@ import { Button, InputNumber } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const SizeSelection = (props : IProduct) => {
+const SizeSelection = (props: IProduct) => {
   const searchParams = useSearchParams();
   const colorlabel = searchParams.get('color') || props.productOption[0].label;
   const selectedColor = props.productOption.find((item) => item.label === colorlabel) || props.productOption[0];
@@ -37,7 +37,7 @@ const SizeSelection = (props : IProduct) => {
 
   return (
     <div>
-      <ColorPicker productOption={props.productOption} selectedColor={colorlabel}/>
+      <ColorPicker productOption={props.productOption} selectedColor={colorlabel} />
       <hr className='mb-4 mt-5' />
       <div className='mb-2 text-base'>Size (US)</div>
       <div className='mb-5 flex flex-wrap gap-3'>
