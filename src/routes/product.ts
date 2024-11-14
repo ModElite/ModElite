@@ -19,3 +19,18 @@ export const getProduct = async (filter?: Filters, Paging?: Paging, Order?: ISor
     return null;
   }
 };
+
+export async function GetProductById(pid: string) {
+  try {
+    const res = await axiosInstance.get(`/product/${pid}`);
+    const data = res.data.data;
+    return {
+      data,
+    };
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    return {
+      data: null,
+    };
+  }
+};
