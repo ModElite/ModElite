@@ -1,13 +1,17 @@
 // chage from index encoded to color name
 
 'use client';
-import { IProduct } from '@/interfaces/product';
+import { IProductOption } from '@/interfaces/product';
 import { Button } from 'antd';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const ProductPicSlideShow = (props: IProduct) => {
+type Props = {
+  productOption: IProductOption[];
+};
+
+const ProductPicSlideShow = (props: Props) => {
   const searchParams = useSearchParams();
   const color = searchParams.get('color') || props.productOption[0].label;
   const [currentSlide, setCurrentSlide] = useState(0);

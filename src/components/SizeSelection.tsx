@@ -2,12 +2,16 @@
 
 'use client';
 import ColorPicker from '@/components/ColorPicker';
-import { IProduct, IProductSize } from '@/interfaces/product';
+import { IProductOption, IProductSize } from '@/interfaces/product';
 import { Button, InputNumber } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const SizeSelection = (props: IProduct) => {
+type Props = {
+  productOption: IProductOption[];
+};
+
+const SizeSelection = (props: Props) => {
   const searchParams = useSearchParams();
   const colorlabel = searchParams.get('color') || props.productOption[0].label;
   const selectedColor = props.productOption.find((item) => item.label === colorlabel) || props.productOption[0];

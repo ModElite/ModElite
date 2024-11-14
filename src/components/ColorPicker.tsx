@@ -2,14 +2,12 @@
 import { IProductOption } from '@/interfaces/product';
 import { Button } from 'antd';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const ColorPicker = (props: { productOption: IProductOption[]; selectedColor: string }) => {
-  const [currentColor, setCurrentColor] = useState(props.productOption[0].label);
+  const router = useRouter();
   const handleClick = (label: string) => {
-    setCurrentColor(label);
-    const newUrl = `${window.location.pathname}?color=${label}`;
-    window.history.pushState(null, '', newUrl);
+    router.push(`?color=${label}`);
   };
 
   return (
