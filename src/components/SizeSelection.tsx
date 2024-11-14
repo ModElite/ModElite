@@ -1,60 +1,79 @@
+// use searchparam instead of child component useState passing method for easier maintaining.
+
 'use client';
 import ColorPicker from '@/components/ColorPicker';
-import { Button, InputNumber } from 'antd';
+import { IProductOption, IProductSize } from '@/interfaces/product';
+import { addToCart } from '@/routes/cart';
+import { Button, InputNumber, Modal } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { IoCloseCircle } from 'react-icons/io5';
 
-interface product {
-  label: string;
-  images: Array<string>;
-}
+type Props = {
+  productOption: IProductOption[];
+};
 
-interface SizeSelectionProps {
-  pid: string;
-  sizes: number[];
-  maxqty: number;
-  products: product[];
-}
-
-const SizeSelection: React.FC<SizeSelectionProps> = (props) => {
+const SizeSelection = (props: Props) => {
   const searchParams = useSearchParams();
-  const colorlabel = parseInt(searchParams.get('color') ?? '') ?? 0;
+  const colorlabel = searchParams.get('color') || props.productOption[0].label;
+  const selectedColor = props.productOption.find((item) => item.label === colorlabel) || props.productOption[0];
+
   const [selectSize, setSelectSize] = useState<number>();
-  const [setSize, setSetSize] = useState<number>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [size, setSize] = useState<string>();
+  const [maxQty, setMaxQty] = useState<number>(1);
 
   const router = useRouter();
 
-  const handleSendSize = (index: number, items: number) => {
+  const handleSendSize = (index: number, item: string, qty: number) => {
     setSelectSize(index);
-    setSetSize(items);
+    setSize(item);
+    setMaxQty(qty);
   };
-
-  const [hover, setHover] = useState(false);
   const [qty, setQty] = useState<number>(1);
-
   const onChange = (newQty: number | null) => {
     setQty(newQty ?? qty);
   };
 
+  useEffect(() => {
+    setQty(1);
+  }, [colorlabel, selectSize]);
+
+  async function handleAddtoCart(size: string, qty: number) {
+    try {
+      const result = await addToCart(size, qty);
+      if (result) {
+        router.push(`/cart`);
+      } else {
+        setModalOpen(true);
+        console.error('Error adding to cart');
+      }
+    } catch (error) {
+      setModalOpen(true);
+      console.error('Error adding to cart:', error);
+    }
+  }
+
   return (
     <div>
-      <ColorPicker products={props.products} />
+      <ColorPicker productOption={props.productOption} selectedColor={colorlabel} />
       <hr className='mb-4 mt-5' />
       <div className='mb-2 text-base'>Size (US)</div>
       <div className='mb-5 flex flex-wrap gap-3'>
-        {props.sizes.map((items: number, index: number) => (
+        {selectedColor.productSize.map((item: IProductSize, index: number) => (
           <Button
             key={index}
             className='w-fit rounded-xl border px-4 py-2'
             style={{
-              background: selectSize === index ? '#6E62E5' : 'white',
-              color: selectSize === index ? 'white' : 'black',
+              background: selectSize === index ? '#6E62E5' : !item.quantity ? '#f5f5f5' : 'white',
+              color: selectSize === index ? 'white' : !item.quantity ? '#c8c8c8' : 'black',
               fontSize: '16px',
             }}
+            disabled={!item.quantity}
             size='large'
-            onClick={() => handleSendSize(index, items)}
+            onClick={() => handleSendSize(index, item.size.id, item.quantity)}
           >
-            {items}
+            {item.size.size}
           </Button>
         ))}
       </div>
@@ -67,7 +86,7 @@ const SizeSelection: React.FC<SizeSelectionProps> = (props) => {
               <InputNumber
                 size='large'
                 min={1}
-                max={props.maxqty}
+                max={maxQty}
                 defaultValue={qty}
                 onChange={onChange}
                 changeOnWheel
@@ -88,7 +107,7 @@ const SizeSelection: React.FC<SizeSelectionProps> = (props) => {
                   borderRadius: '10px',
                   fontSize: '16px',
                 }}
-                onClick={() => router.push(`/cart/${props.pid}/${props.products[colorlabel].label}/${setSize}/${qty}`)}
+                onClick={() => handleAddtoCart(size || '', qty)}
               >
                 Buy
               </Button>
@@ -99,14 +118,11 @@ const SizeSelection: React.FC<SizeSelectionProps> = (props) => {
                 type='primary'
                 style={{
                   width: '100%',
-                  backgroundColor: hover ? '#AEA8F1' : '#8E85EB',
                   color: 'white',
                   borderRadius: '10px',
                   fontSize: '16px',
                 }}
-                onClick={() => router.push('/cart')}
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
+                onClick={() => handleAddtoCart(size || '', qty)}
               >
                 Add to cart
               </Button>
@@ -114,6 +130,26 @@ const SizeSelection: React.FC<SizeSelectionProps> = (props) => {
           </div>
         </div>
       </div>
+      <Modal centered closable={false} open={modalOpen} footer={[]}>
+        <div className='flex flex-col items-center justify-center gap-4'>
+          <IoCloseCircle className='size-20 text-red-500/90' />
+          <div className='text-2xl font-bold'>Error!</div>
+          <div className='text-center text-lg'>
+            Something went wrong. <br />
+            Please try again.
+          </div>
+          <Button
+            onClick={() => setModalOpen(false)}
+            color='danger'
+            variant='solid'
+            style={{
+              padding: '20px',
+            }}
+          >
+            Try again
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };

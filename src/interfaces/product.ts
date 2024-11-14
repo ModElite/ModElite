@@ -22,6 +22,7 @@ export interface IProductOption {
   id: string;
   productSize: IProductSize[];
   label: string;
+  imageUrl: string;
   quantity: number;
   createdAt: string;
   updatedAt: string;
