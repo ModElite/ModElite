@@ -3,9 +3,11 @@
 'use client';
 import ColorPicker from '@/components/ColorPicker';
 import { IProductOption, IProductSize } from '@/interfaces/product';
-import { Button, InputNumber } from 'antd';
+import { addToCart } from '@/routes/cart';
+import { Button, InputNumber, Modal } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { IoCloseCircle } from 'react-icons/io5';
 
 type Props = {
   productOption: IProductOption[];
@@ -17,6 +19,7 @@ const SizeSelection = (props: Props) => {
   const selectedColor = props.productOption.find((item) => item.label === colorlabel) || props.productOption[0];
 
   const [selectSize, setSelectSize] = useState<number>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [size, setSize] = useState<string>();
   const [maxQty, setMaxQty] = useState<number>(1);
 
@@ -27,10 +30,7 @@ const SizeSelection = (props: Props) => {
     setSize(item);
     setMaxQty(qty);
   };
-
-  const [hover, setHover] = useState(false);
   const [qty, setQty] = useState<number>(1);
-
   const onChange = (newQty: number | null) => {
     setQty(newQty ?? qty);
   };
@@ -38,6 +38,21 @@ const SizeSelection = (props: Props) => {
   useEffect(() => {
     setQty(1);
   }, [colorlabel, selectSize]);
+
+  async function handleAddtoCart(size: string, qty: number) {
+    try {
+      const result = await addToCart(size, qty);
+      if (result) {
+        router.push(`/cart`);
+      } else {
+        setModalOpen(true);
+        console.error('Error adding to cart');
+      }
+    } catch (error) {
+      setModalOpen(true);
+      console.error('Error adding to cart:', error);
+    }
+  }
 
   return (
     <div>
@@ -92,8 +107,7 @@ const SizeSelection = (props: Props) => {
                   borderRadius: '10px',
                   fontSize: '16px',
                 }}
-                // sending product size id + quantity
-                onClick={() => router.push(`/cart/${size}/${qty}`)}
+                onClick={() => handleAddtoCart(size || '', qty)}
               >
                 Buy
               </Button>
@@ -104,14 +118,11 @@ const SizeSelection = (props: Props) => {
                 type='primary'
                 style={{
                   width: '100%',
-                  backgroundColor: hover ? '#AEA8F1' : '#8E85EB',
                   color: 'white',
                   borderRadius: '10px',
                   fontSize: '16px',
                 }}
-                onClick={() => router.push('/cart')}
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
+                onClick={() => handleAddtoCart(size || '', qty)}
               >
                 Add to cart
               </Button>
@@ -119,6 +130,26 @@ const SizeSelection = (props: Props) => {
           </div>
         </div>
       </div>
+      <Modal centered closable={false} open={modalOpen} footer={[]}>
+        <div className='flex flex-col items-center justify-center gap-4'>
+          <IoCloseCircle className='size-20 text-red-500/90' />
+          <div className='text-2xl font-bold'>Error!</div>
+          <div className='text-center text-lg'>
+            Something went wrong. <br />
+            Please try again.
+          </div>
+          <Button
+            onClick={() => setModalOpen(false)}
+            color='danger'
+            variant='solid'
+            style={{
+              padding: '20px',
+            }}
+          >
+            Try again
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 };
