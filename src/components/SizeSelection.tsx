@@ -33,7 +33,7 @@ const SizeSelection = (props : IProduct) => {
 
   useEffect(() => {
     setQty(1);
-  }, [colorlabel,selectSize]);
+  }, [colorlabel, selectSize]);
 
   return (
     <div>
@@ -46,8 +46,8 @@ const SizeSelection = (props : IProduct) => {
             key={index}
             className='w-fit rounded-xl border px-4 py-2'
             style={{
-              background: selectSize === index ? '#6E62E5' : (!item.quantity ? '#f5f5f5' : 'white'),
-              color: selectSize === index ? 'white' : (!item.quantity ? '#c8c8c8' : 'black'),
+              background: selectSize === index ? '#6E62E5' : !item.quantity ? '#f5f5f5' : 'white',
+              color: selectSize === index ? 'white' : !item.quantity ? '#c8c8c8' : 'black',
               fontSize: '16px',
             }}
             disabled={!item.quantity}
