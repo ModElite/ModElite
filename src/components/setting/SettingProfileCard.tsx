@@ -1,18 +1,42 @@
 'use client';
-import { IProfile } from '@/interfaces/profile';
+import { IProfileData } from '@/interfaces/profile';
+import { updateProfile, updateUserInfo } from '@/routes/profile';
 import { Button, Card, Form, Input } from 'antd';
+import Image from 'next/image';
 import { FC, useState } from 'react';
 import { PiPencilSimpleLine } from 'react-icons/pi';
 import ImageCropper from '../ImageCroper';
-import Image from 'next/image';
+import { customizeRequiredMark } from '@/components/customReuiredMark';
 
-const SettingProfileCard: FC<IProfile> = (props) => {
+interface Props {
+  userInfo: IProfileData;
+}
+
+const SettingProfileCard: FC<Props> = (props) => {
   const [editable, setEditable] = useState(false);
-  const [initValue, setInitValue] = useState<IProfile>(props);
+  const [initValue, setInitValue] = useState<IProfileData>(props.userInfo);
   const [form] = Form.useForm();
-  const onFinish = (values: IProfile) => {
-    console.log('Received values:', values);
-    setInitValue({ ...values, image: initValue.image });
+  const onFinish = async (values: IProfileData) => {
+    try {
+      const response = await updateUserInfo({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        phone: values.phone,
+      });
+
+      if (response === false) {
+        throw new Error('Update user info failed');
+      }
+
+      setInitValue(response);
+    } catch {
+      // modal error
+      return;
+    } finally {
+      setEditable(false);
+    }
+
+    setInitValue({ ...values, profileUrl: initValue.profileUrl });
   };
 
   const editButtonHandler = () => {
@@ -20,10 +44,22 @@ const SettingProfileCard: FC<IProfile> = (props) => {
     form.resetFields();
   };
 
-  const setImageURL = (url: string) => {
-    console.log(url);
-    setInitValue({ ...initValue, image: url });
-    return;
+  const setImageURL = async (url: string) => {
+    try {
+      const result = await updateProfile({ profileUrl: url });
+      if (result === false) {
+        throw new Error('Update profile failed');
+      }
+
+      setInitValue({
+        ...result,
+        profileUrl: url,
+      });
+      return;
+    } catch {
+      // modal error
+      return;
+    }
   };
 
   return (
@@ -41,35 +77,77 @@ const SettingProfileCard: FC<IProfile> = (props) => {
         </div>
       }
     >
-      <Form layout='vertical' initialValues={initValue} onFinish={onFinish} form={form}>
+      <Form<IProfileData> form={form} layout='vertical' initialValues={initValue} onFinish={onFinish} requiredMark={customizeRequiredMark} scrollToFirstError>
         <div className='grid grid-cols-1 gap-4 lg:grid-cols-3'>
           <div className='col-span-3 grid w-full content-center gap-4 p-2 lg:col-span-1'>
             <div className='relative mx-auto aspect-square w-full min-w-16 max-w-64'>
               <Image
-                src={initValue.image}
+                src={initValue.profileUrl}
                 alt='preview-image'
                 className='rounded-full'
-                fill
+                layout='fill'
                 sizes='(max-width: 400px) 100vw, 400px'
                 style={{ objectFit: 'cover' }}
+                onError={(e) => {
+                  e.currentTarget.src = '/profile.png';
+                }}
               />
             </div>
-            <ImageCropper ImageURL={initValue.image} setImageURL={setImageURL} />
+            <ImageCropper ImageURL={initValue.profileUrl} setImageURL={setImageURL} />
           </div>
           <div className='col-span-3 w-full lg:col-span-2'>
             <div className='grid'>
               {/* Input for 4 item with form */}
-              <Form.Item label='First Name' name='first_name'>
+              <Form.Item<IProfileData>
+                label='First Name'
+                name='firstName'
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
                 <Input disabled={!editable} size='large' />
               </Form.Item>
-              <Form.Item label='Last Name' name='last_name'>
+              <Form.Item<IProfileData>
+                label='Last Name'
+                name='lastName'
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
                 <Input disabled={!editable} size='large' />
               </Form.Item>
-              <Form.Item label='Email' name='email'>
+              <Form.Item<IProfileData>
+                label='Email'
+                name='email'
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
                 <Input disabled={true} type='email' size='large' />
               </Form.Item>
-              <Form.Item label='Phone' name='phone_num'>
-                <Input disabled={!editable} size='large' />
+              <Form.Item<IProfileData>
+                label='Phone'
+                name='phone'
+                rules={[
+                  {
+                    required: true,
+                    min: 10,
+                    max: 10,
+                    message: 'Phone number must be 10 digits',
+                  },
+                  {
+                    pattern: /^[0-9\b]+$/,
+                    message: 'Phone number must be number',
+                  },
+                ]}
+              >
+                <Input minLength={10} maxLength={10} disabled={!editable} size='large' />
               </Form.Item>
             </div>
           </div>

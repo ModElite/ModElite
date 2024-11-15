@@ -1,5 +1,6 @@
+'use server';
+import { IProfileData, IProfileUpdateInfo, IProfileUpdateProfile } from '@/interfaces/profile';
 import { axiosInstance } from '@/utils/axiosInstanceServer';
-import { IProfileData } from '@/interfaces/profile';
 
 export const getProfile = async () => {
   try {
@@ -7,8 +8,35 @@ export const getProfile = async () => {
     if (response.status !== 200) {
       return null;
     }
+
     return response.data.data as IProfileData;
   } catch {
     return null;
+  }
+};
+
+export const updateUserInfo = async (data: IProfileUpdateInfo) => {
+  try {
+    const response = await axiosInstance.patch('/user', data);
+    if (response.status !== 200) {
+      return false;
+    }
+    console.log(response.data);
+
+    return response.data.data as IProfileData;
+  } catch {
+    return false;
+  }
+};
+
+export const updateProfile = async (data: IProfileUpdateProfile) => {
+  try {
+    const response = await axiosInstance.patch('/user', data);
+    if (response.status !== 200) {
+      return false;
+    }
+    return response.data.data as IProfileData;
+  } catch {
+    return false;
   }
 };

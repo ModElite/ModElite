@@ -11,13 +11,7 @@ export default async function ProfileSetting() {
   }
   return (
     <>
-      <SettingProfileCard
-        first_name={data.firstName}
-        last_name={data.lastName}
-        email={data.email}
-        phone_num={data.phone}
-        image={data.profileUrl != '' ? data.profileUrl : '/shoe1.jpg'}
-      />
+      <SettingProfileCard userInfo={data} />
     </>
   );
 }
