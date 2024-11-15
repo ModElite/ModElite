@@ -28,10 +28,8 @@ export const isAuth = async () => {
     if (response.status !== 200) {
       return false;
     }
-    console.log(response.data);
     return response.data.success as boolean;
-  } catch (error) {
-    console.log('ERROR', error);
+  } catch {
     return false;
   }
 };

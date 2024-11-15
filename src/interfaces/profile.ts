@@ -1,11 +1,3 @@
-export interface IProfile {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_num: string;
-  image: string;
-}
-
 export interface IProfileData {
   id: string;
   email: string;
@@ -17,4 +9,14 @@ export interface IProfileData {
   role: string;
   updateAt: string;
   createdAt: string;
+}
+
+export interface IProfileUpdateInfo {
+  firstName: string;
+  lastName: string;
+  phone: string;
+}
+
+export interface IProfileUpdateProfile {
+  profileUrl: string;
 }
