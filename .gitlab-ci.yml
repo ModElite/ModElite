@@ -2,6 +2,7 @@ stages:
   - format
   - eslint
   - build
+  - deploy
 
 image: node:latest
 
