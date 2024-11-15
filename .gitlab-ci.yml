@@ -52,3 +52,19 @@ build:
   script:
     - if [ ! -d "node_modules" ]; then yarn install; fi
     - yarn build
+
+deploy:
+  stage: deploy
+  only:
+    - main
+  dependencies:
+    - build
+  needs:
+    - build
+  cache:
+    policy: pull
+  script:
+    - yarn global add vercel
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --prod --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
