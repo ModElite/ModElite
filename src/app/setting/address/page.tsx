@@ -1,10 +1,16 @@
-import React from 'react';
+'use server';
+import SettingAddress from '@/components/setting/SettingAddress';
+import { IAdressData } from '@/interfaces/address';
+import { getAddress } from '@/routes/address';
 
 export default async function AddressSetting() {
+  const datas = (await getAddress()) as IAdressData[];
+  if (datas === null) {
+    return;
+  }
   return (
     <>
-      <h1 className='text-4xl font-bold'>Welcome to the Setting Page</h1>
-      <p className='mt-4 text-lg'>This is the setting page. You can customize your settings here.</p>
+      <SettingAddress objects={datas} />
     </>
   );
 }
