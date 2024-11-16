@@ -1,7 +1,7 @@
 'use server';
-
 import SettingAddressEdit from '@/components/setting/SettingAddressEdit';
 import { IAdressData } from '@/interfaces/address';
+import { ISelectOption } from '@/interfaces/input';
 import { getAddress, getProvinces } from '@/routes/address';
 import { redirect } from 'next/navigation';
 
@@ -11,10 +11,11 @@ export default async function EditAddress({ params }: { params: { id: string } }
   if (provinces === null || datas === null) {
     redirect('/500');
   }
+  const provincesOption: ISelectOption[] = provinces.map((item) => ({ label: item.nameTh, value: item.id }));
 
   return (
     <>
-      <SettingAddressEdit object={datas} provinces={provinces} />
+      <SettingAddressEdit object={datas} provinces={provinces} provincesOption={provincesOption} />
     </>
   );
 }

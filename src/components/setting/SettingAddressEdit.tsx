@@ -1,13 +1,15 @@
 'use client';
 import { IAddressSend, IAdress, IAdressData, IOnFinish, IAdressOption, IProviceData } from '@/interfaces/address';
+import { ISelectOption } from '@/interfaces/input';
 import { getDistricts, getSubDistricts, postAddress, putAddress } from '@/routes/address';
 import { Button, Form, Input, Select, Switch } from 'antd';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
 
-interface Addressobject {
+interface Props {
   object: IAdressData | undefined;
   provinces: IProviceData[];
+  provincesOption: ISelectOption[];
 }
 
 interface Previous {
@@ -16,10 +18,10 @@ interface Previous {
   subDistrict: string;
 }
 
-const SettingAddressEdit: FC<Addressobject> = (props) => {
+const SettingAddressEdit: FC<Props> = (props) => {
   const [form] = Form.useForm();
   const router = useRouter();
-  const { object } = props;
+  const object = props.object;
   const formValue = {
     id: object?.id ?? '',
     firstName: object?.firstName ?? '',
@@ -35,9 +37,6 @@ const SettingAddressEdit: FC<Addressobject> = (props) => {
     zipCode: object?.zipCode ?? '',
   } as IAdress;
 
-  const provinces_list: { label: string; value: string }[] = props.provinces.map((item) => {
-    return { label: item.nameTh, value: item.id };
-  });
   const [previous, setPrevious] = useState<Previous>({
     province: object?.province || '',
     district: object?.district || '',
@@ -54,22 +53,28 @@ const SettingAddressEdit: FC<Addressobject> = (props) => {
   const fetchDistricts = async (provinceId: string) => {
     const districtData = await getDistricts(provinceId);
     if (districtData == null) return;
-    setDistrict(districtData.map((item) => ({ label: item.nameTh, value: item.id })));
+    const districtOption = districtData.map((item) => ({ label: item.nameTh, value: item.id }));
+    setDistrict(districtOption);
+    return districtOption;
   };
 
   const fetchSubDistricts = async (districtId: string) => {
     const subDistrictData = await getSubDistricts(districtId);
     if (subDistrictData == null) return;
-    setSubDistrict(subDistrictData.map((item) => ({ label: item.nameTh, value: item.id, zipcode: item.zipcode })));
+    const subDistrictOption = subDistrictData.map((item) => ({ label: item.nameTh, value: item.id, zipcode: item.zipcode }));
+    setSubDistrict(subDistrictOption);
+    return subDistrictOption;
   };
 
   useEffect(() => {
     const fetchData = async () => {
       if (object?.province) {
-        await fetchDistricts(provinces_list.find((item) => item.label === previous.province)?.value as string);
+        const province = props.provincesOption.find((item) => item.label === previous.province)?.value as string;
+        const districtPrevious = await fetchDistricts(province);
         if (object?.district) {
-          await fetchSubDistricts(district?.find((item) => item.label === previous.district)?.value as string);
-          form.setFieldValue('zipCode', subDistrict?.find((item) => item.zipcode === object.zipCode)?.zipcode);
+          const subDistrictPrevious = await fetchSubDistricts(districtPrevious?.find((item) => item.label === previous.district)?.value as string);
+          const ZipCodePrevious = subDistrictPrevious?.find((item) => item.label === previous.subDistrict)?.zipcode;
+          form.setFieldValue('zipCode', ZipCodePrevious);
         }
       }
     };
@@ -93,7 +98,6 @@ const SettingAddressEdit: FC<Addressobject> = (props) => {
     } as IAddressSend;
     let res;
     if (object?.id === undefined) {
-      // console.log(sendData)
       res = await postAddress(sendData);
     } else {
       res = await putAddress(object.id, sendData);
@@ -147,7 +151,7 @@ const SettingAddressEdit: FC<Addressobject> = (props) => {
                     await fetchDistricts(value.value);
                   }
                 }}
-                options={provinces_list}
+                options={props.provincesOption}
               />
             </Form.Item>
             <Form.Item label='District' name='district' layout='vertical' required rules={[{ required: true }]} className='h-18 lg:col-span-3'>
