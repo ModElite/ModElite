@@ -53,7 +53,13 @@ const SettingAddressEdit: FC<Props> = (props) => {
   const fetchDistricts = async (provinceId: string) => {
     const districtData = await getDistricts(provinceId);
     if (districtData == null) return;
-    const districtOption = districtData.map((item) => ({ label: item.nameTh, value: item.id }));
+    const districtOption = districtData
+      .map((item) => ({ label: item.nameTh, value: item.id }))
+      .sort((a, b) => {
+        if (a.label < b.label) return -1;
+        if (a.label > b.label) return 1;
+        return 0;
+      });
     setDistrict(districtOption);
     return districtOption;
   };
@@ -61,7 +67,13 @@ const SettingAddressEdit: FC<Props> = (props) => {
   const fetchSubDistricts = async (districtId: string) => {
     const subDistrictData = await getSubDistricts(districtId);
     if (subDistrictData == null) return;
-    const subDistrictOption = subDistrictData.map((item) => ({ label: item.nameTh, value: item.id, zipcode: item.zipcode }));
+    const subDistrictOption = subDistrictData
+      .map((item) => ({ label: item.nameTh, value: item.id, zipcode: item.zipcode }))
+      .sort((a, b) => {
+        if (a.label < b.label) return -1;
+        if (a.label > b.label) return 1;
+        return 0;
+      });
     setSubDistrict(subDistrictOption);
     return subDistrictOption;
   };
@@ -190,10 +202,10 @@ const SettingAddressEdit: FC<Props> = (props) => {
               <Input placeholder='Zip Code' size='large' style={{ padding: '6px 0.5rem' }} disabled />
             </Form.Item>
             <Form.Item label='Email' name='email' layout='vertical' required rules={[{ required: true }]} className='h-18 lg:col-span-6'>
-              <Input placeholder='Example@gmail.com' size='large' style={{ padding: '6px 0.5rem' }} />
+              <Input autoComplete='on' placeholder='Example@gmail.com' size='large' style={{ padding: '6px 0.5rem' }} />
             </Form.Item>
             <Form.Item label='Phone Number' name='phone' layout='vertical' required rules={[{ required: true }]} className='h-18 lg:col-span-6'>
-              <Input placeholder='(603) 000-0000' size='large' style={{ padding: '6px 0.5rem' }} />
+              <Input autoComplete='on' placeholder='(603) 000-0000' size='large' style={{ padding: '6px 0.5rem' }} />
             </Form.Item>
             <Form.Item label='Default' name='default' required rules={[{ required: false }]} className='h-18 lg:col-span-12'>
               <Switch />
