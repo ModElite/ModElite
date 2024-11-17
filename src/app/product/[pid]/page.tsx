@@ -15,30 +15,39 @@ const DefaultMetadata: Metadata = {
 };
 
 export async function generateMetadata({ params: { pid = '' } }: { params: { pid: string } }) {
-  const product = await GetProductById(pid);
-  if (product === null) return DefaultMetadata;
-  const imageUrl = JSON.parse(product.productOption[0].imageUrl) as string[];
+  try {
+    const product = await GetProductById(pid);
+    if (product === null) throw new Error('Product not found');
 
-  return {
-    title: product.name,
-    description: product.description,
-    keywords: product.name,
-    openGraph: {
+    const imageUrl: string[] = Array.isArray(JSON.parse(product.productOption[0].imageUrl)) ? JSON.parse(product.productOption[0].imageUrl) : [];
+
+    return {
       title: product.name,
       description: product.description,
-      images: imageUrl.map((url) => ({
-        url,
-        width: 800,
-        height: 600,
-        alt: product.name,
-      })),
-    },
-  } as Metadata;
+      keywords: `${product.name}, ${product.description}`,
+      openGraph: {
+        title: product.name,
+        description: product.description,
+        images:
+          imageUrl.length > 0
+            ? imageUrl.map((url: string) => ({
+                url,
+                width: 800,
+                height: 600,
+                alt: product.name,
+              }))
+            : [],
+      },
+    } as Metadata;
+  } catch {
+    return DefaultMetadata;
+  }
 }
 
 export default async function ViewProduct({ params: { pid = '' } }: { params: { pid: string } }) {
   const product = await GetProductById(pid);
   if (product === null) return <div>Product not found</div>;
+
   return (
     <div className='flex w-full flex-col content-center items-center justify-center gap-y-8 bg-white py-12'>
       <div className='w-9/12'>
