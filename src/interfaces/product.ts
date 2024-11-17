@@ -13,7 +13,9 @@ export interface IProduct {
   description: string;
   price: number;
   status: string;
+  imageUrl: string;
   productOption: IProductOption[];
+  tags: number[];
   createdAt: string;
   updatedAt: string;
 }

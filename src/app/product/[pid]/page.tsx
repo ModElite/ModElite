@@ -6,11 +6,39 @@ import SizeSelection from '@/components/SizeSelection';
 import { HomeOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'antd';
 import { GetProductById } from '@/routes/product';
+import { Metadata } from 'next';
+
+const DefaultMetadata: Metadata = {
+  title: 'Product',
+  description: 'Product',
+  keywords: 'Product',
+};
+
+export async function generateMetadata({ params: { pid = '' } }: { params: { pid: string } }) {
+  const product = await GetProductById(pid);
+  if (product === null) return DefaultMetadata;
+  const imageUrl = JSON.parse(product.productOption[0].imageUrl) as string[];
+
+  return {
+    title: product.name,
+    description: product.description,
+    keywords: product.name,
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      images: imageUrl.map((url) => ({
+        url,
+        width: 800,
+        height: 600,
+        alt: product.name,
+      })),
+    },
+  } as Metadata;
+}
 
 export default async function ViewProduct({ params: { pid = '' } }: { params: { pid: string } }) {
-  const { data } = await GetProductById(pid);
-  if (data === null) return <div>Product not found</div>;
-  const product = data;
+  const product = await GetProductById(pid);
+  if (product === null) return <div>Product not found</div>;
   return (
     <div className='flex w-full flex-col content-center items-center justify-center gap-y-8 bg-white py-12'>
       <div className='w-9/12'>
