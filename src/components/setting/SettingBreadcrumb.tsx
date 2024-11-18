@@ -19,6 +19,10 @@ const SettingBreadcrumb: React.FC = () => {
       title: <span className='text-xl'>Order History</span>,
       href: '/setting/order-history',
     },
+    {
+      title: <span className='text-xl'>Wishlist</span>,
+      href: '/setting/wishlist',
+    },
   ];
 
   const items = [

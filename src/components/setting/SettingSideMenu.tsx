@@ -9,7 +9,7 @@ const SettingSideMenu = () => {
     { name: 'Profile', icon: IoHomeOutline, route: '/setting' },
     { name: 'Address', icon: IoHomeOutline, route: '/setting/address' },
     { name: 'Order History', icon: IoHomeOutline, route: '/setting/order-history' },
-    { name: 'Wishlist', icon: IoHomeOutline, route: '/wishlist' },
+    { name: 'Wishlist', icon: IoHomeOutline, route: '/setting/wishlist' },
     { name: 'Log-out', icon: IoHomeOutline, route: '/logout' },
   ];
   const pathname = usePathname();
