@@ -27,7 +27,6 @@ axiosInstance.interceptors.response.use((response) => {
   }
   if (response.status === 500) {
     console.log('Internal Server Error');
-    console.log(response.data);
   }
   return response;
 });

@@ -1,15 +1,13 @@
 'use client';
-import { IAddressSend, IAdress, IAdressData, IOnFinish, IAdressOption, IProviceData } from '@/interfaces/address';
-import { ISelectOption } from '@/interfaces/input';
+import { IAddressSend, IAdress, IAdressData, IAdressOption, IOnFinish, IProviceData } from '@/interfaces/address';
 import { getDistricts, getSubDistricts, postAddress, putAddress } from '@/routes/address';
 import { Button, Form, Input, Select, Switch } from 'antd';
-import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
 
-interface Props {
+interface Addressobject {
   object: IAdressData | undefined;
   provinces: IProviceData[];
-  provincesOption: ISelectOption[];
+  onClose: () => void;
 }
 
 interface Previous {
@@ -18,11 +16,10 @@ interface Previous {
   subDistrict: string;
 }
 
-const SettingAddressEdit: FC<Props> = (props) => {
+const AddressEditCard: FC<Addressobject> = (props) => {
   const [form] = Form.useForm();
-  const router = useRouter();
-  const object = props.object;
-  const formValue = {
+  const { object } = props;
+  const [formValue, setFormValue] = useState<IAdress>({
     id: object?.id ?? '',
     firstName: object?.firstName ?? '',
     lastName: object?.lastName ?? '',
@@ -35,8 +32,11 @@ const SettingAddressEdit: FC<Props> = (props) => {
     district: object?.district ?? '',
     province: object?.province ?? '',
     zipCode: object?.zipCode ?? '',
-  } as IAdress;
+  } as IAdress);
 
+  const provinces_list: { label: string; value: string }[] = props.provinces.map((item) => {
+    return { label: item.nameTh, value: item.id };
+  });
   const [previous, setPrevious] = useState<Previous>({
     province: object?.province || '',
     district: object?.district || '',
@@ -53,46 +53,56 @@ const SettingAddressEdit: FC<Props> = (props) => {
   const fetchDistricts = async (provinceId: string) => {
     const districtData = await getDistricts(provinceId);
     if (districtData == null) return;
-    const districtOption = districtData
-      .map((item) => ({ label: item.nameTh, value: item.id }))
-      .sort((a, b) => {
-        if (a.label < b.label) return -1;
-        if (a.label > b.label) return 1;
-        return 0;
-      });
-    setDistrict(districtOption);
-    return districtOption;
+    setDistrict(districtData.map((item) => ({ label: item.nameTh, value: item.id })));
   };
 
   const fetchSubDistricts = async (districtId: string) => {
     const subDistrictData = await getSubDistricts(districtId);
     if (subDistrictData == null) return;
-    const subDistrictOption = subDistrictData
-      .map((item) => ({ label: item.nameTh, value: item.id, zipcode: item.zipcode }))
-      .sort((a, b) => {
-        if (a.label < b.label) return -1;
-        if (a.label > b.label) return 1;
-        return 0;
-      });
-    setSubDistrict(subDistrictOption);
-    return subDistrictOption;
+    setSubDistrict(subDistrictData.map((item) => ({ label: item.nameTh, value: item.id, zipcode: item.zipcode })));
   };
 
   useEffect(() => {
     const fetchData = async () => {
       if (object?.province) {
-        const province = props.provincesOption.find((item) => item.label === previous.province)?.value as string;
-        const districtPrevious = await fetchDistricts(province);
+        await fetchDistricts(provinces_list.find((item) => item.label === previous.province)?.value as string);
         if (object?.district) {
-          const subDistrictPrevious = await fetchSubDistricts(districtPrevious?.find((item) => item.label === previous.district)?.value as string);
-          const ZipCodePrevious = subDistrictPrevious?.find((item) => item.label === previous.subDistrict)?.zipcode;
-          form.setFieldValue('zipCode', ZipCodePrevious);
+          await fetchSubDistricts(district?.find((item) => item.label === previous.district)?.value as string);
+          form.setFieldValue('zipCode', subDistrict?.find((item) => item.zipcode === object.zipCode)?.zipcode);
         }
       }
     };
-    console.log(object);
     fetchData();
-  }, []);
+    setFormValue({
+      id: object?.id ?? '',
+      firstName: object?.firstName ?? '',
+      lastName: object?.lastName ?? '',
+      email: object?.email ?? '',
+      phone: object?.phone ?? '',
+      label: object?.label ?? '',
+      default: object?.default ?? false,
+      address: object?.address ?? '',
+      subDistrict: object?.subDistrict ?? '',
+      district: object?.district ?? '',
+      province: object?.province ?? '',
+      zipCode: object?.zipCode ?? '',
+    } as IAdress);
+    form.setFieldsValue({
+      id: object?.id ?? '',
+      firstName: object?.firstName ?? '',
+      lastName: object?.lastName ?? '',
+      email: object?.email ?? '',
+      phone: object?.phone ?? '',
+      label: object?.label ?? '',
+      default: object?.default ?? false,
+      address: object?.address ?? '',
+      subDistrict: object?.subDistrict ?? '',
+      district: object?.district ?? '',
+      province: object?.province ?? '',
+      zipCode: object?.zipCode ?? '',
+    });
+    setDisableForm(false); // Re-enable the form
+  }, [object]);
 
   const onFinish = async (value: IOnFinish) => {
     setDisableForm(true);
@@ -116,22 +126,26 @@ const SettingAddressEdit: FC<Props> = (props) => {
       res = await putAddress(object.id, sendData);
     }
     if (res === true) {
-      router.back();
+      props.onClose();
     } else {
       setDisableForm(false);
     }
   };
 
+  const onReset = () => {
+    props.onClose();
+  };
+
   return (
-    <div className='w-full gap-y-6 rounded-2xl border p-6'>
+    <div className='w-full gap-y-6 rounded-2xl'>
       <div className='flex justify-between border-b pb-6'>
         <span className='font-bold'>Address</span>
-        <Button size='small' ghost style={{ color: '#6E62E5' }} onClick={() => router.back()}>
+        <Button size='small' ghost style={{ color: '#6E62E5' }} onClick={onReset}>
           Back
         </Button>
       </div>
       <div className='flex flex-col gap-y-6 pt-6'>
-        <Form form={form} initialValues={formValue} requiredMark='optional' onFinish={onFinish} disabled={disableForm}>
+        <Form form={form} initialValues={formValue} requiredMark='optional' onFinish={onFinish} onReset={onReset} disabled={disableForm}>
           <div className='grid grid-cols-1 gap-6 gap-x-2 sm:gap-y-0 lg:grid-cols-12'>
             <Form.Item label='Label' name='label' layout='vertical' required rules={[{ required: true }]} className='h-18 lg:col-span-4'>
               <Select
@@ -164,7 +178,7 @@ const SettingAddressEdit: FC<Props> = (props) => {
                     await fetchDistricts(value.value);
                   }
                 }}
-                options={props.provincesOption}
+                options={provinces_list}
               />
             </Form.Item>
             <Form.Item label='District' name='district' layout='vertical' required rules={[{ required: true }]} className='h-18 lg:col-span-3'>
@@ -203,19 +217,26 @@ const SettingAddressEdit: FC<Props> = (props) => {
               <Input placeholder='Zip Code' size='large' style={{ padding: '6px 0.5rem' }} disabled />
             </Form.Item>
             <Form.Item label='Email' name='email' layout='vertical' required rules={[{ required: true }]} className='h-18 lg:col-span-6'>
-              <Input autoComplete='on' placeholder='Example@gmail.com' size='large' style={{ padding: '6px 0.5rem' }} />
+              <Input placeholder='Example@gmail.com' size='large' style={{ padding: '6px 0.5rem' }} />
             </Form.Item>
             <Form.Item label='Phone Number' name='phone' layout='vertical' required rules={[{ required: true }]} className='h-18 lg:col-span-6'>
-              <Input autoComplete='on' placeholder='(603) 000-0000' size='large' style={{ padding: '6px 0.5rem' }} />
+              <Input placeholder='(603) 000-0000' size='large' style={{ padding: '6px 0.5rem' }} />
             </Form.Item>
             <Form.Item label='Default' name='default' required rules={[{ required: false }]} className='h-18 lg:col-span-12'>
               <Switch />
             </Form.Item>
-            <Form.Item required rules={[{ required: true }]} className='flex place-content-center lg:col-span-12'>
-              <Button htmlType='submit' type='primary'>
-                Save Change
-              </Button>
-            </Form.Item>
+            <div className='flex flex-row justify-center gap-x-5 lg:col-span-12'>
+              <Form.Item className='px-2'>
+                <Button htmlType='submit' type='primary'>
+                  Save Change
+                </Button>
+              </Form.Item>
+              <Form.Item className='px-2'>
+                <Button htmlType='reset' type='default'>
+                  Close
+                </Button>
+              </Form.Item>
+            </div>
           </div>
         </Form>
       </div>
@@ -223,4 +244,4 @@ const SettingAddressEdit: FC<Props> = (props) => {
   );
 };
 
-export default SettingAddressEdit;
+export default AddressEditCard;

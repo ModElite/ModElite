@@ -62,17 +62,17 @@ const ListItemCart: React.FC<Props> = ({ cartItems, setCartItems }) => {
           renderItem={(item) => (
             <List.Item className='my-3 border-b border-gray-300'>
               <div className='mb-6 w-full'>
-                <div className='flex place-items-start space-x-6'>
+                <div className='flex place-items-start'>
                   <Checkbox className='flex-none' onChange={() => handleItemSelect(item.productSizeId)} checked={item.selected} />
-                  <div className='flex-1 space-y-3'>
+                  <div className='mx-0 flex-1 space-y-3'>
                     <div className='flex'>
-                      <p className='flex-1 text-[16px]'>{item.product.seller}</p>
+                      <p className='flex-1 px-6 text-[16px]'>{item.product.seller}</p>
                       <Button size='small' className='order-last flex-none' onClick={() => handleUpdatedata(item.productSizeId, 0)}>
                         <IoClose />
                       </Button>
                     </div>
-                    <div className='flex flex-1 space-x-4'>
-                      <div className='flex-grow-0'>
+                    <div className='flex w-full md:flex-1 md:space-x-4'>
+                      <div className='px-6 md:flex-grow-0'>
                         <Image width={150} height={100} className='rounded-[15px] object-cover md:h-32' src={item.product.product_image} alt='' />
                       </div>
 
@@ -97,19 +97,20 @@ const ListItemCart: React.FC<Props> = ({ cartItems, setCartItems }) => {
                               {numberFormat(item.product.productPrice * item.quantity)} THB
                             </p>
                           </div>
-                          <div className='flex'>
-                            <Button size='small' onClick={() => handleUpdatedata(item.productSizeId, item.quantity - 1)}>
-                              <IoRemove />
+                          <div className='flex gap-x-[2px]'>
+                            <Button size='small' style={{ padding: '2px 1px' }} onClick={() => handleUpdatedata(item.productSizeId, item.quantity - 1)}>
+                              <IoRemove width={16} height={16} />
                             </Button>
 
                             <span className='mx-0 w-3 content-center text-center text-[13px] sm:mx-3 md:text-[16px]'>{item.quantity}</span>
 
                             <Button
                               size='small'
+                              style={{ padding: '2px 1px' }}
                               disabled={item.quantity >= item.product.quantity}
                               onClick={() => handleUpdatedata(item.productSizeId, item.quantity + 1)}
                             >
-                              <IoAdd />
+                              <IoAdd width={16} height={16} />
                             </Button>
                           </div>
                         </div>

@@ -1,20 +1,33 @@
 'use server';
-import { IAddressSend, IAdressData, IDistrictsData, IProviceData, ISubDistrictsData } from '@/interfaces/address';
+import { IAddressSend, IAdressData, IAdressDataGet, IDistrictsData, IProviceData, ISubDistrictsData } from '@/interfaces/address';
 import { axiosInstance } from '@/utils/axiosInstanceServer';
 
-export const getAddress = async (id: string = '') => {
+export const getAddress = async () => {
   try {
-    let res;
-    if (id === '') {
-      res = await axiosInstance.get('/address');
-    } else {
-      res = await axiosInstance.get(`/address/${id}`);
-    }
+    const res = await axiosInstance.get('/address');
     if (res.status !== 200) {
       return null;
     }
-    // console.log(res.data.data);
-    return res.data.data as IAdressData | IAdressData[];
+    const data = res.data.data.map((item: IAdressDataGet) => {
+      return {
+        ...item,
+        id: item.id.toString(),
+      };
+    }) as IAdressData[];
+    return data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+export const getAddressByID = async (id: string = '') => {
+  try {
+    const res = await axiosInstance.get(`/address/${id}`);
+    if (res.status !== 200) {
+      return null;
+    }
+    res.data.data.id = res.data.data.id.toString();
+    return res.data.data as IAdressData;
   } catch (err) {
     console.log(err);
     return null;
@@ -27,7 +40,6 @@ export const getProvinces = async () => {
     if (res.status !== 200) {
       return null;
     }
-    // console.log(res.data.data)
     return res.data.data as IProviceData[];
   } catch (err) {
     console.log(err);
@@ -41,7 +53,6 @@ export const getSubDistricts = async (district_id: string) => {
     if (res.status !== 200) {
       return null;
     }
-    // console.log(res.data.data);
     return res.data.data as ISubDistrictsData[];
   } catch (err) {
     console.log(err);
@@ -55,7 +66,6 @@ export const getDistricts = async (province_id: string) => {
     if (res.status !== 200) {
       return null;
     }
-    // console.log(res.data.data);
     return res.data.data as IDistrictsData[];
   } catch (err) {
     console.log(err);
@@ -69,7 +79,6 @@ export const deleteAddress = async (id: string) => {
     if (res.status !== 200) {
       return null;
     }
-    console.log(res.data.success);
     return res.data.success as boolean;
   } catch (err) {
     console.log(err);
@@ -82,7 +91,6 @@ export const putAddress = async (id: string, data: IAddressSend) => {
     if (res.status !== 200) {
       return null;
     }
-    console.log(res.data.success);
     return res.data.success as boolean;
   } catch (err) {
     console.log(err);
@@ -96,7 +104,6 @@ export const postAddress = async (data: IAddressSend) => {
     if (res.status !== 200) {
       return null;
     }
-    console.log(res.data.success);
     return res.data.success as boolean;
   } catch (err) {
     console.log(err);
