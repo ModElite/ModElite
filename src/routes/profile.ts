@@ -21,8 +21,6 @@ export const updateUserInfo = async (data: IProfileUpdateInfo) => {
     if (response.status !== 200) {
       return false;
     }
-    console.log(response.data);
-
     return response.data.data as IProfileData;
   } catch {
     return false;

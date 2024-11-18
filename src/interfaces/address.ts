@@ -12,6 +12,23 @@ export interface IAdress {
   province: string;
   zipCode: string;
 }
+export interface IAdressDataGet {
+  id: number;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  label: string;
+  default: boolean;
+  address: string;
+  subDistrict: string;
+  district: string;
+  province: string;
+  zipCode: string;
+  createdAt: string;
+  updateAt: string;
+}
 
 export interface IAdressData {
   id: string;

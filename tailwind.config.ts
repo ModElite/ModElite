@@ -21,6 +21,7 @@ const config: Config = {
         blue4: '#D6ECF8',
         gray1: '#79797A',
         grayHr: '#D9D9D9',
+        black3: '#AAAAAA',
       },
       size: size,
       spacing: size,

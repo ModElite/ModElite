@@ -1,12 +1,22 @@
 'use server';
-import CartComponents from '@/components/cart/CartComponents';
+import CartPage from '@/components/cart/CartPage';
 import { IExtendedProduct } from '@/interfaces/cart';
+import { getAddress, getProvinces } from '@/routes/address';
 import { getCartSelf } from '@/routes/cart';
-import { Breadcrumb } from 'antd';
 import { redirect } from 'next/navigation';
-import { GrHomeRounded } from 'react-icons/gr';
 
 export default async function Cart() {
+  const address = await getAddress();
+
+  if (address === null) {
+    return;
+  }
+
+  const provinces = await getProvinces();
+  if (provinces === null) {
+    return;
+  }
+
   let newdata: IExtendedProduct[] = [];
 
   try {
@@ -19,31 +29,5 @@ export default async function Cart() {
   } catch (error) {
     console.error('Error fetching data:', error);
   }
-  return (
-    <div className='container mx-auto p-6 xl:p-0'>
-      <div className='mt-12 hidden justify-center md:block'>
-        <Breadcrumb
-          className=''
-          separator='>'
-          items={[
-            {
-              title: <GrHomeRounded />,
-              href: '/',
-            },
-            {
-              title: <p className='text-purple1'>Shopping Cart</p>,
-            },
-          ]}
-        />
-      </div>
-      <div className='mb-4 text-center md:my-8'>
-        <span className='text-[23px] font-semibold md:text-3xl'>Shopping Cart</span>
-      </div>
-      <div>
-        <div className='grid grid-cols-1 justify-center gap-6 md:grid-cols-3 md:gap-0 md:space-x-6 lg:space-x-12'>
-          <CartComponents data={newdata} />
-        </div>
-      </div>
-    </div>
-  );
+  return <CartPage products={newdata} address={address} provinces={provinces} />;
 }

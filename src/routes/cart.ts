@@ -1,6 +1,7 @@
 'use server';
-import { IExtendedProduct } from '@/interfaces/cart';
+import { IExtendedProduct, IOrder, IVoucherData } from '@/interfaces/cart';
 import { axiosInstance } from '@/utils/axiosInstanceServer';
+
 export const addToCart = async (productSizeId: string, quantity: number) => {
   try {
     const response = await axiosInstance.post('/cart', {
@@ -37,6 +38,32 @@ export const postAddCartItem = async (id: string, quantity: number) => {
     }
     return response.data.data as IExtendedProduct[];
   } catch {
+    return null;
+  }
+};
+
+export const getVoucher = async (code: string) => {
+  try {
+    const res = await axiosInstance.get(`/voucher/${code}`);
+    if (res.status !== 200) {
+      return null;
+    }
+    return res.data.data as IVoucherData;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const postOrder = async (order: IOrder) => {
+  try {
+    const res = await axiosInstance.post(`/order`, order);
+    if (res.status !== 200) {
+      return null;
+    }
+    return res.data.success as boolean;
+  } catch (err) {
+    console.log(err);
     return null;
   }
 };

@@ -21,3 +21,25 @@ export interface IProducts {
 export interface IExtendedProduct extends IProducts {
   selected: boolean; // เพิ่ม property selected
 }
+
+export interface IVoucherData {
+  code: string;
+  createdAt: string;
+  expiredAt: string;
+  id: string;
+  maxDiscount: number;
+  minTotalPrice: number;
+  percentage: number;
+  quota: number;
+  updatedAt: string;
+}
+
+export interface IOrder {
+  addressId: string;
+  products: {
+    productSizeId: string;
+    quantity: number;
+  }[];
+  shippingPrice: number;
+  voucherId: string;
+}
