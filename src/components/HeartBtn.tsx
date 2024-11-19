@@ -1,30 +1,98 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'antd';
-import Image from 'next/image';
+import { IoHeart } from 'react-icons/io5';
+import { addToWishList, getWishList, removeWishList } from '@/routes/wishlist';
 
-const HeartBtn: React.FC = () => {
+export default function HeartBtn(props: { pid: string }) {
   const [clicked, setClick] = useState(false);
-  const handleClick = () => {
-    setClick(!clicked);
+
+  const AddFav = async () => {
+    try {
+      const response = await addToWishList(props.pid);
+      if (response === null) {
+        setClick(false);
+      } else {
+        setClick(true);
+        console.log('added');
+      }
+    } catch (error) {
+      console.error('Error adding to wishlist:', error);
+      setClick(false);
+    }
   };
+
+  const DeleteFav = async () => {
+    try {
+      const response = await removeWishList(props.pid);
+      if (response === null) {
+        setClick(true);
+      } else {
+        setClick(false);
+        console.log('deleted');
+      }
+    } catch (error) {
+      console.error('Error remove from wishlist:', error);
+      setClick(true);
+    }
+  };
+
+  useEffect(() => {
+    const fetchWishList = async () => {
+      try {
+        const response = await getWishList();
+        const isLiked = response?.find((item) => item.productId === props.pid);
+        if (response === null) {
+          setClick(false);
+        } else {
+          if (isLiked) {
+            setClick(true);
+          } else {
+            setClick(false);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetch from wishlist:', error);
+        setClick(false);
+      }
+    };
+    fetchWishList();
+  }, [props.pid]);
+
+  const handleHover = (e: React.MouseEvent<HTMLElement>, isHovering: boolean) => {
+    const button = e.currentTarget as HTMLButtonElement;
+    if (!clicked) {
+      button.style.color = isHovering ? '#cfcbf6' : 'white';
+    }
+  };
+
+  const handleClick = () => {
+    if (clicked === false) {
+      AddFav();
+    } else {
+      DeleteFav();
+    }
+  };
+
   return (
     <Button
       size='small'
       style={{
-        background: clicked ? '#6E62E5' : 'white',
+        color: clicked ? '#6e62e5' : 'white',
+        background: '#EFEEFC',
         aspectRatio: '1/1',
         width: '45px',
         height: '45px',
-        borderRadius: '10px',
+        borderRadius: '16px',
+        borderWidth: '0px',
       }}
-      onClick={handleClick}
+      onMouseEnter={(e) => handleHover(e, true)}
+      onMouseLeave={(e) => handleHover(e, false)}
+      onClick={() => handleClick()}
     >
-      <div className='aspect-square'>
-        {clicked ? <Image src='/WhiteHeart.svg' alt='favorite' className='p-3' fill /> : <Image src='/BlackHeart.svg' alt='favorite' className='p-3' fill />}
+      <div className='flex aspect-square items-center justify-center'>
+        <IoHeart className='size-6' />
       </div>
     </Button>
   );
-};
-
-export default HeartBtn;
+}
