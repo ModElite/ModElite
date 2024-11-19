@@ -50,7 +50,7 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
 
   return (
     <div className='flex w-full flex-col content-center items-center justify-center gap-y-8 bg-white py-12'>
-      <div className='w-9/12'>
+      <div className='w-9/12 max-lg:w-10/12'>
         <div className='text-3xl'>
           <Breadcrumb
             separator='>'
@@ -86,7 +86,7 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
                 <div className='text-xl'>{product.price} THB</div>
               </div>
               <div className=''>
-                <HeartBtn />
+                <HeartBtn pid={product.id} />
               </div>
             </div>
 
