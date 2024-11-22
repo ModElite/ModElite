@@ -1,7 +1,6 @@
 'use server';
 import { IExtendedProduct, IOrder, IVoucherData } from '@/interfaces/cart';
 import { axiosInstance } from '@/utils/axiosInstanceServer';
-
 export const addToCart = async (productSizeId: string, quantity: number) => {
   try {
     const response = await axiosInstance.post('/cart', {

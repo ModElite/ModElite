@@ -1,10 +1,28 @@
-import React from 'react';
-import Wishlistcard from '@/components/wishlist/WishListCard';
+'use server';
 
+import Wishlistcard from '@/components/wishlist/WishListCard';
+import { extendWishListWithSumQuantity } from '@/utils/format';
+import { getWishList } from '@/routes/wishlist';
+import { ExtendedWishList } from '@/interfaces/wishlist';
 export default async function wishlist() {
-  return (
-    <>
-      <Wishlistcard />
-    </>
-  );
+  try {
+    const data = await getWishList();
+    if (data == null) {
+      console.log('No data found');
+    } else {
+      const newdata: ExtendedWishList[] = data ? extendWishListWithSumQuantity(data) : [];
+      return (
+        <>
+          <Wishlistcard data={newdata} />
+        </>
+      );
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return (
+      <>
+        <h1>Error loading wishlist</h1>
+      </>
+    );
+  }
 }

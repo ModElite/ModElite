@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
   const navList = [
     {
       label: 'Favorites',
-      route: '/favorite',
+      route: '/setting/wishlist',
       icon: IoHeartOutline,
     },
     {
