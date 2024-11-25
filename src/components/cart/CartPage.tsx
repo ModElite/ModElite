@@ -47,7 +47,7 @@ const CartPage: FC<IProps> = (props) => {
   };
 
   return (
-    <div className='container flex w-full flex-col gap-y-8 px-4 py-6 lg:px-34 lg:py-18'>
+    <div className='container mx-auto flex w-full flex-col gap-y-8 px-4 py-6 lg:px-34 lg:py-18'>
       {switchPage ? (
         <>
           <div className='hidden justify-center md:block'>

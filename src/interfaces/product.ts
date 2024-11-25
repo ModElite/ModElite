@@ -1,3 +1,5 @@
+import { ISize } from '@/interfaces/size';
+
 export interface IProductCard {
   id: string;
   name: string;
@@ -38,13 +40,6 @@ export interface IProductSize {
   updatedAt: string;
 }
 
-export interface ISize {
-  id: string;
-  size: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface IFilter {
   name: string;
   type: 'checkbox' | 'select';
@@ -76,4 +71,26 @@ export interface Filters {
 export interface Paging {
   page: number;
   perPage: number;
+}
+
+export interface ICreateProduct {
+  name: string;
+  description: string;
+  feature: string;
+  price: number;
+  imageUrl: string;
+  productOption: ICreateProductOption[];
+  sellerId: string;
+  tagId: number[];
+}
+
+export interface ICreateProductOption {
+  imageUrl: string;
+  label: string;
+  productSize: ICreateProductSize[];
+}
+
+export interface ICreateProductSize {
+  quantity: number;
+  sizeId: string;
 }
