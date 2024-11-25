@@ -105,6 +105,7 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
       shippingPrice: deliveryFee,
       voucherId: voucher?.id ?? '',
     };
+    // console.log(order)
     const res = postOrder(order);
     console.log(res);
     setIsPaymentProcessing(false);

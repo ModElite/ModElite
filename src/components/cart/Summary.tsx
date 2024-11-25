@@ -21,7 +21,7 @@ const Summary: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <div className='col-span-1 h-fit space-y-2 rounded-[20px] bg-gray-100 lg:mx-6'>
+      <div className='col-span-1 h-fit space-y-2 rounded-[20px] bg-gray-100'>
         <div className='mx-6'>
           <h1 className='py-3'>Order Summary</h1>
         </div>

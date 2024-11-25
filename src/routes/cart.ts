@@ -60,6 +60,7 @@ export const postOrder = async (order: IOrder) => {
     if (res.status !== 200) {
       return null;
     }
+    console.log(res.data.data);
     return res.data.success as boolean;
   } catch (err) {
     console.log(err);
