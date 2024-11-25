@@ -60,16 +60,19 @@ const AllProduct: FC<Props> = (props: Props) => {
           }
         });
       });
-      router.push(`${pathname}?${queryParams.toString()}`);
+      const oldQuery = new URLSearchParams();
+      if (oldQuery.toString() !== queryParams.toString()) {
+        router.push(`${pathname}?${queryParams.toString()}`);
+        getProductFn();
+      }
     };
 
-    getProductFn();
     setQueryParams();
   }, [filter, sort, page]);
 
   return (
-    <div className={`flex`}>
-      <div className={`absolute ${showFilter ? 'block' : 'hidden'} w-full min-w-40 lg:relative lg:block lg:w-1/5`}>
+    <div className='flex'>
+      <div className={`absolute ${showFilter ? 'block' : 'hidden'} w-full min-w-40 lg:relative lg:block lg:w-1/5 lg:max-w-120`}>
         <FilterSidebar filterList={filter} setFilterList={setFilter} setOpenFilter={setShowFilter} />
       </div>
       <div className={`w-full lg:w-4/5 ${showFilter ? 'hidden' : 'block'}`}>
