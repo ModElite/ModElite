@@ -29,9 +29,9 @@ export default function RootLayout({
     <html lang='th' className={`${poppins.variable} bg-white`}>
       <ConfigProvider theme={theme}>
         <AntdRegistry>
-          <body className={`min-h-screen text-black antialiased`}>
+          <body className={`min-h-scree text-black antialiased`}>
             <Navbar />
-            <main className=''>{children}</main>
+            <main className='container mx-auto max-w-[1800px]'>{children}</main>
           </body>
         </AntdRegistry>
       </ConfigProvider>
