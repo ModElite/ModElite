@@ -8,7 +8,6 @@ export default async function wishlist() {
   try {
     const data = await getWishList();
     if (data == null) {
-      console.log('No data found');
     } else {
       const newdata: ExtendedWishList[] = data ? extendWishListWithSumQuantity(data) : [];
       return (

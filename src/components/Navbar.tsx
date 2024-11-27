@@ -60,13 +60,7 @@ const Navbar: React.FC = () => {
         </Link>
 
         <div className='hidden w-1/4 items-center lg:flex'>
-          <Input
-            placeholder='Search...'
-            prefix={<SearchOutlined className='px-2' />}
-            className='w-full rounded-md'
-            size='large'
-            onPressEnter={() => console.log('Search initiated')}
-          />
+          <Input placeholder='Search...' prefix={<SearchOutlined className='px-2' />} className='w-full rounded-md' size='large' />
         </div>
 
         {/* Navbar Buttons */}

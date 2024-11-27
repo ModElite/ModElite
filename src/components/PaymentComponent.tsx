@@ -91,7 +91,6 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
   const createOrder = async () => {
     if (selectedPayment === undefined) {
       setIsPaymentProcessing(false);
-      console.log('please select payment gateway');
       return;
     }
     const order: IOrder = {
@@ -105,9 +104,7 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
       shippingPrice: deliveryFee,
       voucherId: voucher?.id ?? '',
     };
-    // console.log(order)
-    const res = postOrder(order);
-    console.log(res);
+    postOrder(order);
     setIsPaymentProcessing(false);
   };
 

@@ -24,8 +24,6 @@ const HistoryCard: FC<IProps> = (props) => {
   const router = useRouter();
   const param = useParams();
 
-  console.log(props.orders);
-
   return (
     <div className='flex w-full flex-col gap-5 border-b p-5'>
       <div className='grid w-full grid-cols-2 place-content-center gap-2 rounded-2xl bg-[#F5F6FB] p-6 lg:grid-cols-5'>

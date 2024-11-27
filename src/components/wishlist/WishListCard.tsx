@@ -17,10 +17,7 @@ const Wishlistcard: React.FC<Props> = ({ data }) => {
   const fetchData = async () => {
     try {
       const data = await getWishList();
-      if (data == null) {
-        console.log('No data found');
-      } else {
-        console.log('Data received:', data);
+      if (data) {
         const newdatas = data ?? [];
         setMyWishList(extendWishListWithSumQuantity(newdatas));
       }

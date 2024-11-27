@@ -15,9 +15,8 @@ const SettingAddress: FC<IProps> = (props) => {
   const path = usePathname();
   const { objects } = props;
   const onDelete = async (id: string) => {
-    const value = deleteAddress(id);
+    deleteAddress(id);
     router.refresh();
-    console.log(value);
   };
 
   useEffect(() => {

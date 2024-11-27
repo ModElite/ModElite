@@ -90,7 +90,6 @@ const SettingAddressEdit: FC<Props> = (props) => {
         }
       }
     };
-    console.log(object);
     fetchData();
   }, []);
 
