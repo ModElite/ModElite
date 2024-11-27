@@ -77,3 +77,12 @@ export interface User {
   role: string;
   updateAt: string;
 }
+export interface NewUser {
+  bankAccountName: string;
+  bankAccountNumber: string;
+  bankAccountProvider: string;
+  description: string;
+  location: string;
+  logoUrl: string;
+  name: string;
+}

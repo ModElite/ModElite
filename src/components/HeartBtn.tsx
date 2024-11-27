@@ -14,7 +14,6 @@ export default function HeartBtn(props: { pid: string }) {
         setClick(false);
       } else {
         setClick(true);
-        console.log('added');
       }
     } catch (error) {
       console.error('Error adding to wishlist:', error);
@@ -29,7 +28,6 @@ export default function HeartBtn(props: { pid: string }) {
         setClick(true);
       } else {
         setClick(false);
-        console.log('deleted');
       }
     } catch (error) {
       console.error('Error remove from wishlist:', error);

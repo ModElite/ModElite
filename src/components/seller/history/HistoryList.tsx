@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
 import HistoryCard from '@/components/seller/history/HistoryCard';
-import { Button, Input, Modal, Select } from 'antd';
 import { ISellerOrder } from '@/interfaces/seller';
+import { Button, Input, Modal, Select } from 'antd';
+import { FC, useState } from 'react';
 
 interface IProps {
   filter: string;
@@ -18,10 +18,6 @@ const HistoryList: FC<IProps> = (props) => {
   const cancelDeliveryModal = () => {
     setDeliveryModal(false);
   };
-
-  useEffect(() => {
-    console.log(props.filter);
-  }, [props.filter]);
 
   return (
     <>

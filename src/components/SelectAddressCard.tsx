@@ -17,13 +17,11 @@ const SelectAddressCard: React.FC<SelectAddressCardProps> = (props) => {
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(props.selectAddress.id);
 
   const handleSelectChange = (id: string) => {
-    // console.log(id);
     setSelectedAddressId(id);
   };
 
   const handleSubmit = () => {
     const selectedAddress = props.addresses.find((address) => address.id === selectedAddressId);
-    console.log(selectedAddress);
     if (selectedAddress) {
       props.onSelect(selectedAddress);
     }

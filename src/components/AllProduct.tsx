@@ -32,7 +32,6 @@ const AllProduct: FC<Props> = (props: Props) => {
     const productList = await getProduct(filter, page, sort);
     if (productList === null) {
       setLoading(false);
-      console.log('Error');
       return;
     }
 
