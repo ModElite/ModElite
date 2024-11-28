@@ -18,7 +18,7 @@ export default async function Landing() {
       <div className='mx-auto w-fit max-w-full py-6'>
         <div className='flex w-full snap-x gap-6 overflow-x-auto'>
           {listItem.map((brand) => (
-            <Link href={`/product?filter.Brand=${brand.name}`} key={brand.id} className='flex h-full w-32 min-w-32 flex-col items-center gap-y-4'>
+            <Link href={`/product?Brand=${brand.name}`} key={brand.id} className='flex h-full w-32 min-w-32 flex-col items-center gap-y-4'>
               <Image src={`/${brand.imageUrl}`} alt={brand.name} width={100} height={100} className='aspect-square' />
               <span className='text-center lg:text-lg'>{brand.name}</span>
             </Link>
