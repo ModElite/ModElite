@@ -1,77 +1,54 @@
 import { LandingCarousel } from '@/components/landing/LandingCarousel';
-import React from 'react';
 import { ProductCard } from '@/components/ProductCard';
+import { TAG_GROUP_ID } from '@/configs/constant';
+import { getProduct } from '@/routes/product';
+import { getTags } from '@/routes/tag';
 import { Button } from 'antd';
 import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
 export default async function Landing() {
-  const listItem = [
-    { id: 1, name: 'Adidas', img: 'brand.svg' },
-    { id: 2, name: 'Nike', img: 'brand.svg' },
-    { id: 3, name: 'Puma', img: 'brand.svg' },
-    { id: 4, name: 'Reebok', img: 'brand.svg' },
-    { id: 5, name: 'Under Armour', img: 'brand.svg' },
-    { id: 6, name: 'New Balance', img: 'brand.svg' },
-    { id: 7, name: 'Asics', img: 'brand.svg' },
-    { id: 8, name: 'Converse', img: 'brand.svg' },
-    { id: 9, name: 'Vans', img: 'brand.svg' },
-    { id: 10, name: 'Skechers', img: 'brand.svg' },
-    { id: 11, name: 'Fila', img: 'brand.svg' },
-    { id: 12, name: 'Brooks', img: 'brand.svg' },
-    { id: 13, name: 'Saucony', img: 'brand.svg' },
-    { id: 14, name: 'Mizuno', img: 'brand.svg' },
-    { id: 15, name: 'Hoka One One', img: 'brand.svg' },
-  ];
-
+  const brandTags = await getTags(TAG_GROUP_ID.BRAND);
+  const listItem = brandTags.map((tag) => ({ id: tag.id, name: tag.label, imageUrl: tag.imageUrl }));
+  const product_list = (await getProduct()) ?? [];
   return (
     <HomeLayout>
       <LandingCarousel />
       <div className='mx-auto w-fit max-w-full py-6'>
         <div className='flex w-full snap-x gap-6 overflow-x-auto'>
           {listItem.map((brand) => (
-            <div key={brand.id} className='flex h-full w-32 min-w-32 flex-col items-center gap-y-4'>
-              <Image src={`/${brand.img}`} alt={brand.name} width={100} height={100} className='aspect-square' />
+            <Link href={`/product?filter.Brand=${brand.name}`} key={brand.id} className='flex h-full w-32 min-w-32 flex-col items-center gap-y-4'>
+              <Image src={`/${brand.imageUrl}`} alt={brand.name} width={100} height={100} className='aspect-square' />
               <span className='text-center lg:text-lg'>{brand.name}</span>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
       <div className='py-6'>
         <div className='flex w-full justify-between pb-6'>
           <span>Recommended Product</span>
-          <span>View All</span>
+          <Link href={'/product'}>View All</Link>
         </div>
         <div className='flex w-full snap-x gap-6 overflow-x-auto'>
-          <div className='min-w-64 lg:min-w-110'>
-            <ProductCard id={'1'} name='Nike Air Jordan' price={500} image='/shoe1.jpg' tags={['Best Seller', 'Summer sale']} />
-          </div>
-
-          {Array(10)
-            .fill(1)
-            .map((id) => (
-              <div className='min-w-64 lg:min-w-110' key={`1${id}`}>
-                <ProductCard id={id} name='Shoe' price={100} image='/shoe1.jpg' />
-              </div>
-            ))}
+          {product_list.map((product) => (
+            <div className='min-w-64 lg:min-w-110' key={`1${product.id}`}>
+              <ProductCard id={product.id} name={product.name} price={product.price} image={product.imageUrl} />
+            </div>
+          ))}
         </div>
       </div>
       <div className='py-6'>
         <div className='flex w-full justify-between pb-6'>
           <span>Best Seller</span>
-          <span>View All</span>
+          <Link href={'/product'}>View All</Link>
         </div>
         <div className='flex w-full snap-x gap-6 overflow-x-auto'>
-          <div className='min-w-64 lg:min-w-110'>
-            <ProductCard id={'1'} name='Nike Air Jordan' price={500} image='/shoe1.jpg' tags={['Best Seller', 'Summer sale']} />
-          </div>
-
-          {Array(10)
-            .fill(1)
-            .map((id) => (
-              <div className='min-w-64 lg:min-w-110' key={`2${id}`}>
-                <ProductCard id={id} name='Shoe' price={100} image='/shoe1.jpg' />
-              </div>
-            ))}
+          {product_list.map((product) => (
+            <div className='min-w-64 lg:min-w-110' key={`2${product.id}`}>
+              <ProductCard id={product.id} name={product.name} price={product.price} image={product.imageUrl} />
+            </div>
+          ))}
         </div>
       </div>
       <div className='flex h-fit w-full content-center justify-center gap-16 rounded-3xl bg-blue1 text-center lg:hidden'>

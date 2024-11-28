@@ -1,21 +1,28 @@
 'use server';
+import { Filters, ICreateProduct, IProduct } from '@/interfaces/product';
 import { axiosInstance } from '@/utils/axiosInstanceServer';
-import { Filters, ICreateProduct, IProduct, ISort, Paging } from '@/interfaces/product';
 
-export const getProduct = async (filter?: Filters, Paging?: Paging, Order?: ISort) => {
+export const getProduct = async (filter?: Filters) => {
   try {
-    const response = await axiosInstance.get('/product', {
-      params: {
-        filter,
-        Paging,
-        Order,
-      },
-    });
+    // Change filter to array with only checked value
+    let filterArray: { name: string; value: string[] }[] = [];
+    if (filter) {
+      filterArray = Object.keys(filter)
+        .map((key) => {
+          return {
+            name: key,
+            value: filter[key].value.filter((item) => item.checked).map((item) => item.label),
+          };
+        })
+        .filter((item) => item.value.length > 0);
+    }
+    const response = await axiosInstance.post('/product', { filter: filterArray ?? [] });
     if (response.status !== 200) {
       return null;
     }
     return response.data.data as IProduct[];
-  } catch {
+  } catch (err) {
+    console.log(err);
     return null;
   }
 };

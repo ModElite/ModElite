@@ -49,6 +49,15 @@ export interface IFilter {
   }[];
 }
 
+export interface IFilterArray {
+  name: string;
+  type: 'checkbox' | 'select';
+  value: {
+    label: string;
+    checked: boolean;
+  }[];
+}
+
 export interface ISort {
   sortBy: string;
   order: 'asc' | 'desc';

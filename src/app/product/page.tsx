@@ -4,76 +4,20 @@ import AllProduct from '@/components/AllProduct';
 import InternalError from '@/components/InternalError';
 import { Filters, ISort, Paging } from '@/interfaces/product';
 import { getProduct } from '@/routes/product';
+import { getAllTagGroup } from '@/routes/tag';
 
 export default async function AllProductPage({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
   const sort = (searchParams?.sort as string) ?? 'name:asc';
   const page: number = Number(searchParams?.page as string);
   const perPage: number = Number(searchParams?.perpage as string);
 
+  const all_tag = await getAllTagGroup();
   // filter form url will be a query string
-  const filters: Filters = {
-    gender: {
-      name: 'Gender',
-      type: 'checkbox',
-      value: [
-        { label: 'Men', checked: false },
-        { label: 'Women', checked: false },
-        {
-          label: 'Unisex',
-          checked: false,
-        },
-      ],
-    },
-    category: {
-      name: 'Category',
-      type: 'checkbox',
-      value: [
-        { label: 'Clothing', checked: false },
-        { label: 'Accessories', checked: false },
-        {
-          label: 'Footwear',
-          checked: false,
-        },
-      ],
-    },
-    brand: {
-      name: 'Brand',
-      type: 'checkbox',
-      value: [
-        { label: 'Brand A', checked: false },
-        { label: 'Brand B', checked: false },
-        {
-          label: 'Brand C',
-          checked: false,
-        },
-      ],
-    },
-    price: {
-      name: 'Price Range',
-      type: 'checkbox',
-      value: [
-        { label: '$0 - $50', checked: false },
-        { label: '$50 - $100', checked: false },
-        {
-          label: '$100 - $200',
-          checked: false,
-        },
-      ],
-    },
-    size: {
-      name: 'Size (US)',
-      type: 'select',
-      value: [
-        { label: '5', checked: false },
-        { label: '5.5', checked: false },
-        {
-          label: '6',
-          checked: false,
-        },
-        { label: '6.5', checked: false },
-      ],
-    },
-  };
+  const filters = Object.fromEntries(
+    all_tag.map((tag) => {
+      return [tag.name, { name: tag.name, type: 'checkbox', value: tag.value }];
+    })
+  ) as Filters;
 
   Object.keys(filters).forEach((key) => {
     const filter = filters[key];
@@ -94,7 +38,7 @@ export default async function AllProductPage({ searchParams }: { searchParams?: 
     sortBy: sort.split(':')[0],
     order: sort.split(':')[1] as 'asc' | 'desc',
   };
-  const productList = await getProduct(filters, Paging, sortOptions);
+  const productList = await getProduct(filters);
   if (productList === null) return <InternalError />;
   return <AllProduct initProductValue={productList} initFilter={filters} initSort={sortOptions} initPage={Paging} />;
 }
