@@ -13,7 +13,7 @@ type Props = {
 const FilterSidebar: FC<Props> = (props: Props) => {
   return (
     <>
-      <div className='space-y-* h-full min-h-[calc(100vh-4rem)] w-full flex-col overflow-y-auto border-2 bg-white lg:absolute'>
+      <div className='space-y-* h-full min-h-[calc(100vh-4rem)] w-full flex-col overflow-y-auto bg-white lg:absolute'>
         <div className='mx-auto flex flex-col overflow-y-auto px-4 pt-4 lg:p-6'>
           {/*  Item Filter List*/}
           {Object.keys(props.filterList).map((key) => (

@@ -24,21 +24,28 @@ const AllProduct: FC<Props> = (props: Props) => {
   const [filter, setFilter] = useState<Filters>(props.initFilter);
   const [sort, setSort] = useState<ISort>(props.initSort);
   const [page, setPage] = useState<Paging>(props.initPage);
+  const [cache, setCache] = useState<{ [key: string]: IProduct[] }>({ [JSON.stringify(props.initFilter)]: props.initProductValue });
   const [loading, setLoading] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
 
-  const getProductFn = async () => {
-    setLoading(true);
-    const productList = await getProduct(filter, page, sort);
-    if (productList === null) {
-      setLoading(false);
-      return;
-    }
-
-    setLoading(false);
-    setProductValue(productList);
-  };
   useEffect(() => {
+    const getProductFn = async () => {
+      if (cache[JSON.stringify(filter)]) {
+        setProductValue(cache[JSON.stringify(filter)]);
+        return;
+      }
+      setLoading(true);
+      const productList = await getProduct(filter);
+      if (productList === null) {
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+      setProductValue(productList);
+      setCache((prev) => {
+        return { ...prev, [JSON.stringify(filter)]: productList };
+      });
+    };
     const setQueryParams = () => {
       const queryParams = new URLSearchParams();
       if (sort.sortBy !== defaultSort.sortBy || sort.order !== defaultSort.order) {
@@ -47,7 +54,6 @@ const AllProduct: FC<Props> = (props: Props) => {
       if (page.page !== defaultPage.page) {
         queryParams.set('page', `${page.page}`);
       }
-
       if (page.perPage !== defaultPage.perPage) {
         queryParams.set('perPage', `${page.perPage}`);
       }
@@ -59,11 +65,9 @@ const AllProduct: FC<Props> = (props: Props) => {
           }
         });
       });
-      const oldQuery = new URLSearchParams();
-      if (oldQuery.toString() !== queryParams.toString()) {
-        router.push(`${pathname}?${queryParams.toString()}`);
-        getProductFn();
-      }
+
+      router.push(`${pathname}?${queryParams.toString()}`);
+      getProductFn();
     };
 
     setQueryParams();
@@ -140,7 +144,7 @@ const AllProduct: FC<Props> = (props: Props) => {
                 </Select.Option>
               ))}
             </Select>
-            <span className='hidden text-nowrap lg:block'>Showing 8 result</span>
+            <span className='hidden text-nowrap lg:block'>Showing {productValue.length} result</span>
           </div>
         </div>
 
@@ -150,11 +154,38 @@ const AllProduct: FC<Props> = (props: Props) => {
           </div>
         )}
         {!loading && (
-          <div className='grid grid-cols-2 gap-4 p-4 lg:grid-cols-3 xl:grid-cols-4'>
-            {productValue.map((product) => (
-              <ProductCard key={product.id} id={product.id} name={product.name} price={product.price} image={product.imageUrl} />
-            ))}
-          </div>
+          <>
+            <div className='grid grid-cols-2 gap-4 p-4 lg:grid-cols-3 xl:grid-cols-4'>
+              {productValue
+                .sort((a, b) => {
+                  let a_item = a[sort.sortBy as keyof IProduct];
+                  let b_item = b[sort.sortBy as keyof IProduct];
+                  if (Array.isArray(a_item) || Array.isArray(b_item)) {
+                    return 0;
+                  }
+                  if (typeof a_item === 'string') {
+                    a_item = a_item.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+                  }
+                  if (typeof b_item === 'string') {
+                    b_item = b_item.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+                  }
+                  if (sort.order === 'asc') {
+                    return a_item < b_item ? -1 : 1;
+                  } else {
+                    return a_item < b_item ? 1 : -1;
+                  }
+                })
+                .slice((page.page - 1) * page.perPage, page.page * page.perPage)
+                .map((product) => (
+                  <ProductCard key={product.id} id={product.id} name={product.name} price={product.price} image={product.imageUrl} />
+                ))}
+            </div>
+            {productValue.length === 0 && (
+              <div className='flex h-64 items-center justify-center'>
+                <h1>No Product Found</h1>
+              </div>
+            )}
+          </>
         )}
         <Pagination
           align='center'
@@ -167,7 +198,7 @@ const AllProduct: FC<Props> = (props: Props) => {
           }}
           responsive
           showSizeChanger={true}
-          total={80}
+          total={productValue.length}
           onChange={(e) => {
             setPage((prev) => {
               return { ...prev, page: e };

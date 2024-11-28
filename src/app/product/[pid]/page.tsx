@@ -118,7 +118,9 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
             {Array(10)
               .fill(1)
               .map((id) => (
-                <ProductCard key={id} id={id} name='Shoe' price={100} image='/shoe1.jpg' />
+                <div className='min-w-64 lg:min-w-110' key={`2${id}`}>
+                  <ProductCard id={id} name='Shoe' price={100} image='/shoe1.jpg' />
+                </div>
               ))}
           </div>
         </div>
