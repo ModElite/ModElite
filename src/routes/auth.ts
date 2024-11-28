@@ -45,3 +45,17 @@ export const Logout = async () => {
     return false;
   }
 };
+
+export const getUserInfo = async () => {
+  try {
+    const response = await axiosInstance.get('/auth/me');
+    if (response.status !== 200) {
+      return false;
+    }
+    console.log(response.data);
+    return response.data.data;
+  } catch (error) {
+    console.log('ERROR', error);
+    return false;
+  }
+};

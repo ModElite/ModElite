@@ -5,6 +5,11 @@ export function numberFormat(number: number): string {
   return Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(number);
 }
 
+export function phoneNumberFormat(phoneNumber: string) {
+  const listOfNumber = phoneNumber.split('');
+  return listOfNumber.slice(0, 3).join('') + '-' + listOfNumber.slice(3, 6).join('') + '-' + listOfNumber.slice(6).join('');
+}
+
 export function dateFormat(date: Date | string) {
   return new Date(date)
     .toLocaleDateString('en-GB', {
