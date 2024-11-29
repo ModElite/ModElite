@@ -15,10 +15,9 @@ const SellerSideMenu = (props: MenuItemProps) => {
   const menuItems = [
     { name: 'Home', icon: IoHomeOutline, route: `/` },
     { name: 'Dashboard', icon: IoHomeOutline, route: `/seller/${props.Seller.id}` },
-    { name: 'My Shop', icon: IoHomeOutline, route: `/seller/${props.Seller.id}/my-shop` },
     { name: 'My Product', icon: IoHomeOutline, route: `/seller/${props.Seller.id}/my-product` },
     { name: 'Order History', icon: IoHomeOutline, route: `/seller/${props.Seller.id}/order-history` },
-    { name: 'Wallet', icon: IoHomeOutline, route: `/seller/${props.Seller.id}/wallet` },
+    { name: 'Account & Finance', icon: IoHomeOutline, route: `/seller/${props.Seller.id}/account` },
     { name: 'Log-out', icon: IoHomeOutline, route: `/logout` },
   ];
 

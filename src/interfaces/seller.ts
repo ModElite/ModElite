@@ -1,13 +1,40 @@
 export interface ISeller {
-  id: string;
-  name: string;
+  bankAccountName: string;
+  bankAccountNumber: string;
+  bankAccountProvider: string;
+  createdAt: string;
   description: string;
-  logoUrl: string;
-  location: string;
-  ownerId: string;
+  id: string;
   isVerify: boolean;
-  updateAt: Date;
-  createdAt: Date;
+  location: string;
+  logoUrl: string;
+  name: string;
+  ownerId: string;
+  phone: string;
+  sellerTransaction: SellerTransaction[];
+  updateAt: string;
+}
+
+export interface SellerTransaction {
+  bankAccountName: string;
+  bankAccountNumber: string;
+  bankAccountProvider: string;
+  bankTransactionAmount: number;
+  bankTransactionDatetime: string;
+  bankTransactionFee: number;
+  bankTransactionId: string;
+  createdAt: string;
+  id: string;
+  sellerId: string;
+  sellerTransactionOrder: SellerTransactionOrder[];
+  updatedAt: string;
+}
+
+export interface SellerTransactionOrder {
+  createdAt: string;
+  orderId: string;
+  sellerTransactionId: string;
+  updatedAt: string;
 }
 
 export interface ISellerOrder {
@@ -85,4 +112,24 @@ export interface NewUser {
   location: string;
   logoUrl: string;
   name: string;
+  phone: string;
+}
+
+export interface IDashBoard {
+  orderSizeDashboard: OrderSizeDashboard[];
+  productDashboard: ProductDashboard[];
+  totalOrder: number;
+  totalOrderAmount: number;
+  totalOrderProductUnit: number;
+  totalOrderUser: number;
+}
+
+export interface OrderSizeDashboard {
+  quantity: number;
+  size: string;
+}
+
+export interface ProductDashboard {
+  productName: string;
+  quantity: number;
 }
