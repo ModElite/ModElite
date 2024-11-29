@@ -12,10 +12,6 @@ const SellerBreadcrumb: React.FC = () => {
       href: '',
     },
     {
-      title: <span className='text-xl'>My Shop</span>,
-      href: 'my-shop',
-    },
-    {
       title: <span className='text-xl'>My Product</span>,
       href: 'my-product',
     },
@@ -24,8 +20,8 @@ const SellerBreadcrumb: React.FC = () => {
       href: 'order-history',
     },
     {
-      title: <span className='text-xl'>Wallet</span>,
-      href: 'wallet',
+      title: <span className='text-xl'>Account & Finance</span>,
+      href: 'account',
     },
   ];
 
