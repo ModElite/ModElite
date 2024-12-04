@@ -1,4 +1,5 @@
 'use server';
+import { IOrderList } from '@/interfaces/order';
 import { axiosInstance } from '@/utils/axiosInstanceServer';
 
 export const getOrderInfo = async () => {
@@ -8,7 +9,7 @@ export const getOrderInfo = async () => {
       return false;
     }
     // console.log('test',response.data);
-    return response.data.data;
+    return response.data.data as IOrderList[];
   } catch (error) {
     console.log('ERROR', error);
     return false;
