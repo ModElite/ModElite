@@ -3,9 +3,9 @@ import HeartBtn from '@/components/HeartBtn';
 import { ProductCard } from '@/components/ProductCard';
 import ProductPicSlideShow from '@/components/ProductPicSlideShow';
 import SizeSelection from '@/components/SizeSelection';
+import { getProduct, GetProductById } from '@/routes/product';
 import { HomeOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'antd';
-import { GetProductById } from '@/routes/product';
 import { Metadata } from 'next';
 
 const DefaultMetadata: Metadata = {
@@ -47,6 +47,8 @@ export async function generateMetadata({ params: { pid = '' } }: { params: { pid
 export default async function ViewProduct({ params: { pid = '' } }: { params: { pid: string } }) {
   const product = await GetProductById(pid);
   if (product === null) return <div>Product not found</div>;
+
+  const product_list = (await getProduct()) ?? [];
 
   return (
     <div className='flex w-full flex-col content-center items-center justify-center gap-y-8 bg-white py-12'>
@@ -114,14 +116,12 @@ export default async function ViewProduct({ params: { pid = '' } }: { params: { 
         {/* Other Section */}
         <div className='mt-12 space-y-8'>
           <h1 className='text-xl font-bold'>You may also like</h1>
-          <div className='flex snap-x gap-6 overflow-x-auto'>
-            {Array(10)
-              .fill(1)
-              .map((id) => (
-                <div className='min-w-64 lg:min-w-110' key={`2${id}`}>
-                  <ProductCard id={id} name='Shoe' price={100} image='/shoe1.jpg' />
-                </div>
-              ))}
+          <div className='flex w-full snap-x gap-6 overflow-x-auto'>
+            {product_list.map((product) => (
+              <div className='min-w-64 lg:min-w-110' key={`1${product.id}`}>
+                <ProductCard id={product.id} name={product.name} price={product.price} image={product.imageUrl} />
+              </div>
+            ))}
           </div>
         </div>
       </div>

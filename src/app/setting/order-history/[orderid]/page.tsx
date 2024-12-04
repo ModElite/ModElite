@@ -19,7 +19,13 @@ interface GroupOfOrderProductData {
 export default async function OrderHistory({ params: { orderid = '' } }: { params: { orderid: string } }) {
   const userInfo = await getUserInfo();
   const temp = await getOrderInfo();
-  const OrderInfo = temp.find((item: IOrderList) => item.id === orderid);
+
+  console.log(temp);
+
+  if (typeof temp === 'boolean') {
+    return;
+  }
+  const OrderInfo = temp.find((item: IOrderList) => item.id === orderid) || ({} as IOrderList);
 
   const orderProductDataGroupedBySellerId = OrderInfo.orderProductData.reduce((acc: GroupOfOrderProductData[], product: IOrderProductData) => {
     const existedSeller = acc.find((item) => item.sellerId === product.sellerId);
