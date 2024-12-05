@@ -1,9 +1,8 @@
 import BackButton from '@/components/orderHistory/BackButton';
 import CancelAndContactButton from '@/components/orderHistory/CancelAndContactButton';
 import CopyToClipBoard from '@/components/orderHistory/CopyToClipboard';
-import { IOrderList, IOrderProductData } from '@/interfaces/order';
-import { getUserInfo } from '@/routes/auth';
-import { getOrderInfo } from '@/routes/order';
+import { IOrderProductData } from '@/interfaces/order';
+import { getOrderInfoById } from '@/routes/order';
 import { dateFormat, numberFormat, phoneNumberFormat } from '@/utils/format';
 import parse from 'html-react-parser';
 import Image from 'next/image';
@@ -17,14 +16,10 @@ interface GroupOfOrderProductData {
 }
 
 export default async function OrderHistory({ params: { orderid = '' } }: { params: { orderid: string } }) {
-  const userInfo = await getUserInfo();
-  const temp = await getOrderInfo();
-
-  if (typeof temp === 'boolean') {
+  const OrderInfo = await getOrderInfoById(orderid);
+  if (typeof OrderInfo === 'boolean') {
     return;
   }
-  const OrderInfo = temp.find((item: IOrderList) => item.id === orderid) || ({} as IOrderList);
-
   const orderProductDataGroupedBySellerId = OrderInfo.orderProductData.reduce((acc: GroupOfOrderProductData[], product: IOrderProductData) => {
     const existedSeller = acc.find((item) => item.sellerId === product.sellerId);
     if (existedSeller) {
@@ -80,11 +75,7 @@ export default async function OrderHistory({ params: { orderid = '' } }: { param
   const orderStatusDisplay = (id: number) => {
     return id === 3 ? 'Order Completed!' : id === 2 ? 'Your Parcel is on the way.' : id === 1 ? 'Must be shipped.' : 'Refunded.';
   };
-
-  // const orderStatus = 'REFUND'; //Mockup data
   const currentOrderStatus = orderStatusEncoded.find((item) => item.status === OrderInfo.status)?.statusId || 0;
-
-  const mockupphone = '0800800080';
 
   return (
     <div className='max-lg:w-screen max-lg:p-4 lg:w-full'>
@@ -106,12 +97,6 @@ export default async function OrderHistory({ params: { orderid = '' } }: { param
             <div className=''>
               <div className='text-base font-bold'>Order id</div>
               <CopyToClipBoard pid={OrderInfo.id} />
-              {/* <div className='flex items-center gap-2'>
-                {OrderInfo.id}
-                <button className='text-purple1' onClick={() => navigator.clipboard.writeText(OrderInfo.id)}>
-                  <BsCopy />
-                </button>
-              </div> */}
             </div>
             <div className=' '>
               <div className='text-base font-bold'>Date</div>
@@ -207,16 +192,18 @@ export default async function OrderHistory({ params: { orderid = '' } }: { param
           <hr className='my-4' />
           <div className='flex w-full flex-grow items-start justify-between gap-4 max-lg:flex-col'>
             <div className='w-full'>
-              <div className='text-base'>{userInfo.name || 'Boom Chanapat'} </div>
-              <div className='text-base text-gray1'>{userInfo.address || 'boom asdfasdfasdjklynjikonnklkl 20140boom asdfasdfasdjklynjikonnklkl 20140'}</div>
+              <div className='text-base'>
+                {OrderInfo.firstName} {OrderInfo.lastName}
+              </div>
+              <div className='text-base text-gray1'>{OrderInfo.address}</div>
             </div>
             <div className='w-full'>
               <div className='text-base'>Email</div>
-              <div className='text-base text-gray1'>{userInfo.email || 'testtest@gmail.com'}</div>
+              <div className='text-base text-gray1'>{OrderInfo.email}</div>
             </div>
             <div className='w-full'>
               <div className='text-base'>Phone Number</div>
-              <div className='text-base text-gray1'>{phoneNumberFormat(userInfo.phone) || phoneNumberFormat(mockupphone)}</div>
+              <div className='text-base text-gray1'>{phoneNumberFormat(OrderInfo.phone)}</div>
             </div>
           </div>
         </div>

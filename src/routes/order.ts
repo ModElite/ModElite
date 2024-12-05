@@ -19,9 +19,9 @@ export const getOrderInfoById = async (orderid: string) => {
   try {
     const response = await axiosInstance.get(`/order/self/${orderid}`);
     if (response.status !== 200) {
-      return false;
+      throw new Error(response.data.message);
     }
-    return response.data.data;
+    return response.data.data as IOrderList;
   } catch (error) {
     console.log('ERROR', error);
     return false;

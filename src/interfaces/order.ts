@@ -28,6 +28,10 @@ export interface IOrderList {
   shippingPrice: number;
   discount: number;
   voucherCode: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
   address: string;
   createdAt: string;
   updatedAt: string;
