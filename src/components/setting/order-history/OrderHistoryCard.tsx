@@ -58,7 +58,7 @@ const OrderHistoryCard: FC<IProps> = (props) => {
               key={item.id}
               productName={item.productName}
               productDescription={item.productDescription}
-              productImageUrl={item.productOptionImageUrl[0]}
+              productImageUrl={item.productOptionImageUrl}
               productOptionLabel={item.productOptionLabel}
               productSize={item.productSize}
               productPrice={item.productPrice}
@@ -120,7 +120,7 @@ const ProductData: FC<IPropsOrder> = (props) => {
     <div className='grid grid-cols-3'>
       <div className='col-span-3 flex flex-col gap-4 sm:col-span-2 sm:flex-row'>
         <div className='self-center'>
-          <Image src={props.productImageUrl} alt={props.productDescription} width={152} height={128} style={{ borderRadius: '12px' }} />
+          <Image src={JSON.parse(props.productImageUrl || '[]')[0]} alt={props.productDescription} width={128} height={128} style={{ borderRadius: '12px' }} />
         </div>
         <div className='hidden flex-col gap-4 sm:flex'>
           <span>{props.productName}</span>
