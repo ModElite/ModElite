@@ -1,16 +1,20 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { CiUser } from 'react-icons/ci';
 import { IoHomeOutline } from 'react-icons/io5';
+import { GrMap } from 'react-icons/gr';
+import { AiOutlineHeart, AiOutlineSync } from 'react-icons/ai';
+import { HiArrowRightOnRectangle } from 'react-icons/hi2';
 
 const SettingSideMenu = () => {
   const menuItems = [
     { name: 'Home', icon: IoHomeOutline, route: '/' },
-    { name: 'Profile', icon: IoHomeOutline, route: '/setting' },
-    { name: 'Address', icon: IoHomeOutline, route: '/setting/address' },
-    { name: 'Order History', icon: IoHomeOutline, route: '/setting/order-history' },
-    { name: 'Wishlist', icon: IoHomeOutline, route: '/setting/wishlist' },
-    { name: 'Log-out', icon: IoHomeOutline, route: '/logout' },
+    { name: 'Profile', icon: CiUser, route: '/setting' },
+    { name: 'Address', icon: GrMap, route: '/setting/address' },
+    { name: 'Order History', icon: AiOutlineSync, route: '/setting/order-history' },
+    { name: 'Wishlist', icon: AiOutlineHeart, route: '/setting/wishlist' },
+    { name: 'Log-out', icon: HiArrowRightOnRectangle, route: '/logout' },
   ];
   const pathname = usePathname();
 

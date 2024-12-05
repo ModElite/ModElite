@@ -3,7 +3,10 @@ import { ISeller } from '@/interfaces/seller';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { IoHomeOutline } from 'react-icons/io5';
+import { IoHomeOutline, IoPieChartOutline } from 'react-icons/io5';
+import { HiArrowRightOnRectangle } from 'react-icons/hi2';
+import { AiOutlineCodeSandbox, AiOutlineSync } from 'react-icons/ai';
+import { TfiWallet } from 'react-icons/tfi';
 
 interface MenuItemProps {
   Seller: ISeller;
@@ -14,11 +17,11 @@ const SellerSideMenu = (props: MenuItemProps) => {
 
   const menuItems = [
     { name: 'Home', icon: IoHomeOutline, route: `/` },
-    { name: 'Dashboard', icon: IoHomeOutline, route: `/seller/${props.Seller.id}` },
-    { name: 'My Product', icon: IoHomeOutline, route: `/seller/${props.Seller.id}/my-product` },
-    { name: 'Order History', icon: IoHomeOutline, route: `/seller/${props.Seller.id}/order-history` },
-    { name: 'Account & Finance', icon: IoHomeOutline, route: `/seller/${props.Seller.id}/account` },
-    { name: 'Log-out', icon: IoHomeOutline, route: `/logout` },
+    { name: 'Dashboard', icon: IoPieChartOutline, route: `/seller/${props.Seller.id}` },
+    { name: 'My Product', icon: AiOutlineCodeSandbox, route: `/seller/${props.Seller.id}/my-product` },
+    { name: 'Order History', icon: AiOutlineSync, route: `/seller/${props.Seller.id}/order-history` },
+    { name: 'Account & Finance', icon: TfiWallet, route: `/seller/${props.Seller.id}/account` },
+    { name: 'Log-out', icon: HiArrowRightOnRectangle, route: `/logout` },
   ];
 
   return (
