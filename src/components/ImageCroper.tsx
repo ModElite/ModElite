@@ -1,9 +1,9 @@
+import { axiosInstanceClient } from '@/utils/axiosInstanceClient';
+import type { UploadProps } from 'antd';
 import { Button, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
-import type { UploadProps } from 'antd';
-import { BiUpload } from 'react-icons/bi';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { BiUpload } from 'react-icons/bi';
 
 type Props = {
   ImageURL: string;
@@ -31,14 +31,14 @@ const ImageCropper = (props: Props) => {
     if (uploadImages) {
       const formData = new FormData();
       formData.append('file', uploadImages);
-      await axios
-        .post('https://wangchan.dev.wirabyte.com/upload', formData, {
+      await axiosInstanceClient
+        .post('/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         })
         .then((res) => {
-          props.setImageURL(`https://wangchan.dev.wirabyte.com/images/${res.data.filename}`);
+          props.setImageURL(res.data.url);
         })
         .catch((err) => {
           console.log(err);

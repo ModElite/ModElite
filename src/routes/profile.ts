@@ -29,7 +29,7 @@ export const updateUserInfo = async (data: IProfileUpdateInfo) => {
 
 export const updateProfile = async (data: IProfileUpdateProfile) => {
   try {
-    const response = await axiosInstance.patch('/user', data);
+    const response = await axiosInstance.patch('/user/profile', data);
     if (response.status !== 200) {
       return false;
     }
