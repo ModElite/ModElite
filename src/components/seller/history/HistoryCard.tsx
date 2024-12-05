@@ -125,7 +125,7 @@ const ProductData: FC<IPropsOrder> = (props) => {
     <div className='grid grid-cols-3'>
       <div className='col-span-3 flex flex-col gap-4 sm:col-span-2 sm:flex-row'>
         <div className='self-center'>
-          <Image src={props.productImageUrl} alt={props.productDescription} width={152} height={128} style={{ borderRadius: '12px' }} />
+          <Image src={props.productImageUrl} alt={props.productDescription} width={128} height={128} style={{ borderRadius: '12px', objectFit: 'cover' }} />
         </div>
         <div className='hidden flex-col gap-4 sm:flex'>
           <span>{props.productName}</span>
@@ -140,24 +140,20 @@ const ProductData: FC<IPropsOrder> = (props) => {
           <span>Price {props.productPrice} THB</span>
         </div>
       </div>
-      {window.screen.width < 640 ? (
-        <div className='col-span-2'>
-          <div className='flex flex-col gap-4'>
-            <span>{props.productName}</span>
-            <div className='flex flex-col'>
-              <span>
-                Color: <span className='text-gray-400'>{props.productOptionLabel}</span>
-              </span>
-              <span>
-                Size(US): <span className='text-gray-400'>{props.productSize}</span>
-              </span>
-            </div>
-            <span>Price {props.productPrice} THB</span>
+      <div className='col-span-2 block sm:hidden'>
+        <div className='flex flex-col gap-4'>
+          <span>{props.productName}</span>
+          <div className='flex flex-col'>
+            <span>
+              Color: <span className='text-gray-400'>{props.productOptionLabel}</span>
+            </span>
+            <span>
+              Size(US): <span className='text-gray-400'>{props.productSize}</span>
+            </span>
           </div>
+          <span>Price {props.productPrice} THB</span>
         </div>
-      ) : (
-        <></>
-      )}
+      </div>
       <div className='col-span-1 place-self-end'>
         <span className='size-fit'>Qty {props.quantity}</span>
       </div>

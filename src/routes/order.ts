@@ -1,5 +1,5 @@
 'use server';
-import { IOrderList } from '@/interfaces/order';
+import { IExpressBody, IOrderList } from '@/interfaces/order';
 import { axiosInstance } from '@/utils/axiosInstanceServer';
 
 export const getOrderInfo = async () => {
@@ -8,7 +8,6 @@ export const getOrderInfo = async () => {
     if (response.status !== 200) {
       return false;
     }
-    // console.log('test',response.data);
     return response.data.data as IOrderList[];
   } catch (error) {
     console.log('ERROR', error);
@@ -22,8 +21,21 @@ export const getOrderInfoById = async (orderid: string) => {
     if (response.status !== 200) {
       return false;
     }
-    console.log('test', response.data);
     return response.data.data;
+  } catch (error) {
+    console.log('ERROR', error);
+    return false;
+  }
+};
+
+export const updateOrderExpress = async (orderid: string, data: IExpressBody) => {
+  try {
+    const response = await axiosInstance.put(`/order/express/${orderid}`, data);
+    if (response.status !== 200) {
+      return false;
+    }
+    console.log('test', response);
+    return true;
   } catch (error) {
     console.log('ERROR', error);
     return false;

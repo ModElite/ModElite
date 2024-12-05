@@ -57,7 +57,7 @@ export const getVoucher = async (code: string) => {
 export const postOrder = async (order: IOrder) => {
   try {
     const res = await axiosInstance.post(`/order`, order);
-    if (res.status !== 200) {
+    if (res.status !== 201) {
       return null;
     }
     return res.data.success as boolean;

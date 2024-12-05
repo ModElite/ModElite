@@ -13,6 +13,7 @@ import { getAddress } from '@/routes/address';
 import { getVoucher, postOrder } from '@/routes/cart';
 import { IOrder, IProducts, IVoucherData } from '@/interfaces/cart';
 import Image from 'next/image';
+import Swal from 'sweetalert2';
 
 interface IProps {
   products: IProducts[];
@@ -93,8 +94,9 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
       setIsPaymentProcessing(false);
       return;
     }
+
     const order: IOrder = {
-      addressId: selectedAddress.id,
+      addressId: Number(selectedAddress.id.toString()),
       products: products.map((item) => {
         return {
           productSizeId: item.productSizeId,
@@ -104,11 +106,23 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
       shippingPrice: deliveryFee,
       voucherId: voucher?.id ?? '',
     };
-    postOrder(order);
+    try {
+      const status = await postOrder(order);
+      if (status) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Order Created Successfully',
+          text: 'Your order has been created successfully. Please check your email for more information.',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          window.location.href = '/setting/order-history';
+        });
+      }
+    } catch (error) {
+      console.error('Error creating order:', error);
+    }
     setIsPaymentProcessing(false);
   };
-
-  useEffect(() => {}, []);
 
   useEffect(() => {
     if (editFlag) {

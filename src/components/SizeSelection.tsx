@@ -20,14 +20,14 @@ const SizeSelection = (props: Props) => {
 
   const [selectSize, setSelectSize] = useState<number>();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [size, setSize] = useState<string>();
+  const [productSizeId, setProductSizeId] = useState<string>();
   const [maxQty, setMaxQty] = useState<number>(1);
 
   const router = useRouter();
 
   const handleSendSize = (index: number, item: string, qty: number) => {
     setSelectSize(index);
-    setSize(item);
+    setProductSizeId(item);
     setMaxQty(qty);
   };
   const [qty, setQty] = useState<number>(1);
@@ -39,9 +39,9 @@ const SizeSelection = (props: Props) => {
     setQty(1);
   }, [colorlabel, selectSize]);
 
-  async function handleAddtoCart(size: string, qty: number) {
+  async function handleAddtoCart(ProductSizeId: string, qty: number) {
     try {
-      const result = await addToCart(size, qty);
+      const result = await addToCart(ProductSizeId, qty);
       if (result) {
         router.push(`/cart`);
       } else {
@@ -71,7 +71,7 @@ const SizeSelection = (props: Props) => {
             }}
             disabled={!item.quantity}
             size='large'
-            onClick={() => handleSendSize(index, item.size.id, item.quantity)}
+            onClick={() => handleSendSize(index, item.id, item.quantity)}
           >
             {item.size.size}
           </Button>
@@ -107,7 +107,7 @@ const SizeSelection = (props: Props) => {
                   borderRadius: '10px',
                   fontSize: '16px',
                 }}
-                onClick={() => handleAddtoCart(size || '', qty)}
+                onClick={() => handleAddtoCart(productSizeId || '', qty)}
               >
                 Buy
               </Button>
@@ -122,7 +122,7 @@ const SizeSelection = (props: Props) => {
                   borderRadius: '10px',
                   fontSize: '16px',
                 }}
-                onClick={() => handleAddtoCart(size || '', qty)}
+                onClick={() => handleAddtoCart(productSizeId || '', qty)}
               >
                 Add to cart
               </Button>

@@ -100,3 +100,8 @@ export interface User {
   role: string;
   updateAt: string;
 }
+
+export interface IExpressBody {
+  expressProvider: string;
+  expressTrackingCode: string;
+}

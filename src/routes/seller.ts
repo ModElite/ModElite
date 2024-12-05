@@ -34,7 +34,8 @@ export const getOrderHistory = async (seller_id: string) => {
       return null;
     }
     return res.data.data as ISellerOrder[];
-  } catch {
+  } catch (err) {
+    console.log(err);
     return null;
   }
 };
