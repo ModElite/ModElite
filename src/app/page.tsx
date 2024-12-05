@@ -1,3 +1,4 @@
+import Footer from '@/components/landing/footer';
 import { LandingCarousel } from '@/components/landing/LandingCarousel';
 import { ProductCard } from '@/components/ProductCard';
 import { TAG_GROUP_ID } from '@/configs/constant';
@@ -44,7 +45,7 @@ export default async function Landing() {
           <Link href={'/product'}>View All</Link>
         </div>
         <div className='flex w-full snap-x gap-6 overflow-x-auto'>
-          {product_list.map((product) => (
+          {product_list.reverse().map((product) => (
             <div className='min-w-64 lg:min-w-110' key={`2${product.id}`}>
               <ProductCard id={product.id} name={product.name} price={product.price} image={product.imageUrl} />
             </div>
@@ -56,10 +57,9 @@ export default async function Landing() {
           <div className='relative flex content-center justify-center'>
             <Image src='./shopbag.svg' alt='' layout='fill' className='z-0 opacity-30' style={{ objectFit: 'cover' }} />
             <div className='relative z-10 flex w-4/5 flex-col justify-center gap-12 py-16 text-left text-white lg:w-1/2'>
-              <h1 className='text-center text-lg font-bold lg:text-start lg:text-3xl'>Explore Our Newest Product Arrivals!</h1>
+              <h1 className='text-center text-lg font-bold lg:text-start lg:text-3xl'>Let{`\'`}s create your store here.</h1>
               <p className='text-md lg:tex-normal text-center lg:text-start'>
-                Ant Design Landing platform has a variety of templates, download template package, you can use it quickly, you can also use the editor to
-                quickly build a dedicated page for you.
+                Pellentesque eu nibh eget mauris congue mattis mattis nec tellus. Phasellus imperdiet elit eu magna.
               </p>
               <Button type='primary' className='mx-auto w-fit'>
                 Learn More
@@ -72,11 +72,8 @@ export default async function Landing() {
         <div className='mx-auto h-full'>
           <div className='flex content-center justify-center'>
             <div className='content-st flex w-4/5 flex-col justify-center gap-12 py-16 text-left text-white lg:w-1/2'>
-              <h1 className='text-3xl font-bold'>Explore Our Newest Product Arrivals!</h1>
-              <p>
-                Ant Design Landing platform has a variety of templates, download template package, you can use it quickly, you can also use the editor to
-                quickly build a dedicated page for you.
-              </p>
+              <h1 className='text-3xl font-bold'>Let{`\'`}s create your store here.</h1>
+              <p>Pellentesque eu nibh eget mauris congue mattis mattis nec tellus. Phasellus imperdiet elit eu magna.</p>
               <Button type='primary' className='mx-auto w-fit'>
                 Learn More
               </Button>
@@ -90,5 +87,10 @@ export default async function Landing() {
 }
 
 const HomeLayout = (props: { children: React.ReactNode }) => {
-  return <div className='p-8 lg:p-16'>{props.children}</div>;
+  return (
+    <div className='p-8 lg:p-16'>
+      <div>{props.children}</div>
+      <Footer />
+    </div>
+  );
 };

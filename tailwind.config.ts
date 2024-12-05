@@ -23,6 +23,7 @@ const config: Config = {
         blue4: '#D6ECF8',
         gray2: '#79797A',
         grayHr: '#D9D9D9',
+        black2: '#79797A',
         black3: '#AAAAAA',
         natural8: '#BFBFBF',
       },
