@@ -120,7 +120,13 @@ const ProductData: FC<IPropsOrder> = (props) => {
     <div className='grid grid-cols-3'>
       <div className='col-span-3 flex flex-col gap-4 sm:col-span-2 sm:flex-row'>
         <div className='self-center'>
-          <Image src={JSON.parse(props.productImageUrl || '[]')[0]} alt={props.productDescription} width={128} height={128} style={{ borderRadius: '12px' }} />
+          <Image
+            src={JSON.parse(props.productImageUrl || '[]')[0]}
+            alt={props.productDescription}
+            width={128}
+            height={128}
+            style={{ borderRadius: '12px', objectFit: 'cover' }}
+          />
         </div>
         <div className='hidden flex-col gap-4 sm:flex'>
           <span>{props.productName}</span>
