@@ -119,9 +119,6 @@ const NewSeller: FC = () => {
             <Form.Item name='phone' label={<p className='text-bold text-lg'>Phone</p>} required rules={[{ required: true }]} className='h-18 lg:col-span-4'>
               <Input size='large' placeholder='(000) 000-0000' onChange={(e) => handleNumber(e.target.value, 'phone')} style={{ padding: '6px 11px' }} />
             </Form.Item>
-            <Form.Item name='phone' label={<p className='text-bold text-lg'>Phone</p>} required rules={[{ required: true }]} className='h-18 lg:col-span-4'>
-              <Input size='large' placeholder='(000) 000-0000' onChange={(e) => handleNumber(e.target.value, 'phone')} style={{ padding: '6px 11px' }} />
-            </Form.Item>
             <Form.Item
               name='location'
               label={<p className='text-bold text-lg'>Location</p>}
