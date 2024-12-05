@@ -7,6 +7,7 @@ import React, { Fragment, useState } from 'react';
 import { FaUserEdit } from 'react-icons/fa';
 import { IoBagOutline, IoClose, IoHeartOutline, IoMapOutline, IoReorderThreeOutline, IoSyncOutline } from 'react-icons/io5';
 import { MdAccountCircle } from 'react-icons/md';
+import { PiShoppingCart } from 'react-icons/pi';
 
 const Navbar: React.FC = () => {
   const navList = [
@@ -40,6 +41,11 @@ const Navbar: React.FC = () => {
     {
       label: 'Cart',
       route: '/cart',
+      icon: PiShoppingCart,
+    },
+    {
+      label: 'Seller',
+      route: '/seller',
       icon: IoBagOutline,
     },
   ];
