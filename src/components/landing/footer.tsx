@@ -83,9 +83,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <hr className='border-black2 w-full border' />
+      <hr className='w-full border border-black2' />
       <div className='my-2 flex flex-col justify-between gap-y-2 md:flex-row md:gap-y-0'>
-        <h4 className='text-black2 content-center'>Modelite.sssboom.xyz © 2024, All Rights Reserved</h4>
+        <h4 className='content-center text-black2'>Modelite.sssboom.xyz © 2024, All Rights Reserved</h4>
         <div className='flex flex-row flex-wrap space-x-4'>
           <Image src='/visa.jpg' alt='visa' width={40} height={25} className='aspect-square object-contain' />
           <Image src='/master_card.jpg' alt='master_card' width={40} height={25} className='aspect-square object-contain' />
