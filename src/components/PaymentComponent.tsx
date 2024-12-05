@@ -1,5 +1,4 @@
 'use client';
-
 import { IAdressData, IProviceData } from '@/interfaces/address';
 import { Button, Modal, Radio, Input } from 'antd';
 import Link from 'next/link';
@@ -107,15 +106,15 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
       voucherId: voucher?.id ?? '',
     };
     try {
-      const status = await postOrder(order);
-      if (status) {
+      const orderId = await postOrder(order);
+      if (orderId) {
         Swal.fire({
           icon: 'success',
           title: 'Order Created Successfully',
-          text: 'Your order has been created successfully. Please check your email for more information.',
-          confirmButtonText: 'OK',
+          text: 'Your order has been created successfully. Please proceed to payment.',
+          confirmButtonText: 'Pay Now',
         }).then(() => {
-          window.location.href = '/setting/order-history';
+          window.location.href = `/fakepayment/${orderId}`;
         });
       }
     } catch (error) {
