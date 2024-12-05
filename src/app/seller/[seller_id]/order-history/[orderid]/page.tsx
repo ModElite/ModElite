@@ -1,43 +1,21 @@
 import BackButton from '@/components/orderHistory/BackButton';
 import CancelAndContactButton from '@/components/orderHistory/CancelAndContactButton';
 import CopyToClipBoard from '@/components/orderHistory/CopyToClipboard';
-import { IOrderList, IOrderProductData } from '@/interfaces/order';
-import { getUserInfo } from '@/routes/auth';
-import { getOrderInfo } from '@/routes/order';
+import EditExpress from '@/components/seller/history/EditExpress';
+import { ISellerOrder, OrderProductDaum } from '@/interfaces/seller';
+import { getOrderHistory } from '@/routes/seller';
 import { dateFormat, numberFormat, phoneNumberFormat } from '@/utils/format';
 import parse from 'html-react-parser';
 import Image from 'next/image';
 import { BsBox2, BsBoxSeam, BsCheckLg, BsTruck } from 'react-icons/bs';
 import { TbCircleCheck } from 'react-icons/tb';
 
-interface GroupOfOrderProductData {
-  sellerId: string;
-  sellerName: string;
-  orderProductData: IOrderProductData[];
-}
-
-export default async function OrderHistory({ params: { orderid = '' } }: { params: { orderid: string } }) {
-  const userInfo = await getUserInfo();
-  const temp = await getOrderInfo();
-
-  if (typeof temp === 'boolean') {
+export default async function OrderHistory({ params: { orderid = '', seller_id = '' } }: { params: { orderid: string; seller_id: string } }) {
+  const temp = await getOrderHistory(seller_id);
+  if (temp === null) {
     return;
   }
-  const OrderInfo = temp.find((item: IOrderList) => item.id === orderid) || ({} as IOrderList);
-
-  const orderProductDataGroupedBySellerId = OrderInfo.orderProductData.reduce((acc: GroupOfOrderProductData[], product: IOrderProductData) => {
-    const existedSeller = acc.find((item) => item.sellerId === product.sellerId);
-    if (existedSeller) {
-      existedSeller.orderProductData.push(product);
-    } else {
-      acc.push({
-        sellerId: product.sellerId,
-        sellerName: product.sellerName,
-        orderProductData: [product],
-      });
-    }
-    return acc;
-  }, []);
+  const OrderInfo = temp.find((item: ISellerOrder) => item.id === orderid) || ({} as ISellerOrder);
 
   const orderStatusList = [
     {
@@ -81,10 +59,7 @@ export default async function OrderHistory({ params: { orderid = '' } }: { param
     return id === 3 ? 'Order Completed!' : id === 2 ? 'Your Parcel is on the way.' : id === 1 ? 'Must be shipped.' : 'Refunded.';
   };
 
-  // const orderStatus = 'REFUND'; //Mockup data
   const currentOrderStatus = orderStatusEncoded.find((item) => item.status === OrderInfo.status)?.statusId || 0;
-
-  const mockupphone = '0800800080';
 
   return (
     <div className='max-lg:w-screen max-lg:p-4 lg:w-full'>
@@ -106,19 +81,13 @@ export default async function OrderHistory({ params: { orderid = '' } }: { param
             <div className=''>
               <div className='text-base font-bold'>Order id</div>
               <CopyToClipBoard pid={OrderInfo.id} />
-              {/* <div className='flex items-center gap-2'>
-                {OrderInfo.id}
-                <button className='text-purple1' onClick={() => navigator.clipboard.writeText(OrderInfo.id)}>
-                  <BsCopy />
-                </button>
-              </div> */}
             </div>
             <div className=' '>
               <div className='text-base font-bold'>Date</div>
               <div>{dateFormat(OrderInfo.createdAt)}</div>
             </div>
             <div className='flex gap-3'>
-              <CancelAndContactButton totalAmout={numberFormat(OrderInfo.totalPrice - OrderInfo.discount)} role='user' />
+              <CancelAndContactButton totalAmout={numberFormat(OrderInfo.totalPrice - OrderInfo.discount)} role='seller' />
             </div>
           </div>
         </div>
@@ -202,21 +171,48 @@ export default async function OrderHistory({ params: { orderid = '' } }: { param
           </div>
         </div>
 
-        <div className='flex flex-col rounded-3xl border max-lg:mx-4 max-lg:mb-4 max-lg:p-4 lg:mx-6 lg:mb-7 lg:p-7'>
-          <div className='w-full text-lg font-bold'>Delivery to</div>
-          <hr className='my-4' />
-          <div className='flex w-full flex-grow items-start justify-between gap-4 max-lg:flex-col'>
-            <div className='w-full'>
-              <div className='text-base'>{userInfo.name || 'Boom Chanapat'} </div>
-              <div className='text-base text-gray1'>{userInfo.address || 'boom asdfasdfasdjklynjikonnklkl 20140boom asdfasdfasdjklynjikonnklkl 20140'}</div>
+        <div className='flex w-full max-lg:flex-col max-lg:gap-4 max-lg:px-4 lg:gap-6 lg:px-6'>
+          <div className='flex w-full flex-col rounded-3xl border max-lg:mb-4 max-lg:p-4 lg:mb-7 lg:p-7'>
+            <div className='w-full text-lg font-bold'>Delivery to</div>
+            <hr className='my-4' />
+            <div className='flex w-full flex-grow flex-col items-start justify-between gap-4 max-lg:flex-col'>
+              <div className='w-full'>
+                <div className='text-base'>
+                  {OrderInfo.firstName}&nbsp;
+                  {OrderInfo.lastName}
+                </div>
+                <div className='text-base text-gray1'>{OrderInfo.address}</div>
+              </div>
+              <div className='w-full'>
+                <div className='text-base'>Email</div>
+                <div className='text-base text-gray1'>{OrderInfo.email}</div>
+              </div>
+              <div className='w-full'>
+                <div className='text-base'>Phone Number</div>
+                <div className='text-base text-gray1'>{phoneNumberFormat(OrderInfo.phone)}</div>
+              </div>
             </div>
-            <div className='w-full'>
-              <div className='text-base'>Email</div>
-              <div className='text-base text-gray1'>{userInfo.email || 'testtest@gmail.com'}</div>
+          </div>
+
+          <div className='flex w-full flex-col rounded-3xl border max-lg:mb-4 max-lg:p-4 lg:mb-7 lg:p-7'>
+            <div className='flex w-full justify-between'>
+              <div className='text-lg font-bold'>Ship by</div>
+              <EditExpress expressProvider={OrderInfo.expressProvider} expressTrackingNumber={OrderInfo.expressTrackingNumber} orderId={OrderInfo.id} />
             </div>
-            <div className='w-full'>
-              <div className='text-base'>Phone Number</div>
-              <div className='text-base text-gray1'>{phoneNumberFormat(userInfo.phone) || phoneNumberFormat(mockupphone)}</div>
+            <hr className='my-4' />
+            <div className='flex w-full flex-grow flex-col items-start justify-between gap-4 max-lg:flex-col'>
+              <div className='w-full'>
+                <div className='text-base'>Date</div>
+                <div className='text-base text-gray1'>{dateFormat(OrderInfo.updatedAt) || 'updatedAt'}</div>
+              </div>
+              <div className='w-full'>
+                <div className='text-base'>Express</div>
+                <div className='text-base text-gray1'>{OrderInfo.expressProvider || 'expressProvider'}</div>
+              </div>
+              <div className='w-full'>
+                <div className='text-base'>Code</div>
+                <div className='text-base text-gray1'>{OrderInfo.expressTrackingNumber || 'xxxxxxx'}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -242,51 +238,45 @@ export default async function OrderHistory({ params: { orderid = '' } }: { param
         </div>
 
         <div className='flex w-full flex-col px-6 max-lg:mb-4 lg:mb-7'>
-          {orderProductDataGroupedBySellerId.map((item: GroupOfOrderProductData) => {
-            return (
-              <>
-                <div className='max-lg:mb-3 max-lg:text-lg lg:mb-5 lg:text-xl'>{item.sellerName}</div>
-                {item.orderProductData.map((item: IOrderProductData, index: number) => (
-                  <div className='mb-4 flex w-full max-lg:gap-5 lg:gap-1' key={index}>
-                    <div className='w-32'>
-                      <Image
-                        src={JSON.parse(item.productOptionImageUrl)[0]}
-                        alt={'productImg'}
-                        width={100}
-                        height={100}
-                        className='aspect-square rounded-xl object-cover'
-                      ></Image>
-                    </div>
+          {/* <div className='max-lg:mb-3 max-lg:text-lg lg:mb-5 lg:text-xl'>{OrderInfo.se}</div> */}
+          {OrderInfo.orderProductData.map((item: OrderProductDaum, index: number) => (
+            <div className='mb-4 flex w-full max-lg:gap-5 lg:gap-1' key={index}>
+              <div className='w-32'>
+                <Image
+                  src={JSON.parse(item.productOptionImageUrl)[0]}
+                  alt={'productImg'}
+                  width={100}
+                  height={100}
+                  className='aspect-square rounded-xl object-cover'
+                ></Image>
+              </div>
 
-                    <div className='flex w-full flex-col'>
-                      <div className='text-lg'>{item.productName}</div>
+              <div className='flex w-full flex-col'>
+                <div className='text-lg'>{item.productName}</div>
 
-                      <div className='flex max-lg:text-sm'>
-                        Color: &nbsp;
-                        <div className='text-gray1'>{item.productOptionLabel}</div>
-                      </div>
+                <div className='flex max-lg:text-sm'>
+                  Color: &nbsp;
+                  <div className='text-gray1'>{item.productOptionLabel}</div>
+                </div>
 
-                      <div className='flex max-lg:text-sm'>
-                        Size: &nbsp;
-                        <div className='text-gray1'>{item.productSize}</div>
-                      </div>
+                <div className='flex max-lg:text-sm'>
+                  Size: &nbsp;
+                  <div className='text-gray1'>{item.productSize}</div>
+                </div>
 
-                      <div className='flex w-full justify-between max-lg:text-sm'>
-                        <div className='flex'>
-                          Price &nbsp;
-                          <div className='text-gray1'>{item.price} THB</div>
-                        </div>
-                        <div>
-                          Qty: &nbsp;
-                          {item.quantity}
-                        </div>
-                      </div>
-                    </div>
+                <div className='flex w-full justify-between max-lg:text-sm'>
+                  <div className='flex'>
+                    Price &nbsp;
+                    <div className='text-gray1'>{item.price} THB</div>
                   </div>
-                ))}
-              </>
-            );
-          })}
+                  <div>
+                    Qty: &nbsp;
+                    {item.quantity}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
 import { Button, Form, Input, Modal } from 'antd';
 import { useState } from 'react';
 
-const CancelAndContactButton = (props: { totalAmout: string }) => {
+const CancelAndContactButton = (props: { totalAmout: string; role: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -20,32 +20,50 @@ const CancelAndContactButton = (props: { totalAmout: string }) => {
 
   return (
     <>
-      <Button
-        size='large'
-        onClick={showModal}
-        style={{
-          width: '100%',
-          color: '#6E62E5',
-          borderRadius: '10px',
-          borderColor: '#6E62E5',
-          backgroundColor: 'transparent',
-          fontSize: '16px',
-        }}
-      >
-        Cancel
-      </Button>
-      <Button
-        size='large'
-        type='primary'
-        style={{
-          width: '100%',
-          color: 'white',
-          borderRadius: '10px',
-          fontSize: '16px',
-        }}
-      >
-        Contact
-      </Button>
+      {props.role !== 'seller' ? (
+        <>
+          <Button
+            size='large'
+            onClick={showModal}
+            style={{
+              width: '100%',
+              color: '#6E62E5',
+              borderRadius: '10px',
+              borderColor: '#6E62E5',
+              backgroundColor: 'transparent',
+              fontSize: '16px',
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            size='large'
+            type='primary'
+            style={{
+              width: '100%',
+              color: 'white',
+              borderRadius: '10px',
+              fontSize: '16px',
+            }}
+          >
+            Contact
+          </Button>
+        </>
+      ) : (
+        <Button
+          size='large'
+          style={{
+            width: '100%',
+            color: '#6E62E5',
+            borderRadius: '10px',
+            borderColor: '#6E62E5',
+            backgroundColor: 'transparent',
+            fontSize: '16px',
+          }}
+        >
+          Contact
+        </Button>
+      )}
       <Modal
         title='Cancel order'
         open={isModalOpen}

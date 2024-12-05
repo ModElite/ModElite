@@ -38,14 +38,15 @@ export interface SellerTransactionOrder {
 }
 
 export interface ISellerOrder {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
   address: string;
-  createdAt: string;
   discount: number;
   expressProvider: string;
   expressTrackingNumber: string;
-  firstName: string;
-  id: string;
-  lastName: string;
   orderProduct: OrderProduct[];
   orderProductData: OrderProductDaum[];
   productPrice: number;
@@ -55,10 +56,11 @@ export interface ISellerOrder {
   shippingPrice: number;
   status: 'PENDING' | 'PAYMENT_SUCCESS' | 'DELIVERY_ON_THE_WAY' | 'REFUND' | 'END' | 'CANCEL';
   totalPrice: number;
-  updatedAt: string;
   user: User;
   userId: string;
   voucherCode: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface OrderProduct {

@@ -35,7 +35,7 @@ export interface IVoucherData {
 }
 
 export interface IOrder {
-  addressId: string;
+  addressId: number;
   products: {
     productSizeId: string;
     quantity: number;
