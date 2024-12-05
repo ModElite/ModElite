@@ -51,7 +51,7 @@ export async function GetProductById(pid: string) {
 
 export async function CreateProductAPI(body: ICreateProduct) {
   try {
-    const response = await axiosInstance.post(`/product`, body);
+    const response = await axiosInstance.post(`/product/create`, body);
     if (response.status !== 201) {
       throw new Error('Error creating product');
     }
