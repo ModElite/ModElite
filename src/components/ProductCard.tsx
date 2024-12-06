@@ -6,11 +6,9 @@ import React from 'react';
 
 export const ProductCard: React.FC<IProductCard> = ({ id, name, price, image, tags }) => {
   return (
-    <Link className='flex w-full snap-center flex-col justify-center gap-y-4 rounded-3xl bg-white p-4' href={`/product/${id}`}>
-      <div className='relative aspect-video h-32 w-full lg:h-60'>
-        {image && (
-          <Image src={image ?? 'shoe1.jpg'} alt={name} className='rounded-3xl' fill sizes='(max-width: 1000px) 100vw, 1000px' style={{ objectFit: 'cover' }} />
-        )}
+    <Link className='flex w-full snap-center flex-col justify-center gap-y-4 rounded-3xl bg-white' href={`/product/${id}`}>
+      <div className='relative aspect-square w-full lg:h-60'>
+        {image && <Image src={image ?? 'shoe1.jpg'} alt={name} className='rounded-3xl' fill sizes='1000px' style={{ objectFit: 'cover' }} />}
       </div>
       <div className='flex flex-col gap-3'>
         <div className='flex flex-wrap space-x-2'>

@@ -78,7 +78,7 @@ const AllProduct: FC<Props> = (props: Props) => {
       <div className={`absolute ${showFilter ? 'block' : 'hidden'} w-full min-w-40 lg:relative lg:block lg:w-1/5 lg:max-w-120`}>
         <FilterSidebar filterList={filter} setFilterList={setFilter} setOpenFilter={setShowFilter} />
       </div>
-      <div className={`w-full lg:w-4/5 ${showFilter ? 'hidden' : 'block'}`}>
+      <div className={`w-full ${showFilter ? 'hidden' : 'block'}`}>
         <div className='flex h-16 w-full bg-white p-4'>
           <div className='hidden w-full items-center gap-1 overflow-x-auto px-3 py-2 lg:flex'>
             {Object.keys(filter).some((key) => filter[key].value.some((value) => value.checked)) && (
@@ -155,7 +155,7 @@ const AllProduct: FC<Props> = (props: Props) => {
         )}
         {!loading && (
           <>
-            <div className='grid grid-cols-2 gap-4 p-4 lg:grid-cols-3 xl:grid-cols-4'>
+            <div className='grid grid-cols-2 gap-4 px-4 md:grid-cols-3 lg:p-4 xl:grid-cols-4'>
               {productValue
                 .sort((a, b) => {
                   let a_item = a[sort.sortBy as keyof IProduct];
@@ -177,7 +177,9 @@ const AllProduct: FC<Props> = (props: Props) => {
                 })
                 .slice((page.page - 1) * page.perPage, page.page * page.perPage)
                 .map((product) => (
-                  <ProductCard key={product.id} id={product.id} name={product.name} price={product.price} image={product.imageUrl} />
+                  <div key={product.id}>
+                    <ProductCard id={product.id} name={product.name} price={product.price} image={product.imageUrl} />
+                  </div>
                 ))}
             </div>
             {productValue.length === 0 && (
@@ -203,6 +205,10 @@ const AllProduct: FC<Props> = (props: Props) => {
             setPage((prev) => {
               return { ...prev, page: e };
             });
+          }}
+          style={{
+            marginBottom: '30px',
+            marginTop: '30px',
           }}
         />
       </div>
