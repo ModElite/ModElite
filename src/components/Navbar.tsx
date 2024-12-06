@@ -4,9 +4,9 @@ import { Input } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { Fragment, useState } from 'react';
+import { BsPerson } from 'react-icons/bs';
 import { FaUserEdit } from 'react-icons/fa';
 import { IoBagOutline, IoClose, IoHeartOutline, IoMapOutline, IoReorderThreeOutline, IoSyncOutline } from 'react-icons/io5';
-import { MdAccountCircle } from 'react-icons/md';
 import { PiShoppingCart } from 'react-icons/pi';
 
 const Navbar: React.FC = () => {
@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
     {
       label: 'Account',
       route: '/setting',
-      icon: MdAccountCircle,
+      icon: BsPerson,
       submenu: [
         {
           label: 'Profile',
