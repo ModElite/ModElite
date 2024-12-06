@@ -60,7 +60,10 @@ export const postOrder = async (order: IOrder) => {
     if (res.status !== 201) {
       return null;
     }
-    return res.data.data as string;
+    return res.data.data as {
+      amount: number;
+      orderId: string;
+    };
   } catch (err) {
     console.log(err);
     return null;

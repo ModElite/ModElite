@@ -106,15 +106,18 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
       voucherId: voucher?.id ?? '',
     };
     try {
-      const orderId = await postOrder(order);
-      if (orderId) {
+      const orderDetail = await postOrder(order);
+      if (orderDetail !== null) {
         Swal.fire({
           icon: 'success',
           title: 'Order Created Successfully',
           text: 'Your order has been created successfully. Please proceed to payment.',
           confirmButtonText: 'Pay Now',
-        }).then(() => {
-          window.location.href = `/fakepayment/${orderId}`;
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.open(`https://pay.sn/wirabyte/${orderDetail.amount}/${orderDetail.orderId}`, '_blank');
+            window.location.href = `/fakepayment/${orderDetail.orderId}`;
+          }
         });
       }
     } catch (error) {
@@ -161,7 +164,7 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
       </div>
       <div className='grid w-full grid-cols-1 gap-8 lg:grid-cols-2'>
         <div className='col-span-1 flex w-full flex-col gap-8'>
-          <div className='rounded-2xl border border-gray-300 bg-white px-6 py-4 shadow-md'>
+          <div className='rounded-2xl border border-gray-300 bg-white px-6 py-4'>
             <div className='flex items-center justify-between pb-2'>
               <div className='text-base font-bold md:text-xl'>Address</div>
               <Button
@@ -199,7 +202,7 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
               </div>
             </div>
           </div>
-          <div className='flex flex-col rounded-2xl border border-gray-300 bg-white px-6 py-4 shadow-md'>
+          <div className='flex flex-col rounded-2xl border border-gray-300 bg-white px-6 py-4'>
             <h2 className='border-b pb-2 text-xl font-bold'>Order Details</h2>
             <div className=''></div>
             {products.map((product) => (
@@ -239,7 +242,7 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
           </div>
         </div>
         <div className='col-span-1 flex w-full flex-col gap-8'>
-          <div className='rounded-2xl border border-gray-300 bg-white shadow-md'>
+          <div className='rounded-2xl border border-gray-300 bg-white'>
             <h2 className='px-6 py-4 text-lg font-semibold md:text-base'>Payment Details</h2>
             <div className='border-b' />
             <Radio.Group
@@ -262,7 +265,7 @@ const PaymentComponent: FC<IProps> = ({ products, address, provinces, onBack }) 
               ))}
             </Radio.Group>
           </div>
-          <div className='rounded-2xl border border-gray-300 bg-white shadow-md'>
+          <div className='rounded-2xl border border-gray-300 bg-white'>
             <h2 className='px-6 py-4 text-base font-semibold md:text-xl'>Review Item by Stores</h2>
             <div className='mx-6 border-b' />
             <div className='px-6 py-4'>

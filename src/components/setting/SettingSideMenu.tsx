@@ -19,7 +19,7 @@ const SettingSideMenu = () => {
   const pathname = usePathname();
 
   return (
-    <div className='hidden h-fit w-92 rounded-xl border border-l-gray1 bg-white lg:block'>
+    <div className='hidden h-fit w-92 rounded-xl border border-gray1 border-opacity-15 bg-white lg:block'>
       <h2 className='mb-4 px-6 pt-4 text-2xl font-semibold'>Navigation</h2>
       <div>
         {menuItems.map((item) => (

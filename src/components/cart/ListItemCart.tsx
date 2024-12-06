@@ -51,6 +51,9 @@ const ListItemCart: React.FC<Props> = ({ cartItems, setCartItems }) => {
     <ConfigProvider renderEmpty={customizeRenderEmpty}>
       <div>
         <List
+          style={{
+            boxShadow: '0px 0px 0px',
+          }}
           header={
             <div className='my-1 flex space-x-[15px]'>
               <Checkbox onChange={(e) => handleSelectAll(e.target.checked)} checked={selectAll}></Checkbox>
