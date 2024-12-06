@@ -34,7 +34,6 @@ export const updateOrderExpress = async (orderid: string, data: IExpressBody) =>
     if (response.status !== 200) {
       return false;
     }
-    console.log('test', response);
     return true;
   } catch (error) {
     console.log('ERROR', error);

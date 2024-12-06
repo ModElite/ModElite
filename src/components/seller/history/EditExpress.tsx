@@ -1,5 +1,6 @@
 'use client';
 
+import { EXPRESS_OPTION } from '@/interfaces/seller';
 import { updateOrderExpress } from '@/routes/order';
 import { Button, Form, Input, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
@@ -67,16 +68,7 @@ const EditExpress = (props: { expressProvider: string; expressTrackingNumber: st
                 flex: 1,
               }}
             >
-              <Select defaultValue={props.expressProvider} onChange={(value) => onInput('expressProvider', value)}>
-                <Select.Option value='Kerry Express'>Kerry Express</Select.Option>
-                <Select.Option value='J&T Express'>J&T Express</Select.Option>
-                <Select.Option value='Flash Express'>Flash Express</Select.Option>
-                <Select.Option value='Thai Express'>Thai Express</Select.Option>
-                <Select.Option value='Lala Move'>Lala Move</Select.Option>
-                <Select.Option value='Ninja Van'>Ninja Van</Select.Option>
-                <Select.Option value='SCG Express'>SCG Express</Select.Option>
-                <Select.Option value='DHL EXPRESS'>DHL EXPRESS</Select.Option>
-              </Select>
+              <Select defaultValue={props.expressProvider} onChange={(value) => onInput('expressProvider', value)} options={EXPRESS_OPTION} />
             </Form.Item>
 
             <Form.Item

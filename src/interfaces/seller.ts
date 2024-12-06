@@ -1,3 +1,38 @@
+export const EXPRESS_OPTION = [
+  {
+    label: 'Kerry Express',
+    value: 'Kerry Express',
+  },
+  {
+    label: 'J&T Express',
+    value: 'J&T Express',
+  },
+  {
+    label: 'Flash Express',
+    value: 'Flash Express',
+  },
+  {
+    label: 'Thai Express',
+    value: 'Thai Express',
+  },
+  {
+    label: 'Lala Move',
+    value: 'Lala Move',
+  },
+  {
+    label: 'Ninja Van',
+    value: 'Ninja Van',
+  },
+  {
+    label: 'SCG Express',
+    value: 'SCG Express',
+  },
+  {
+    label: 'DHL Express',
+    value: 'DHL Express',
+  },
+];
+
 export interface ISeller {
   bankAccountName: string;
   bankAccountNumber: string;
@@ -44,6 +79,8 @@ export interface ISellerOrder {
   email: string;
   phone: string;
   address: string;
+  discouexpressnt: number;
+  Provider: string;
   discount: number;
   expressProvider: string;
   expressTrackingNumber: string;
