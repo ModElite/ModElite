@@ -20,6 +20,7 @@ const SizeSelection = (props: Props) => {
 
   const [selectSize, setSelectSize] = useState<number>();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalOpenNotSelect, setModalOpenNotSelect] = useState<boolean>(false);
   const [productSizeId, setProductSizeId] = useState<string>();
   const [maxQty, setMaxQty] = useState<number>(1);
 
@@ -41,6 +42,11 @@ const SizeSelection = (props: Props) => {
 
   async function handleAddtoCart(ProductSizeId: string, qty: number) {
     try {
+      if (!ProductSizeId) {
+        setModalOpenNotSelect(true);
+        return;
+      }
+
       const result = await addToCart(ProductSizeId, qty);
       if (result) {
         router.push(`/cart`);
@@ -140,6 +146,23 @@ const SizeSelection = (props: Props) => {
           </div>
           <Button
             onClick={() => setModalOpen(false)}
+            color='danger'
+            variant='solid'
+            style={{
+              padding: '20px',
+            }}
+          >
+            Try again
+          </Button>
+        </div>
+      </Modal>
+      <Modal centered closable={false} open={modalOpenNotSelect} footer={[]}>
+        <div className='flex flex-col items-center justify-center gap-4'>
+          <IoCloseCircle className='size-20 text-red-500/90' />
+          <div className='text-2xl font-bold'>Error!</div>
+          <div className='text-center text-lg'>Please select color and size before adding to cart.</div>
+          <Button
+            onClick={() => setModalOpenNotSelect(false)}
             color='danger'
             variant='solid'
             style={{

@@ -1,11 +1,11 @@
 'use server';
 import { IFilterArray } from '@/interfaces/product';
 import { ITag, ITagGroup } from '@/interfaces/tag';
-import { axiosInstanceClient } from '@/utils/axiosInstanceClient';
+import { axiosInstance } from '@/utils/axiosInstanceServer';
 
 export const getTags = async (tagGroupId?: string) => {
   try {
-    const response = await axiosInstanceClient.get(`/tag`, {
+    const response = await axiosInstance.get(`/tag`, {
       ...(tagGroupId ? { params: { tagGroupId: tagGroupId } } : {}),
     });
     if (response.status !== 200) {
@@ -19,7 +19,7 @@ export const getTags = async (tagGroupId?: string) => {
 
 export const getAllTagGroup = async () => {
   try {
-    const response = await axiosInstanceClient.get(`/tag_group`, {
+    const response = await axiosInstance.get(`/tag_group`, {
       params: {
         withTags: true,
       },

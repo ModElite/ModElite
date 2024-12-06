@@ -6,7 +6,7 @@ import React from 'react';
 
 export const ProductCard: React.FC<IProductCard> = ({ id, name, price, image, tags }) => {
   return (
-    <Link className='lg: flex w-full snap-center flex-col justify-center gap-y-4 rounded-3xl border border-gray-200 bg-white p-4' href={`/product/${id}`}>
+    <Link className='flex w-full snap-center flex-col justify-center gap-y-4 rounded-3xl bg-white p-4' href={`/product/${id}`}>
       <div className='relative aspect-video h-32 w-full lg:h-60'>
         {image && (
           <Image src={image ?? 'shoe1.jpg'} alt={name} className='rounded-3xl' fill sizes='(max-width: 1000px) 100vw, 1000px' style={{ objectFit: 'cover' }} />
