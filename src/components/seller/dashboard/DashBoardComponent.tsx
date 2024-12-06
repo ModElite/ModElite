@@ -68,7 +68,7 @@ const DashBoardComponent: FC<IProps> = (props) => {
           </div>
         </div>
         <div className='flex flex-row justify-center gap-3 rounded-xl bg-[#FFDED4] px-2 py-3 lg:px-6 lg:py-8 xl:gap-6'>
-          <div className='bg-orange1 flex h-10 w-10 items-center justify-center rounded-full'>
+          <div className='flex h-10 w-10 items-center justify-center rounded-full bg-orange1'>
             <FaMoneyBillWave size={25} color='#FFFFFF' />
           </div>
           <div className='flex flex-col'>
