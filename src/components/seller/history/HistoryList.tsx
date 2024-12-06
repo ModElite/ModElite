@@ -71,7 +71,7 @@ const HistoryList: FC<IProps> = (props) => {
               />
             );
           })}
-        {props.orders.length === 0 ? (
+        {props.orders.filter((item) => item.status === props.filter || props.filter === '').length === 0 ? (
           <div className='w-full p-16 text-gray-400'>
             <div className='mx-auto w-fit'>
               <HiInbox size={64} color='#e5e7eb' />
