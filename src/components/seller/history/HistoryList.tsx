@@ -2,6 +2,7 @@ import HistoryCard from '@/components/seller/history/HistoryCard';
 import { ISellerOrder } from '@/interfaces/seller';
 import { Button, Input, Modal, Select } from 'antd';
 import { FC, useState } from 'react';
+import { HiInbox } from 'react-icons/hi';
 
 interface IProps {
   filter: string;
@@ -27,6 +28,16 @@ const HistoryList: FC<IProps> = (props) => {
           .map((item) => {
             return <HistoryCard key={item.id} viewDeliveryDetail={openDeliveryModal} status={item.status} orders={item} />;
           })}
+        {props.orders.length === 0 ? (
+          <div className='w-full p-16 text-gray-400'>
+            <div className='mx-auto w-fit'>
+              <HiInbox size={64} color='#e5e7eb' />
+              <span>No data</span>
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
 
       <Modal open={deliveryModal} closable={false} footer={null} centered onCancel={cancelDeliveryModal} width={592} height={260}>
