@@ -107,7 +107,14 @@ const SettingProfileCard: FC<Props> = (props) => {
                   },
                 ]}
               >
-                <Input disabled={!editable} size='large' />
+                <Input
+                  style={{
+                    padding: '0.25rem 0.75rem',
+                  }}
+                  disabled={!editable}
+                  size='large'
+                  className=''
+                />
               </Form.Item>
               <Form.Item<IProfileData>
                 label='Last Name'
@@ -118,7 +125,13 @@ const SettingProfileCard: FC<Props> = (props) => {
                   },
                 ]}
               >
-                <Input disabled={!editable} size='large' />
+                <Input
+                  style={{
+                    padding: '0.25rem 0.75rem',
+                  }}
+                  disabled={!editable}
+                  size='large'
+                />
               </Form.Item>
               <Form.Item<IProfileData>
                 label='Email'
@@ -129,7 +142,14 @@ const SettingProfileCard: FC<Props> = (props) => {
                   },
                 ]}
               >
-                <Input disabled={true} type='email' size='large' />
+                <Input
+                  style={{
+                    padding: '0.25rem 0.75rem',
+                  }}
+                  disabled={true}
+                  type='email'
+                  size='large'
+                />
               </Form.Item>
               <Form.Item<IProfileData>
                 label='Phone'
@@ -147,7 +167,15 @@ const SettingProfileCard: FC<Props> = (props) => {
                   },
                 ]}
               >
-                <Input minLength={10} maxLength={10} disabled={!editable} size='large' />
+                <Input
+                  style={{
+                    padding: '0.25rem 0.75rem',
+                  }}
+                  minLength={10}
+                  maxLength={10}
+                  disabled={!editable}
+                  size='large'
+                />
               </Form.Item>
             </div>
           </div>

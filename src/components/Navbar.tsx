@@ -1,6 +1,4 @@
 'use client';
-import { SearchOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { Fragment, useState } from 'react';
@@ -59,16 +57,9 @@ const Navbar: React.FC = () => {
       <div className='min-w-screen-xl mx-auto flex flex-wrap items-center justify-between px-6 py-2 sm:px-12'>
         <Link href='/' className='pl-4 text-2xl font-bold'>
           <div className='flex flex-row items-center'>
-            <div className='relative size-12 lg:size-12 xl:mx-2 xl:size-16'>
-              <Image src='/logo.png' fill alt='logo' className='inline h-4 object-cover' />
-            </div>
+            <Image src='/logo.png' width={40} height={40} alt='logo' className='aspect-square' />
           </div>
         </Link>
-
-        <div className='hidden w-1/4 items-center lg:flex'>
-          <Input placeholder='Search...' prefix={<SearchOutlined className='px-2' />} className='w-full rounded-md' size='large' />
-        </div>
-
         {/* Navbar Buttons */}
         <button
           aria-label='toggle navbar'
