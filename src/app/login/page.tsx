@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { getGoogleAuth } from '@/routes/auth';
+import { getGoogleAuth } from '@/api/auth';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Button, Modal } from 'antd';

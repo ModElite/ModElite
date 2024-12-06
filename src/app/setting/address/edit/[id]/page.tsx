@@ -1,7 +1,7 @@
 'use server';
 import SettingAddressEdit from '@/components/setting/SettingAddressEdit';
 import { ISelectOption } from '@/interfaces/input';
-import { getAddressByID, getProvinces } from '@/routes/address';
+import { getAddressByID, getProvinces } from '@/api/address';
 import { redirect } from 'next/navigation';
 
 export default async function EditAddress({ params }: { params: { id: string } }) {

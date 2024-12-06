@@ -1,6 +1,6 @@
 'use client';
 import { IProfileData } from '@/interfaces/profile';
-import { updateProfile, updateUserInfo } from '@/routes/profile';
+import { updateProfile, updateUserInfo } from '@/api/profile';
 import { Button, Card, Form, Input } from 'antd';
 import Image from 'next/image';
 import { FC, useState } from 'react';

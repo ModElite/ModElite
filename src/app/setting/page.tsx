@@ -1,6 +1,6 @@
 import SettingProfileCard from '@/components/setting/SettingProfileCard';
 import React from 'react';
-import { getProfile } from '@/routes/profile';
+import { getProfile } from '@/api/profile';
 import { redirect } from 'next/navigation';
 
 export default async function ProfileSetting() {

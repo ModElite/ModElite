@@ -1,7 +1,7 @@
 'use client';
 
 import { EXPRESS_OPTION } from '@/interfaces/seller';
-import { updateOrderExpress } from '@/routes/order';
+import { updateOrderExpress } from '@/api/order';
 import { Button, Form, Input, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { useState } from 'react';

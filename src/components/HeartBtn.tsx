@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from 'antd';
 import { IoHeart } from 'react-icons/io5';
-import { addToWishList, getWishList, removeWishList } from '@/routes/wishlist';
+import { addToWishList, getWishList, removeWishList } from '@/api/wishlist';
 
 export default function HeartBtn(props: { pid: string }) {
   const [clicked, setClick] = useState(false);

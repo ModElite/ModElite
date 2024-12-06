@@ -1,7 +1,7 @@
 'use client';
 import FilterSidebar from '@/components/FilterSidebar';
 import { Filters, IProduct, ISort, Paging } from '@/interfaces/product';
-import { getProduct } from '@/routes/product';
+import { getProduct } from '@/api/product';
 import { Button, Pagination, Select, Spin } from 'antd';
 import { usePathname, useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';

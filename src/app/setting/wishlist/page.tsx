@@ -2,7 +2,7 @@
 
 import Wishlistcard from '@/components/wishlist/WishListCard';
 import { extendWishListWithSumQuantity } from '@/utils/format';
-import { getWishList } from '@/routes/wishlist';
+import { getWishList } from '@/api/wishlist';
 import { ExtendedWishList } from '@/interfaces/wishlist';
 export default async function wishlist() {
   try {

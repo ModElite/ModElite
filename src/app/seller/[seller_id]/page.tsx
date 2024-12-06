@@ -1,7 +1,7 @@
 'use server';
 
 import DashBoardComponent from '@/components/seller/dashboard/DashBoardComponent';
-import { getDashBoard, isSeller } from '@/routes/seller';
+import { getDashBoard, isSeller } from '@/api/seller';
 import { redirect } from 'next/navigation';
 
 export default async function Dashboard({ params }: { params: { seller_id: string } }) {

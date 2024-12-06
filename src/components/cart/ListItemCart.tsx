@@ -1,6 +1,6 @@
 'use client';
 import { IExtendedProduct } from '@/interfaces/cart';
-import { postAddCartItem } from '@/routes/cart';
+import { postAddCartItem } from '@/api/cart';
 import { numberFormat } from '@/utils/format';
 import { Button, Checkbox, ConfigProvider, List } from 'antd';
 import Image from 'next/image';

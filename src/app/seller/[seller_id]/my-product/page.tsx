@@ -1,6 +1,6 @@
 'use server';
 import MyProductList from '@/components/seller/product/MyProductList';
-import { getProductBySeller } from '@/routes/product';
+import { getProductBySeller } from '@/api/product';
 
 export default async function myProduct({ params }: { params: { seller_id: string } }) {
   let product = await getProductBySeller(params.seller_id);

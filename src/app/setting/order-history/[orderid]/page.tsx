@@ -2,7 +2,7 @@ import BackButton from '@/components/orderHistory/BackButton';
 import CancelAndContactButton from '@/components/orderHistory/CancelAndContactButton';
 import CopyToClipBoard from '@/components/orderHistory/CopyToClipboard';
 import { IOrderProductData } from '@/interfaces/order';
-import { getOrderInfoById } from '@/routes/order';
+import { getOrderInfoById } from '@/api/order';
 import { dateFormat, numberFormat, phoneNumberFormat } from '@/utils/format';
 import parse from 'html-react-parser';
 import Image from 'next/image';

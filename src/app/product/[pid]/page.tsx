@@ -3,7 +3,7 @@ import HeartBtn from '@/components/HeartBtn';
 import { ProductCard } from '@/components/ProductCard';
 import ProductPicSlideShow from '@/components/ProductPicSlideShow';
 import SizeSelection from '@/components/SizeSelection';
-import { getProduct, GetProductById } from '@/routes/product';
+import { getProduct, GetProductById } from '@/api/product';
 import { HomeOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'antd';
 import { Metadata } from 'next';

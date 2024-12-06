@@ -1,6 +1,6 @@
 'use client';
 import { ExtendedWishList } from '@/interfaces/wishlist';
-import { getWishList, removeWishList } from '@/routes/wishlist';
+import { getWishList, removeWishList } from '@/api/wishlist';
 import { extendWishListWithSumQuantity, numberFormat } from '@/utils/format';
 import { Button, List } from 'antd';
 import Image from 'next/image';

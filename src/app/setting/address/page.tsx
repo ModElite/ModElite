@@ -1,6 +1,6 @@
 'use server';
 import SettingAddress from '@/components/setting/SettingAddress';
-import { getAddress } from '@/routes/address';
+import { getAddress } from '@/api/address';
 
 export default async function AddressSetting() {
   const datas = await getAddress();

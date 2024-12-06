@@ -1,7 +1,7 @@
 'use server';
 
 import HistoryPage from '@/components/seller/history/HistoryPage';
-import { getOrderHistory } from '@/routes/seller';
+import { getOrderHistory } from '@/api/seller';
 import { redirect } from 'next/navigation';
 
 interface IParmas {

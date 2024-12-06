@@ -2,7 +2,7 @@
 
 import { customizeRequiredMark } from '@/components/customReuiredMark';
 import { ISeller } from '@/interfaces/seller';
-import { isSeller, patchUpdateSeller } from '@/routes/seller';
+import { isSeller, patchUpdateSeller } from '@/api/seller';
 import { axiosInstanceClient } from '@/utils/axiosInstanceClient';
 import { Button, Form, Input, Select, Table, TableColumnsType, Upload, UploadProps } from 'antd';
 import ImgCrop from 'antd-img-crop';

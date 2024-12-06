@@ -1,8 +1,8 @@
 'use server';
 import CreateProduct from '@/components/seller/product/CreateProduct';
 import { TAG_GROUP_ID } from '@/configs/constant';
-import { getAllSize } from '@/routes/size';
-import { getTags } from '@/routes/tag';
+import { getAllSize } from '@/api/size';
+import { getTags } from '@/api/tag';
 
 export default async function myProduct({ params }: { params: { seller_id: string } }) {
   const size = await getAllSize();

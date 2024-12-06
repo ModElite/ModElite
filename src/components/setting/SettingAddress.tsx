@@ -1,7 +1,7 @@
 'use client';
 import SettingAddressCard from '@/components/setting/SettingAddressCard';
 import { IAdressData } from '@/interfaces/address';
-import { deleteAddress } from '@/routes/address';
+import { deleteAddress } from '@/api/address';
 import { Button } from 'antd';
 import { usePathname, useRouter } from 'next/navigation';
 import { FC, useEffect } from 'react';

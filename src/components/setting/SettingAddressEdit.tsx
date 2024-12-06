@@ -1,7 +1,7 @@
 'use client';
 import { IAddressSend, IAdress, IAdressData, IOnFinish, IAdressOption, IProviceData } from '@/interfaces/address';
 import { ISelectOption } from '@/interfaces/input';
-import { getDistricts, getSubDistricts, postAddress, putAddress } from '@/routes/address';
+import { getDistricts, getSubDistricts, postAddress, putAddress } from '@/api/address';
 import { Button, Form, Input, Select, Switch } from 'antd';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';

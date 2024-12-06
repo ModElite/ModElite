@@ -1,7 +1,7 @@
 'use client';
 
 import { NewUser } from '@/interfaces/seller';
-import { postSeller } from '@/routes/seller';
+import { postSeller } from '@/api/seller';
 import { axiosInstanceClient } from '@/utils/axiosInstanceClient';
 import { Button, Form, Input, Select, Upload, UploadProps } from 'antd';
 import ImgCrop from 'antd-img-crop';

@@ -1,8 +1,8 @@
 'use server';
 import CartPage from '@/components/cart/CartPage';
 import { IExtendedProduct } from '@/interfaces/cart';
-import { getAddress, getProvinces } from '@/routes/address';
-import { getCartSelf } from '@/routes/cart';
+import { getAddress, getProvinces } from '@/api/address';
+import { getCartSelf } from '@/api/cart';
 import { redirect } from 'next/navigation';
 
 export default async function Cart() {

@@ -1,4 +1,4 @@
-import { Logout } from '@/routes/auth';
+import { Logout } from '@/api/auth';
 import { redirect } from 'next/navigation';
 import React from 'react';
 

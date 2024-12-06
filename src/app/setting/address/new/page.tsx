@@ -2,7 +2,7 @@
 
 import SettingAddressEdit from '@/components/setting/SettingAddressEdit';
 import { ISelectOption } from '@/interfaces/input';
-import { getProvinces } from '@/routes/address';
+import { getProvinces } from '@/api/address';
 import { redirect } from 'next/navigation';
 
 export default async function NewAddress() {

@@ -1,7 +1,7 @@
 'use server';
 
 import SellerList from '@/components/seller/SellerList';
-import { getSellerByOwner } from '@/routes/seller';
+import { getSellerByOwner } from '@/api/seller';
 
 export default async function seller() {
   const seller_list = await getSellerByOwner();

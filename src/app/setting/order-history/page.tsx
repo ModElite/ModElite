@@ -1,5 +1,5 @@
 import OrderHistoryPage from '@/components/setting/order-history/OrderHistoryPage';
-import { getOrderInfo } from '@/routes/order';
+import { getOrderInfo } from '@/api/order';
 
 export default async function OrderHistory() {
   const order = await getOrderInfo();

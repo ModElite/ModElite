@@ -1,6 +1,6 @@
 import SettingBreadcrumb from '@/components/setting/SettingBreadcrumb';
 import SettingSideMenu from '@/components/setting/SettingSideMenu';
-import { isAuth } from '@/routes/auth';
+import { isAuth } from '@/api/auth';
 import { redirect } from 'next/navigation';
 import React from 'react';
 

@@ -3,7 +3,7 @@ import { customizeRequiredMark } from '@/components/customReuiredMark';
 import ProductImageCroper from '@/components/seller/product/ProductImageCroper';
 import ProductMultiImageCroper from '@/components/seller/product/ProductMultiImageCroper';
 import { ICreateProduct, ICreateProductOption } from '@/interfaces/product';
-import { CreateProductAPI } from '@/routes/product';
+import { CreateProductAPI } from '@/api/product';
 import { Button, Form, Input, Select } from 'antd';
 import Link from 'next/link';
 import React from 'react';

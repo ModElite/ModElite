@@ -1,8 +1,8 @@
 import SellerBreadcrumb from '@/components/seller/SellerBreadcrumb';
 import SellerSideMenu from '@/components/seller/SellerMenu';
 import { ISeller } from '@/interfaces/seller';
-import { isAuth } from '@/routes/auth';
-import { isSeller } from '@/routes/seller';
+import { isAuth } from '@/api/auth';
+import { isSeller } from '@/api/seller';
 import { redirect } from 'next/navigation';
 import React from 'react';
 

@@ -3,7 +3,7 @@ import CancelAndContactButton from '@/components/orderHistory/CancelAndContactBu
 import CopyToClipBoard from '@/components/orderHistory/CopyToClipboard';
 import EditExpress from '@/components/seller/history/EditExpress';
 import { ISellerOrder, OrderProductDaum } from '@/interfaces/seller';
-import { getOrderHistory } from '@/routes/seller';
+import { getOrderHistory } from '@/api/seller';
 import { dateFormat, numberFormat, phoneNumberFormat } from '@/utils/format';
 import parse from 'html-react-parser';
 import Image from 'next/image';

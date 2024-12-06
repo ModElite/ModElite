@@ -3,8 +3,8 @@
 import AllProduct from '@/components/AllProduct';
 import InternalError from '@/components/InternalError';
 import { Filters, ISort, Paging } from '@/interfaces/product';
-import { getProduct } from '@/routes/product';
-import { getAllTagGroup } from '@/routes/tag';
+import { getProduct } from '@/api/product';
+import { getAllTagGroup } from '@/api/tag';
 
 export default async function AllProductPage({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
   const sort = (searchParams?.sort as string) ?? 'name:asc';

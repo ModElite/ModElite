@@ -3,7 +3,7 @@
 'use client';
 import ColorPicker from '@/components/ColorPicker';
 import { IProductOption, IProductSize } from '@/interfaces/product';
-import { addToCart } from '@/routes/cart';
+import { addToCart } from '@/api/cart';
 import { Button, InputNumber, Modal } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';

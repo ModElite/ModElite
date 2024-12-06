@@ -1,7 +1,7 @@
 import HistoryCard from '@/components/seller/history/HistoryCard';
 import { IExpressBody } from '@/interfaces/order';
 import { EXPRESS_OPTION, ISellerOrder } from '@/interfaces/seller';
-import { updateOrderExpress } from '@/routes/order';
+import { updateOrderExpress } from '@/api/order';
 import { Button, Input, Modal, Select } from 'antd';
 import { FC, useState } from 'react';
 import { HiInbox } from 'react-icons/hi';

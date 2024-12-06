@@ -1,7 +1,7 @@
 'use server';
 
 import AccountComponent from '@/components/seller/account/AccountComponent';
-import { isSeller } from '@/routes/seller';
+import { isSeller } from '@/api/seller';
 
 interface IParmas {
   seller_id: string;
