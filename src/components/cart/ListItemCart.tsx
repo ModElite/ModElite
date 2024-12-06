@@ -80,7 +80,11 @@ const ListItemCart: React.FC<Props> = ({ cartItems, setCartItems }) => {
                         <h2 className='text-[13px] font-semibold md:text-[16px]'>{item.product.productName}</h2>
 
                         <div className='my-3 space-y-[6-px]'>
-                          <h4 className='text-[13px] text-gray1 md:text-[16px]'>{item.product.productDescription}</h4>
+                          <h4 className='text-[13px] text-gray1 md:text-[16px]'>
+                            {item.product.productDescription.length > 50
+                              ? item.product.productDescription.slice(0, 50) + '...'
+                              : item.product.productDescription}
+                          </h4>
                           <h4 className='text-[13px] md:text-[16px]'>
                             Color:
                             <span className='text-[13px] text-gray1 md:text-[16px]'> {item.product.productOption}</span>
