@@ -17,7 +17,7 @@ export default function Home() {
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <div className='grid h-[90vh] content-center justify-center'>
+    <div className='grid h-[100vh] content-center justify-center bg-purplebg'>
       <div className='flex w-full flex-col items-center justify-center gap-4 rounded-3xl bg-white px-16 py-8'>
         <div>
           <Image src='/logo.png' width={75} height={75} alt='logo' className='object-cover' />
@@ -26,7 +26,7 @@ export default function Home() {
           <div className='text-2xl font-bold'>ModÉlite</div>
           <div className='flex w-5/6 flex-wrap text-center'>Access all feature by signing in to your account here.</div>
           <button
-            className='flex items-center justify-center gap-4 rounded-full px-20 py-4 shadow-lg shadow-gray-200 duration-300 hover:bg-gray-100/75'
+            className='flex items-center justify-center gap-4 rounded-full stroke-gray1 px-20 py-4 shadow-lg shadow-gray-200 duration-300 hover:bg-gray-100/75'
             onClick={() => LoginHandle()}
           >
             <Image src='/Google.svg' width={25} height={25} alt='googleLogo' className='object-cover' />

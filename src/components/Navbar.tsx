@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { FaUserEdit } from 'react-icons/fa';
@@ -8,6 +9,7 @@ import { IoBagOutline, IoClose, IoHeartOutline, IoMapOutline, IoReorderThreeOutl
 import { PiShoppingCart } from 'react-icons/pi';
 
 const Navbar: React.FC = () => {
+  const pathname = usePathname();
   const navList = [
     {
       label: 'Favorites',
@@ -51,6 +53,8 @@ const Navbar: React.FC = () => {
   const toggleNavbar = () => {
     setShowMenu(!showMenu);
   };
+
+  if (pathname === '/login') return null;
 
   return (
     <nav aria-label='Main Navigation' className='sticky top-0 z-50 border-gray-200 bg-white shadow-md'>
