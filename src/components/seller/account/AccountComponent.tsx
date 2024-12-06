@@ -61,7 +61,7 @@ const AccountComponent: FC<IProps> = (props) => {
   ];
 
   const bank_list = [
-    { value: 'Bangkok bank', label: 'Bangkok bang' },
+    { value: 'Bangkok bank', label: 'Bangkok bank' },
     { value: 'Bank of Ayudhya', label: 'Bank of Ayudhya' },
     { value: 'Kasikorn bank', label: 'Kasikorn bank' },
     { value: 'Krung thai bank', label: 'Siam commercial bank' },
@@ -144,9 +144,9 @@ const AccountComponent: FC<IProps> = (props) => {
 
   return (
     <div className='flex w-full flex-col gap-8'>
-      <div className='h-fit w-full gap-y-6 rounded-2xl border'>
+      <div className='h-fit w-full gap-y-6 rounded-2xl border border-gray1 border-opacity-25'>
         <div className='flex justify-between border-b px-6 py-4'>
-          <h1 className='text-2xl font-semibold'>Store detail</h1>
+          <h1 className='text-xl font-semibold'>Store detail</h1>
           {!isEdit ? (
             <div className='flex flex-row gap-1 text-purple1' onClick={() => setIsEdit(true)}>
               <AiOutlineEdit className='size-6' /> Edit
@@ -169,7 +169,7 @@ const AccountComponent: FC<IProps> = (props) => {
                       <span>Your Balance</span>
                     </div>
                     <div>
-                      <span>7530 Bath</span>
+                      <span>0 Bath</span>
                     </div>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ const AccountComponent: FC<IProps> = (props) => {
               </div>
             </div>
             <div className='grid h-fit grid-cols-1 gap-6 p-6 sm:grid-cols-2'>
-              <div className='rounded-2xl border border-gray-400 p-6'>
+              <div className='rounded-2xl border border-opacity-25 p-6'>
                 <div className='border-b pb-4 text-xl font-bold'>Store detail</div>
                 <div className='flex flex-col justify-between gap-4 pt-4'>
                   <div>
@@ -199,7 +199,7 @@ const AccountComponent: FC<IProps> = (props) => {
                   </div>
                 </div>
               </div>
-              <div className='rounded-2xl border border-gray-400 p-6'>
+              <div className='rounded-2xl border border-opacity-25 p-6'>
                 <div className='border-b pb-4 text-xl font-bold'>Bank detail</div>
                 <div className='flex flex-col justify-between gap-4 pt-4'>
                   <div>

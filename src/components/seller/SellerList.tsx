@@ -54,7 +54,7 @@ const SellerCard: FC<ISellerCard> = (props) => {
   return (
     <div className='flex h-full w-full flex-col place-items-center justify-center gap-3'>
       <Image src={props.logoUrl} alt={props.description} className='rounded-full' width={60} height={60} />
-      <span className='w-fit text-5xl font-bold'>{props.name}</span>
+      <span className='w-fit text-xl font-bold'>{props.name}</span>
     </div>
   );
 };

@@ -17,6 +17,7 @@ const config: Config = {
         purple3: '#CFCBF6',
         purple4: '#EFEEFC',
         purplebg: '#F5F6FB',
+        orange1: '#FE6B3F',
         blue1: '#46A8E1',
         blue2: '#6FBBE8',
         blue3: '#C1E2F5',

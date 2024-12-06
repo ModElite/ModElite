@@ -83,7 +83,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <hr className='w-full border border-black2' />
+      <hr className='w-full border border-black2 opacity-15' />
       <div className='my-2 flex flex-col justify-between gap-y-2 md:flex-row md:gap-y-0'>
         <h4 className='content-center text-black2'>Modelite.sssboom.xyz © 2024, All Rights Reserved</h4>
         <div className='flex flex-row flex-wrap space-x-4'>
