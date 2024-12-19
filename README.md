@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ModElite
 
-## Getting Started
+ModElite is a premier e-commerce platform specializing in high-quality, stylish shoes. Our mission is to provide customers with a seamless shopping experience, offering a wide range of footwear options that cater to various tastes and preferences. With a focus on both fashion and comfort, Modelite ensures that every pair of shoes meets the highest standards of craftsmanship. Explore our collection and step into a world of elegance and sophistication.
 
-First, run the development server:
+# Core Features
+
+- **Online e-commerce**: Online e-commerce for luxury brand-name shoes.
+
+# Functional Requirement
+
+- **User Registration**
+- **Category**
+- **Filter Search**
+- **Add to Cart**
+- **Payment**
+- **Order Details**
+- **Order Tracking**
+- **Order Status**
+- **Add Product**
+- **Manage Payment**
+
+# Project Setup
+
+## Prerequisites
+
+- Node.js and Yarn installed on your machine.
+
+## Installation
+
+Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://git.cpe.kmutt.ac.th/modelite/modelitefrontend.git
+cd modelitefrontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Install the dependencies using Yarn:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+yarn install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+Start develop the project:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+yarn dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Build the project:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+yarn build
+```
 
-## Deploy on Vercel
+Start the project:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+yarn start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Run linting:
+
+```bash
+yarn lint
+```
+
+# Technologies
+
+- **Next.js**: Building high-performance, server rendered web applications
+- **Ant Design**: Enterprise-class UI design language
+- **Tailwind CSS**: is a utility-first CSS framework for rapidly building modern websites without ever leaving your HTML.
+- **Yarn**: Dependency management.
+- **Node**: JavaScript runtime environment
